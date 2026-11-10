@@ -3,11 +3,11 @@
 <head>
 <meta charset='UTF-8'>
 <meta content='width=device-width, initial-scale=1.0' name='viewport'>
-<meta content='#0b2a30' name='theme-color'>
+<meta content='#06131f' name='theme-color'>
 <title>My Statement</title>
 <link href='https://fonts.googleapis.com' rel='preconnect'>
 <link crossorigin='anonymous' href='https://fonts.gstatic.com' rel='preconnect'>
-<link href='https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,800&amp;display=swap' rel='stylesheet'>
 <style>
 :root{
   --primary:#217c78;--primary-dark:#175e5b;--primary-soft:#eef8fa;
@@ -362,6 +362,55 @@ td{font-variant-numeric:tabular-nums}
 .branch-chip{display:inline-flex;align-items:center;gap:10px;padding:7px 14px;border-radius:30px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);font-size:12.5px;font-weight:600;color:#ffe3ad}
 .branch-chip .rl{padding:2px 9px;border-radius:20px;background:var(--gold);color:#113032;font-size:11px;font-weight:800;letter-spacing:.4px;text-transform:uppercase}
 @media(max-width:520px){.branch-chip{order:3;width:100%;justify-content:center}}
+
+/* ===== PREMIUM THEME: midnight navy + emerald + champagne gold ===== */
+:root{
+ --primary:#0f5c4d;--primary-dark:#0a4338;--primary-soft:#eaf3f0;
+ --gold:#c9a24a;--gold-soft:#faf4e4;
+ --ink:#0b1f33;--text:#25323f;--muted:#76808b;
+ --bg:#f6f4ef;--border:#e8e3d8;--border-strong:#d8d1c1;
+ --shadow-sm:0 1px 2px rgba(11,31,51,.05),0 2px 6px rgba(11,31,51,.04);
+ --shadow:0 1px 2px rgba(11,31,51,.04),0 16px 36px -16px rgba(11,31,51,.2);
+ --display:'Fraunces',Georgia,serif;
+}
+body{background:radial-gradient(1000px 520px at 100% -10%,rgba(201,162,74,.15),transparent 60%),radial-gradient(900px 600px at -10% 110%,rgba(15,92,77,.10),transparent 60%),var(--bg);background-attachment:fixed}
+header{background:linear-gradient(120deg,rgba(6,19,31,.98),rgba(11,42,68,.97) 60%,rgba(15,58,82,.97));box-shadow:0 14px 34px rgba(6,19,31,.32)}
+header::after{background:linear-gradient(90deg,transparent,#c9a24a 25%,#ecd28f 50%,#c9a24a 75%,transparent)}
+h1,h2,.date-title,.pending-info h3,.stat strong,.cod-box strong{font-family:var(--display)}
+h1{font-weight:700;letter-spacing:-.2px}
+h2{font-weight:700;font-size:18px}
+h2::before{width:3px;background:linear-gradient(var(--gold),#a7822f)}
+.card{border-top:1px solid var(--border);border-radius:16px}
+.stat{background:linear-gradient(145deg,#0b1f33,#12304d);border:0;box-shadow:0 14px 30px -14px rgba(11,31,51,.55)}
+.stat::before{background:linear-gradient(var(--gold),#a7822f)}
+.stat span{color:rgba(255,255,255,.62)}
+.stat strong{color:#fff}
+.stat strong.green{color:#6ee7b7}.stat strong.red{color:#fca5a5}
+button{background:linear-gradient(135deg,#0f6b58,#0a4338);box-shadow:0 8px 18px -6px rgba(10,67,56,.55),inset 0 1px 0 rgba(255,255,255,.16)}
+button:hover{background:linear-gradient(135deg,#0c5a4a,#08382f);box-shadow:0 12px 24px -8px rgba(10,67,56,.6),inset 0 1px 0 rgba(255,255,255,.16)}
+.success{background:linear-gradient(135deg,#17934a,#0f6e37)}
+.success:hover{background:linear-gradient(135deg,#128040,#0b5a2d)}
+.tab.active,.tab.active:hover{background:linear-gradient(135deg,#0b1f33,#12304d);color:#fff;box-shadow:0 8px 18px -6px rgba(11,31,51,.55)}
+.tab:hover{background:var(--primary-soft);color:var(--primary)}
+.auth-tabs button.active{color:var(--primary)}
+input:focus,select:focus{border-color:var(--primary);box-shadow:0 0 0 4px rgba(15,92,77,.14)}
+.date-header{background:linear-gradient(180deg,#fbfaf6,#f3f0e7)}
+th{background:#f8f6f0}
+tbody tr:hover{background:#fbfaf6}
+.owner-note-box{background:var(--gold-soft);border-color:#eadcb5;color:#6b5314}
+.toast{background:#0b1f33}
+.branch-chip{background:rgba(201,162,74,.12);border-color:rgba(201,162,74,.4);color:#f3dc9f}
+.branch-chip .rl{background:linear-gradient(135deg,#ecd28f,#c9a24a);color:#0b1f33}
+/* login + splash */
+.aurora{background:radial-gradient(circle at 20% 15%,rgba(201,162,74,.28),transparent 45%),radial-gradient(circle at 85% 85%,rgba(15,138,110,.42),transparent 50%),linear-gradient(135deg,#06131f,#0b2a44 55%,#0f3a52)}
+.orbs i:nth-child(1){background:#c9a24a}.orbs i:nth-child(2){background:#0f8a6e}
+.orbs i:nth-child(3){background:#1e5a8a}.orbs i:nth-child(4){background:#e6c77a}
+.eyebrow{color:#ecd28f}.eyebrow i{background:#c9a24a;box-shadow:0 0 0 4px rgba(201,162,74,.28)}
+.hero-title{font-family:var(--display);font-weight:700;letter-spacing:-1px}
+.hero-title .grad{background-image:linear-gradient(100deg,#f3dc9f,#c9a24a 45%,#7fd6b9)}
+.hero-list b{background:linear-gradient(135deg,#ecd28f,#c9a24a);color:#0b1f33;box-shadow:0 6px 16px rgba(201,162,74,.35)}
+.logo-ring::before{background:conic-gradient(from 0deg,#c9a24a,#0f8a6e,#12304d,#c9a24a);box-shadow:0 14px 40px rgba(201,162,74,.35)}
+.login-card h1{font-family:var(--display)}
 </style>
 </head>
 <body>
@@ -673,7 +722,7 @@ document.getElementById("regForm").addEventListener("submit", async e => {
 });
 document.getElementById("logoutBtn").onclick = () => { if (sb) sb.auth.signOut(); };
 
-const LOGO_URL = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyNTYgMjU2Jz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9J2cnIHgxPScwJyB5MT0nMCcgeDI9JzEnIHkyPScxJz48c3RvcCBvZmZzZXQ9JzAnIHN0b3AtY29sb3I9JyMxNGI4YTYnLz48c3RvcCBvZmZzZXQ9JzEnIHN0b3AtY29sb3I9JyMwYjNiNGEnLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0nMjU2JyBoZWlnaHQ9JzI1Nicgcng9JzU2JyBmaWxsPSd1cmwoI2cpJy8+PHBhdGggZD0nTTEyOCA1MCBMMTk4IDg4IFYxNjggTDEyOCAyMDYgTDU4IDE2OCBWODggWicgZmlsbD0nI2ZmZmZmZicgZmlsbC1vcGFjaXR5PScuMTQnIHN0cm9rZT0nI2ZmZmZmZicgc3Ryb2tlLXdpZHRoPScxMCcgc3Ryb2tlLWxpbmVqb2luPSdyb3VuZCcvPjxwYXRoIGQ9J001OCA4OCBMMTI4IDEyNiBMMTk4IDg4IE0xMjggMTI2IFYyMDYnIGZpbGw9J25vbmUnIHN0cm9rZT0nI2ZmZmZmZicgc3Ryb2tlLXdpZHRoPScxMCcgc3Ryb2tlLWxpbmVqb2luPSdyb3VuZCcgc3Ryb2tlLWxpbmVjYXA9J3JvdW5kJy8+PGNpcmNsZSBjeD0nMTkwJyBjeT0nMTkwJyByPSczNicgZmlsbD0nI2ZiYmYyNCcvPjx0ZXh0IHg9JzE5MCcgeT0nMjA2JyBmb250LXNpemU9JzQ2JyBmb250LXdlaWdodD0nODAwJyB0ZXh0LWFuY2hvcj0nbWlkZGxlJyBmaWxsPScjMGIzYjRhJyBmb250LWZhbWlseT0nQXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWYnPiYjODM3Nzs8L3RleHQ+PC9zdmc+";
+const LOGO_URL = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyNTYgMjU2Jz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9J2cnIHgxPScwJyB5MT0nMCcgeDI9JzEnIHkyPScxJz48c3RvcCBvZmZzZXQ9JzAnIHN0b3AtY29sb3I9JyMxYTRhNmUnLz48c3RvcCBvZmZzZXQ9JzEnIHN0b3AtY29sb3I9JyMwNjEzMWYnLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0naycgeDE9JzAnIHkxPScwJyB4Mj0nMScgeTI9JzEnPjxzdG9wIG9mZnNldD0nMCcgc3RvcC1jb2xvcj0nI2VjZDI4ZicvPjxzdG9wIG9mZnNldD0nMScgc3RvcC1jb2xvcj0nI2I4OTAyZicvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPScyNTYnIGhlaWdodD0nMjU2JyByeD0nNTYnIGZpbGw9J3VybCgjZyknLz48cGF0aCBkPSdNMTI4IDUwIEwxOTggODggVjE2OCBMMTI4IDIwNiBMNTggMTY4IFY4OCBaJyBmaWxsPScjZmZmZmZmJyBmaWxsLW9wYWNpdHk9Jy4xMCcgc3Ryb2tlPScjZWNkMjhmJyBzdHJva2Utd2lkdGg9JzknIHN0cm9rZS1saW5lam9pbj0ncm91bmQnLz48cGF0aCBkPSdNNTggODggTDEyOCAxMjYgTDE5OCA4OCBNMTI4IDEyNiBWMjA2JyBmaWxsPSdub25lJyBzdHJva2U9JyNlY2QyOGYnIHN0cm9rZS13aWR0aD0nOScgc3Ryb2tlLWxpbmVqb2luPSdyb3VuZCcgc3Ryb2tlLWxpbmVjYXA9J3JvdW5kJy8+PGNpcmNsZSBjeD0nMTkwJyBjeT0nMTkwJyByPSczNicgZmlsbD0ndXJsKCNrKScvPjx0ZXh0IHg9JzE5MCcgeT0nMjA2JyBmb250LXNpemU9JzQ2JyBmb250LXdlaWdodD0nODAwJyB0ZXh0LWFuY2hvcj0nbWlkZGxlJyBmaWxsPScjMDYxMzFmJyBmb250LWZhbWlseT0nQXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWYnPiYjODM3Nzs8L3RleHQ+PC9zdmc+";
 
 const splash = document.getElementById("splash");
 const logoBox = document.getElementById("logoBox");
