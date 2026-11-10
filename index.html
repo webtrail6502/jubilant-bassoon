@@ -348,6 +348,20 @@ td{font-variant-numeric:tabular-nums}
 .pending-item.rejecting::after{content:"\2715";position:absolute;inset:0;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:72px;font-weight:800;color:#c62839;background:rgba(253,236,238,.88);animation:xPop .45s cubic-bezier(.2,.9,.3,1.3) both}
 @keyframes xPop{from{opacity:0;scale:.5}to{opacity:1;scale:1}}
 @keyframes rejectOut{0%{transform:none}15%{transform:translateX(-9px)}30%{transform:translateX(9px)}45%{transform:translateX(-5px)}60%{transform:none;opacity:1}100%{transform:scale(.92) translateY(12px);opacity:0;filter:blur(3px)}}
+
+/* ===== AUTH FORMS / BRANCH CHIP ===== */
+.auth-tabs{display:flex;gap:4px;padding:4px;background:#f1eef6;border-radius:14px;margin-bottom:18px}
+.auth-tabs button{height:40px;background:transparent;color:var(--muted);box-shadow:none;border-radius:11px;font-size:14px}
+.auth-tabs button:hover{transform:none;background:rgba(255,255,255,.6);box-shadow:none}
+.auth-tabs button.active{background:#fff;color:var(--primary);box-shadow:var(--shadow-sm)}
+.auth-form{text-align:left;display:grid;gap:14px}
+.auth-form .hint{font-size:12px;color:var(--muted);margin-top:-6px;line-height:1.45}
+#rCode,#lEmail,#rEmail{text-transform:none}
+#rCode{text-transform:uppercase;letter-spacing:2px;font-weight:700}
+#loginOk{color:var(--green);font-size:13px;margin-top:16px;display:none;line-height:1.5;background:var(--green-soft);padding:10px 12px;border-radius:10px}
+.branch-chip{display:inline-flex;align-items:center;gap:10px;padding:7px 14px;border-radius:30px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);font-size:12.5px;font-weight:600;color:#ffe3ad}
+.branch-chip .rl{padding:2px 9px;border-radius:20px;background:var(--gold);color:#2a1033;font-size:11px;font-weight:800;letter-spacing:.4px;text-transform:uppercase}
+@media(max-width:520px){.branch-chip{order:3;width:100%;justify-content:center}}
 </style>
 </head>
 <body>
@@ -357,30 +371,6 @@ td{font-variant-numeric:tabular-nums}
 
 <!-- IMAGE VIEWER -->
 <div id='lightbox'><img alt='' id='lightboxImg'></div>
-
-<!-- PASSWORD MODAL -->
-<div class='hidden' id='pwModal'><div class='pw-card'>
-  <h2>Enter password</h2>
-  <input autocomplete='off' id='pwInput' placeholder='Password' type='password'>
-  <div class='pw-err' id='pwErr'></div>
-  <div class='actions'><button id='pwOk'>Unlock</button><button class='secondary' id='pwCancel'>Cancel</button></div>
-</div></div>
-
-<!-- LOCK / UNLOCK ANIMATION -->
-<div id='vaultFX'>
-  <div class='vp t'></div><div class='vp b'></div>
-  <div class='vring'></div>
-  <div class='vlock'>
-    <svg viewBox='0 0 100 100'>
-      <defs><linearGradient id='vxGold' x1='0' x2='1' y1='0' y2='1'><stop offset='0' stop-color='#ffd98a'></stop><stop offset='1' stop-color='#f08c00'></stop></linearGradient></defs>
-      <path class='shackle' d='M28 52 V36 a22 22 0 0 1 44 0 V52'></path>
-      <rect class='vbody' height='44' rx='12' width='68' x='16' y='50'></rect>
-      <circle class='vkey' cx='50' cy='68' r='6'></circle>
-      <rect class='vkey' height='13' rx='2.5' width='5' x='47.5' y='70'></rect>
-    </svg>
-  </div>
-  <div class='vtxt' id='vaultTxt'>Locked</div>
-</div>
 
 <!-- LOGIN -->
 <div class='aurora' id='loginScreen'>
@@ -399,13 +389,41 @@ td{font-variant-numeric:tabular-nums}
     <div class='login-card'>
       <div class='logo-ring'><img alt='' class='login-logo' id='loginLogo'></div>
       <h1>My Statement</h1>
-      <p>Sign in to continue to your dashboard</p>
-      <button class='google-btn' id='loginBtn'>
-        <svg viewBox='0 0 48 48'><path d='M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.6 17.7 9.5 24 9.5z' fill='#EA4335'></path><path d='M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.2 5.5-4.7 7.2l7.6 5.9c4.4-4.1 6.9-10.1 6.9-17.6z' fill='#4285F4'></path><path d='M10.5 28.7A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.2.8-4.7l-7.9-6.1A24 24 0 0 0 0 24c0 3.9.9 7.5 2.6 10.8l7.9-6.1z' fill='#FBBC05'></path><path d='M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.6-5.9c-2.1 1.4-4.9 2.3-8.3 2.3-6.3 0-11.6-4.1-13.5-9.8l-7.9 6.1C6.5 42.6 14.6 48 24 48z' fill='#34A853'></path></svg>
-        Continue with Google
-      </button>
+      <p id='authSub'>Sign in to continue to your dashboard</p>
+      <div class='auth-tabs'>
+        <button type='button' class='active' id='atLogin'>Login</button>
+        <button type='button' id='atReg'>Register</button>
+      </div>
+
+      <form class='auth-form' id='loginForm' novalidate>
+        <div><label for='lEmail'>Gmail address</label><input autocomplete='email' id='lEmail' placeholder='you@gmail.com' type='email'></div>
+        <div><label for='lPass'>Password</label><input autocomplete='current-password' id='lPass' placeholder='Your password' type='password'></div>
+        <button id='loginBtn' type='submit'>Login</button>
+      </form>
+
+      <form class='auth-form hidden' id='regForm' novalidate>
+        <div>
+          <label>I am a</label>
+          <div class='auth-tabs' style='margin-bottom:0'>
+            <button type='button' class='active' id='roleDelivery'>Delivery boy</button>
+            <button type='button' id='roleAdmin'>Admin</button>
+          </div>
+        </div>
+        <div><label for='rName'>Full name</label><input autocomplete='name' id='rName' placeholder='Your name' type='text'></div>
+        <div><label for='rEmail'>Gmail address</label><input autocomplete='email' id='rEmail' placeholder='you@gmail.com' type='email'></div>
+        <div><label for='rPass'>Password</label><input autocomplete='new-password' id='rPass' placeholder='Minimum 6 characters' type='password'></div>
+        <div class='hidden' id='rBranchNameWrap'><label for='rBranchName'>Branch name</label><input autocomplete='off' id='rBranchName' placeholder='e.g. Belagavi Branch' type='text'></div>
+        <div>
+          <label for='rCode' id='rCodeLbl'>Branch code</label>
+          <input autocomplete='off' id='rCode' maxlength='12' placeholder='e.g. BGM001' type='text'>
+          <div class='hint' id='rCodeHint' style='margin-top:6px'>Ask your admin for the branch code.</div>
+        </div>
+        <button id='regBtn' type='submit'>Create account</button>
+      </form>
+
       <div id='loginError'></div>
-      <div class='secure'>🔒 Secure sign-in powered by Google</div>
+      <div id='loginOk'></div>
+      <div class='secure'>🔒 Your branch data is private to your branch</div>
     </div>
   </div>
 </div>
@@ -415,6 +433,7 @@ td{font-variant-numeric:tabular-nums}
 <header>
   <div class='header-inner'>
     <div class='brand'><img alt='' class='brand-logo' id='headerLogo'><div><h1 id='brandTitle'>My Statement</h1><p>Daily Meesho collection &amp; payment tracker</p></div></div>
+    <div class='branch-chip hidden' id='branchChip'><span class='rl' id='roleLbl'></span><span id='branchLbl'></span></div>
     <div class='user'>
       <img alt='' id='userPhoto'>
       <div class='uname'><strong id='userName'></strong><br><span id='userEmail'></span></div>
@@ -430,7 +449,6 @@ td{font-variant-numeric:tabular-nums}
 <div class='tabs hidden' id='tabsBar'>
   <button class='tab' id='tabHome'>Home</button>
   <button class='tab' id='tabDenom'>Denomination</button>
-  <button class='tab lock' id='tabLock'>Lock<span class='lk-t' id='lockTimer'></span></button>
 </div>
 
 <!-- ================= HOME PAGE ================= -->
@@ -497,6 +515,7 @@ td{font-variant-numeric:tabular-nums}
 <div id='denomView'>
 <section class='card'>
   <h2>Cash Denomination</h2>
+  <div class='owner-note-box' id='denomBranchNote' style='margin:-6px 0 18px'></div>
   <div class='grid' style='grid-template-columns:1fr 1fr;margin-bottom:18px'>
     <div><label for='dRider'>Rider Name</label><input autocomplete='off' id='dRider' placeholder='Rider name' type='text'></div>
     <div><label for='dDate'>Date</label><input id='dDate' type='date'></div>
@@ -547,46 +566,112 @@ td{font-variant-numeric:tabular-nums}
 
 </main>
 </div>
-<script src='https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js'></script>
-<script src='https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js'></script>
-<script src='https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2'></script>
 <script>
 
 
-const firebaseConfig = {
-  apiKey: "AIzaSyAiPWaRx1tN-_6EjFwqRUJqKABgTNMlFAs",
-  authDomain: "my-statement-4406a.firebaseapp.com",
-  projectId: "my-statement-4406a",
-  storageBucket: "my-statement-4406a.firebasestorage.app",
-  messagingSenderId: "536032086229",
-  appId: "1:536032086229:web:49b1b066a7648abd80ba5c",
-  measurementId: "G-QKV0Z4PD7K"
-};
+/* ================= SUPABASE CONFIG =================
+   1. Create a free project at https://supabase.com
+   2. Run supabase-setup.sql in the SQL editor
+   3. Paste Project URL + anon public key below (Project Settings -> API) */
+const SUPABASE_URL = "https://zqaequyzdrngxnifdkty.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_oqXbagCuLh4DUAy4F-Cfmw_kigOJE8T";
 
-const configMissing = firebaseConfig.apiKey === "YOUR_API_KEY";
+const configMissing = SUPABASE_URL.indexOf("YOUR_") === 0 || SUPABASE_ANON_KEY.indexOf("YOUR_") === 0;
 const loginError = document.getElementById("loginError");
-function showLoginError(msg){ loginError.style.display = "block"; loginError.textContent = msg; }
+const loginOk = document.getElementById("loginOk");
+function showLoginError(msg){ loginOk.style.display = "none"; loginError.style.display = "block"; loginError.textContent = msg; }
+function showLoginOk(msg){ loginError.style.display = "none"; loginOk.style.display = "block"; loginOk.textContent = msg; }
+function clearAuthMsgs(){ loginError.style.display = "none"; loginOk.style.display = "none"; }
 
-let auth = null, db = null, userCol = null, unsub = null, unsubPending = null, unsubOwn = null;
-let currentUser = null;
-if (!configMissing) {
-  firebase.initializeApp(firebaseConfig);
-  auth = firebase.auth();
-  db = firebase.firestore();
+let sb = null, currentUser = null, currentProfile = null, isAdmin = false, rtChannel = null;
+if (!configMissing) sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+let regRole = "delivery";
+function setAuthMode(m){
+  const reg = m === "register";
+  document.getElementById("loginForm").classList.toggle("hidden", reg);
+  document.getElementById("regForm").classList.toggle("hidden", !reg);
+  document.getElementById("atLogin").classList.toggle("active", !reg);
+  document.getElementById("atReg").classList.toggle("active", reg);
+  document.getElementById("authSub").textContent = reg ? "Create your account" : "Sign in to continue to your dashboard";
+  clearAuthMsgs();
 }
+function setRegRole(r){
+  regRole = r;
+  const adm = r === "admin";
+  document.getElementById("roleAdmin").classList.toggle("active", adm);
+  document.getElementById("roleDelivery").classList.toggle("active", !adm);
+  document.getElementById("rBranchNameWrap").classList.toggle("hidden", !adm);
+  document.getElementById("rCodeLbl").textContent = adm ? "Create branch code" : "Branch code";
+  document.getElementById("rCodeHint").textContent = adm
+    ? "Choose a unique code (4-12 letters/numbers). Give it to your delivery boys - they need it to register."
+    : "Ask your admin for the branch code. Your denominations will go to that branch only.";
+  clearAuthMsgs();
+}
+document.getElementById("atLogin").onclick = () => setAuthMode("login");
+document.getElementById("atReg").onclick = () => setAuthMode("register");
+document.getElementById("roleDelivery").onclick = () => setRegRole("delivery");
+document.getElementById("roleAdmin").onclick = () => setRegRole("admin");
 
-document.getElementById("loginBtn").onclick = () => {
-  if (configMissing) { showLoginError("Firebase is not configured yet. Paste your firebaseConfig in the script."); return; }
-  loginError.style.display = "none";
-  auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).catch(err => {
-    if (err.code === "auth/unauthorized-domain") {
-      showLoginError("This domain is not authorized. Add it in Firebase Console → Authentication → Settings → Authorized domains.");
-    } else if (err.code !== "auth/popup-closed-by-user") {
-      showLoginError("Login failed: " + err.message);
+function busy(btn, on, text){ btn.disabled = on; if (text) btn.textContent = text; }
+
+document.getElementById("loginForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  clearAuthMsgs();
+  if (configMissing) { showLoginError("Supabase is not configured yet. Paste your URL and anon key in the script."); return; }
+  const email = document.getElementById("lEmail").value.trim();
+  const password = document.getElementById("lPass").value;
+  if (!email || !password) { showLoginError("Enter your email and password."); return; }
+  const btn = document.getElementById("loginBtn");
+  busy(btn, true, "Signing in...");
+  const { error } = await sb.auth.signInWithPassword({ email, password });
+  busy(btn, false, "Login");
+  if (error) showLoginError(/invalid login/i.test(error.message) ? "Wrong email or password." : error.message);
+});
+
+document.getElementById("regForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  clearAuthMsgs();
+  if (configMissing) { showLoginError("Supabase is not configured yet. Paste your URL and anon key in the script."); return; }
+  const name = document.getElementById("rName").value.trim();
+  const email = document.getElementById("rEmail").value.trim();
+  const password = document.getElementById("rPass").value;
+  const code = document.getElementById("rCode").value.trim().toUpperCase();
+  const branchName = document.getElementById("rBranchName").value.trim();
+  const adm = regRole === "admin";
+  if (!name) { showLoginError("Enter your name."); return; }
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { showLoginError("Enter a valid Gmail address."); return; }
+  if (password.length < 6) { showLoginError("Password must be at least 6 characters."); return; }
+  if (!/^[A-Z0-9]{4,12}$/.test(code)) { showLoginError("Branch code must be 4-12 letters or numbers (no spaces)."); return; }
+  if (adm && !branchName) { showLoginError("Enter your branch name."); return; }
+  const btn = document.getElementById("regBtn");
+  busy(btn, true, "Creating account...");
+  try {
+    const chk = await sb.rpc("branch_name_for_code", { p_code: code });
+    if (chk.error) throw chk.error;
+    if (adm && chk.data) { showLoginError("This branch code is already taken. Choose another."); return; }
+    if (!adm && !chk.data) { showLoginError("Invalid branch code. Ask your admin for the correct code."); return; }
+    const { data, error } = await sb.auth.signUp({
+      email, password,
+      options: { data: { name, role: regRole, branch_code: code, branch_name: branchName } }
+    });
+    if (error) {
+      showLoginError(/database error/i.test(error.message) ? "Registration failed. Check the branch code and try again." : error.message);
+      return;
     }
-  });
-};
-document.getElementById("logoutBtn").onclick = () => auth.signOut();
+    if (!data.session) {
+      setAuthMode("login");
+      document.getElementById("lEmail").value = email;
+      showLoginOk("Account created. Check your email to confirm it, then log in.");
+    }
+  } catch (err) {
+    showLoginError("Registration failed: " + err.message);
+  } finally {
+    busy(btn, false, "Create account");
+  }
+});
+document.getElementById("logoutBtn").onclick = () => { if (sb) sb.auth.signOut(); };
 
 const LOGO_URL = "data:image/png;base64,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";
 
@@ -677,69 +762,114 @@ let statements = [];
 let pending = [];
 let denomHistory = [];
 let wasLoggedIn = false;
+let loadedUid = null;
+const timers = {};
+const later = (k, fn) => { clearTimeout(timers[k]); timers[k] = setTimeout(fn, 250); };
 
-if (auth) {
-  auth.onAuthStateChanged(user => {
-    if (user) {
-      currentUser = user;
-      userCol = db.collection("users").doc(user.uid).collection("statements");
-      document.getElementById("userName").textContent = user.displayName || "User";
-      document.getElementById("userEmail").textContent = user.email || "";
-      const photo = document.getElementById("userPhoto");
-      if (user.photoURL) { photo.src = user.photoURL; photo.style.display = ""; } else { photo.style.display = "none"; }
-      clearForm(true);
-      document.getElementById("filterDate").value = "";
-      resetDenomForm();
-      lockHome();
+const rowToStmt = r => ({ id: r.id, person: r.person, date: r.date, collected: Number(r.collected), paid: Number(r.paid),
+  balance: Number(r.balance), type: r.type, source: r.source, createdAt: Number(r.created_at) });
+const rowToDen = r => ({ docId: r.id, id: r.id, rider: r.rider, date: r.date, notes: r.notes || {}, cash: Number(r.cash),
+  phonepe: Number(r.phonepe), delivery: r.delivery, pickup: r.pickup, photo: r.photo, status: r.status,
+  submitterName: r.submitter_name, createdAt: Number(r.created_at) });
 
-      if (unsub) unsub();
-      let first = true;
-      unsub = userCol.onSnapshot(snap => {
-        if (first && snap.empty) {
-          const old = JSON.parse(localStorage.getItem("meesho_statement_v2_" + user.uid) || "[]");
-          if (old.length) {
-            const batch = db.batch();
-            old.forEach((o, n) => batch.set(userCol.doc(String(o.id)), Object.assign({createdAt: Date.now() - n, source: "web"}, o)));
-            batch.commit();
-          }
-        }
-        first = false;
-        statements = snap.docs.map(d => d.data()).sort((x, y) => (y.createdAt || 0) - (x.createdAt || 0));
-        render();
-        updatePersonFields();
-      }, err => alert("Could not load data: " + err.message));
-
-      /* denomination history: each user only receives and sees their OWN submissions */
-      if (unsubOwn) unsubOwn();
-      unsubOwn = db.collection("denominations").where("submittedBy", "==", user.uid).onSnapshot(snap => {
-        denomHistory = snap.docs.map(d => Object.assign({docId: d.id}, d.data())).sort((x, y) => (y.createdAt || 0) - (x.createdAt || 0));
-        renderHistory();
-      }, err => console.error("Denomination history load failed: " + err.message));
-
-      wasLoggedIn = true;
-      playSplash("in", () => {
-        document.getElementById("loginScreen").classList.add("hidden");
-        document.getElementById("appScreen").classList.remove("hidden");
-      });
-    } else {
-      currentUser = null;
-      if (unsub) { unsub(); unsub = null; }
-      if (unsubPending) { unsubPending(); unsubPending = null; }
-      if (unsubOwn) { unsubOwn(); unsubOwn = null; }
-      userCol = null;
-      statements = [];
-      pending = [];
-      denomHistory = [];
-      lockHome();
-      const showLogin = () => {
-        document.getElementById("appScreen").classList.add("hidden");
-        document.getElementById("loginScreen").classList.remove("hidden");
-      };
-      if (wasLoggedIn) { wasLoggedIn = false; playLogout(showLogin); }
-      else showLogin();
-    }
-  });
+async function refreshStatements(){
+  if (!sb || !isAdmin) return;
+  const { data, error } = await sb.from("statements").select("*").order("created_at", { ascending: false });
+  if (error) { console.error(error.message); return; }
+  statements = data.map(rowToStmt);
+  render();
+  updatePersonFields();
 }
+async function refreshPending(){
+  if (!sb || !isAdmin) return;
+  const { data, error } = await sb.from("denominations").select("*").in("status", ["pending", "pp_pending"]).order("created_at", { ascending: false });
+  if (error) { console.error(error.message); return; }
+  pending = data.map(rowToDen);
+  renderPending();
+}
+async function refreshHistory(){
+  if (!sb) return;
+  const { data, error } = await sb.from("denominations")
+    .select("id,rider,date,notes,cash,phonepe,delivery,pickup,status,submitter_name,created_at")
+    .order("created_at", { ascending: false });
+  if (error) { console.error(error.message); return; }
+  denomHistory = data.map(rowToDen);
+  renderHistory();
+}
+
+function startData(){
+  stopData();
+  refreshHistory();
+  if (isAdmin) { refreshStatements(); refreshPending(); }
+  rtChannel = sb.channel("live-" + currentUser.id);
+  rtChannel.on("postgres_changes", { event: "*", schema: "public", table: "denominations" }, () => {
+    later("h", refreshHistory);
+    if (isAdmin) later("p", refreshPending);
+  });
+  if (isAdmin) rtChannel.on("postgres_changes", { event: "*", schema: "public", table: "statements" }, () => later("s", refreshStatements));
+  rtChannel.subscribe();
+}
+function stopData(){
+  if (rtChannel && sb) { sb.removeChannel(rtChannel); }
+  rtChannel = null;
+}
+
+async function handleSession(session){
+  if (session && session.user) {
+    if (loadedUid === session.user.id) return;          /* token refresh etc. */
+    loadedUid = session.user.id;
+    currentUser = session.user;
+    const { data: prof, error } = await sb.from("profiles").select("*").eq("id", currentUser.id).maybeSingle();
+    if (error || !prof) {
+      loadedUid = null;
+      showLoginError("Account profile not found. Please register again.");
+      await sb.auth.signOut();
+      return;
+    }
+    const { data: br } = await sb.from("branches").select("name").eq("code", prof.branch_code).maybeSingle();
+    currentProfile = prof;
+    currentProfile.branch_name = br ? br.name : prof.branch_code;
+    isAdmin = prof.role === "admin";
+
+    document.getElementById("userName").textContent = prof.name;
+    document.getElementById("userEmail").textContent = prof.email;
+    document.getElementById("userPhoto").style.display = "none";
+    document.getElementById("roleLbl").textContent = isAdmin ? "Admin" : "Delivery";
+    document.getElementById("branchLbl").textContent = "Branch: " + currentProfile.branch_name + " (" + prof.branch_code + ")";
+    document.getElementById("branchChip").classList.remove("hidden");
+    document.getElementById("denomBranchNote").innerHTML = isAdmin
+      ? "<strong>Branch: " + escapeHtml(currentProfile.branch_name) + "</strong> (code <strong>" + escapeHtml(prof.branch_code) + "</strong>). Denominations sent by delivery boys with this code appear on your Home page."
+      : "You are sending to <strong>" + escapeHtml(currentProfile.branch_name) + "</strong> (code <strong>" + escapeHtml(prof.branch_code) + "</strong>). Only your branch admin will see it.";
+
+    clearForm(true);
+    document.getElementById("filterDate").value = "";
+    resetDenomForm();
+    document.getElementById("tabsBar").classList.toggle("hidden", !isAdmin);
+    showTab(isAdmin ? "home" : "denom");
+    startData();
+
+    wasLoggedIn = true;
+    playSplash("in", () => {
+      document.getElementById("loginScreen").classList.add("hidden");
+      document.getElementById("appScreen").classList.remove("hidden");
+    });
+  } else {
+    loadedUid = null; currentUser = null; currentProfile = null; isAdmin = false;
+    stopData();
+    statements = []; pending = []; denomHistory = [];
+    document.getElementById("branchChip").classList.add("hidden");
+    document.getElementById("tabsBar").classList.add("hidden");
+    document.getElementById("lPass").value = "";
+    renderPending();
+    const showLogin = () => {
+      document.getElementById("appScreen").classList.add("hidden");
+      document.getElementById("loginScreen").classList.remove("hidden");
+    };
+    if (wasLoggedIn) { wasLoggedIn = false; playLogout(showLogin); }
+    else showLogin();
+  }
+}
+if (sb) sb.auth.onAuthStateChange((event, session) => { setTimeout(() => handleSession(session), 0); });
 
 const money = n => "₹" + Number(n || 0).toLocaleString("en-IN", {minimumFractionDigits:2, maximumFractionDigits:2});
 const today = () => { const d = new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); };
@@ -750,7 +880,7 @@ function escapeHtml(v){
 
 /* ---------- TABS ---------- */
 function showTab(t){
-  if (t === "home" && !homeUnlocked) t = "denom";
+  if (t === "home" && !isAdmin) t = "denom";
   const home = t === "home";
   document.getElementById("homeView").classList.toggle("hidden", !home);
   document.getElementById("denomView").classList.toggle("hidden", home);
@@ -855,7 +985,7 @@ function resetDenomForm(){
   document.getElementById("dPhoto").value = "";
   document.getElementById("photoPreview").style.display = "none";
   document.getElementById("dDate").value = today();
-  document.getElementById("dRider").value = (currentUser && currentUser.displayName) || "";
+  document.getElementById("dRider").value = (currentProfile && currentProfile.name) || "";
   photoData = "";
   updateDenomTotals();
 }
@@ -875,12 +1005,13 @@ document.getElementById("dSubmit").onclick = async () => {
   btn.disabled = true; btn.textContent = "Sending...";
   try {
     const id = String(Date.now()) + Math.floor(Math.random() * 1000);
-    await db.collection("denominations").doc(id).set({
-      id, rider, date, notes: r.notes, cash: r.cash, phonepe: pp, delivery, pickup, photo: photoData,
-      status: "pending", submittedBy: currentUser.uid,
-      submitterName: currentUser.displayName || currentUser.email || "User",
-      createdAt: Date.now()
+    const ins = await sb.from("denominations").insert({
+      id, branch_code: currentProfile.branch_code, rider, date, notes: r.notes, cash: r.cash, phonepe: pp,
+      delivery, pickup, photo: photoData, status: "pending", submitted_by: currentUser.id,
+      submitter_name: currentProfile.name, created_at: Date.now()
     });
+    if (ins.error) throw ins.error;
+    refreshHistory();
     resetDenomForm();
     const m = document.getElementById("dMsg");
     m.textContent = "Sent for approval.";
@@ -893,29 +1024,15 @@ document.getElementById("dSubmit").onclick = async () => {
   }
 };
 
-/* ---------- PENDING APPROVALS (home) ---------- */
-/* Pending requests and the notification banner exist ONLY while the password has been entered. */
-function startPending(){
-  if (unsubPending || !db || !currentUser) return;
-  unsubPending = db.collection("denominations").onSnapshot(snap => {
-    const all = snap.docs.map(d => Object.assign({docId: d.id}, d.data()));
-    pending = all.filter(x => x.status === "pending" || x.status === "pp_pending").sort((x, y) => (y.createdAt || 0) - (x.createdAt || 0));
-    renderPending();
-  }, err => console.error("Pending load failed: " + err.message));
-}
-function stopPending(){
-  if (unsubPending) { unsubPending(); unsubPending = null; }
-  pending = [];
-  renderPending();
-}
+/* ---------- PENDING APPROVALS (admin home) ---------- */
 function updateBanner(n){
   const b = document.getElementById("denomBanner");
-  if (n > 0 && homeUnlocked) {
+  if (n > 0 && isAdmin) {
     document.getElementById("denomBannerNum").textContent = n;
     document.getElementById("denomBannerText").textContent = n === 1 ? "1 denomination received" : n + " denominations received";
     b.classList.remove("collapsed");
   } else {
-    b.classList.add("collapsed");   /* all accepted/rejected -> banner collapses */
+    b.classList.add("collapsed");
   }
 }
 function goPending(){
@@ -923,10 +1040,7 @@ function goPending(){
   const sec = document.getElementById("pendingSection");
   if (sec && !sec.classList.contains("hidden")) setTimeout(() => sec.scrollIntoView({behavior:"smooth", block:"start"}), 50);
 }
-document.getElementById("denomBannerIn").onclick = () => {
-  if (!homeUnlocked) { openPw(true); return; }
-  goPending();
-};
+document.getElementById("denomBannerIn").onclick = goPending;
 
 function noteChips(p){
   return NOTES.filter(n => (p.notes && p.notes[n]) > 0)
@@ -1126,43 +1240,22 @@ async function playAcceptFX(chips, before, exp){
 }
 
 async function acceptDenom(docId, btn){
-  if (!userCol) return;
+  if (!sb || !isAdmin) return;
   const p = pending.find(x => x.docId === docId);
   btn.disabled = true;
   const item = btn.closest(".pending-item");
   const before = totals();
   const chips = [];
   if (p && item && !reduceMotion()) {
-    const mk = (sel, amt, cls, target) => {
-      const el = item.querySelector(sel);
-      if (el && amt > 0) chips.push(makeChip(el.getBoundingClientRect(), "+" + money(amt), cls, target));
-    };
-    mk("[data-cash]", p.cash, "cash", "bal");
+    const el = item.querySelector("[data-cash]");
+    if (el && p.cash > 0) chips.push(makeChip(el.getBoundingClientRect(), "+" + money(p.cash), "cash", "bal"));
   }
   holdTotals = true;
   setTimeout(() => { if (holdTotals) { holdTotals = false; render(); } }, 8000);
   try {
-    const ref = db.collection("denominations").doc(docId);
-    await db.runTransaction(async tx => {
-      const snap = await tx.get(ref);
-      if (!snap.exists || snap.data().status !== "pending") throw new Error("This request was already handled.");
-      const d = snap.data();
-      const sid = "den" + d.id;
-      /* Only the cash denomination goes into the statement (Collected = Balance = cash, Paid = 0).
-         PhonePe, delivery and pickup are kept in the history record only and never touch the totals. */
-      tx.set(userCol.doc(sid), {
-        id: sid, person: d.rider, date: d.date,
-        collected: d.cash, paid: 0, balance: d.cash,
-        type: "person", createdAt: Date.now(), source: "denomination",
-        denomination: { notes: d.notes, cash: d.cash, phonepe: d.phonepe }
-      });
-      if (Number(d.phonepe || 0) > 0) {
-        /* cash accepted; the same request box stays for the PhonePe accept / reject step */
-        tx.update(ref, { status: "pp_pending", acceptedAt: Date.now() });
-      } else {
-        tx.update(ref, { status: "accepted", acceptedAt: Date.now(), photo: firebase.firestore.FieldValue.delete() });
-      }
-    });
+    const { error } = await sb.rpc("accept_denomination", { p_id: docId });
+    if (error) throw error;
+    await Promise.all([refreshStatements(), refreshPending(), refreshHistory()]);
   } catch (e) {
     chips.forEach(c => c.wrap.remove());
     holdTotals = false; render();
@@ -1171,14 +1264,13 @@ async function acceptDenom(docId, btn){
     return;
   }
   buzz(30);
-  showToast(p && Number(p.phonepe || 0) > 0 ? "Cash added \u2014 now confirm PhonePe" : "Accepted \u2014 totals updated", "ok");
-  const cash = p ? Number(p.cash || 0) : 0, pp = p ? Number(p.phonepe || 0) : 0;
-  const exp = { c: before.c + cash, p: before.p, b: before.b + cash };
-  playAcceptFX(chips, before, exp);
+  showToast(p && Number(p.phonepe || 0) > 0 ? "Cash added — now confirm PhonePe" : "Accepted — totals updated", "ok");
+  const cash = p ? Number(p.cash || 0) : 0;
+  playAcceptFX(chips, before, { c: before.c + cash, p: before.p, b: before.b + cash });
 }
 
 async function acceptPhonepe(docId, btn){
-  if (!userCol) return;
+  if (!sb || !isAdmin) return;
   btn.disabled = true;
   const p = pending.find(x => x.docId === docId);
   const item = btn.closest(".pending-item");
@@ -1192,15 +1284,9 @@ async function acceptPhonepe(docId, btn){
   holdTotals = true;
   setTimeout(() => { if (holdTotals) { holdTotals = false; render(); } }, 8000);
   try {
-    const ref = db.collection("denominations").doc(docId);
-    await db.runTransaction(async tx => {
-      const snap = await tx.get(ref);
-      if (!snap.exists || snap.data().status !== "pp_pending") throw new Error("This request was already handled.");
-      const d = snap.data();
-      const ppv = Number(d.phonepe || 0), cashv = Number(d.cash || 0);
-      tx.update(userCol.doc("den" + d.id), { paid: ppv, balance: cashv - ppv });
-      tx.update(ref, { status: "accepted", ppAdded: true, ppAt: Date.now(), photo: firebase.firestore.FieldValue.delete() });
-    });
+    const { error } = await sb.rpc("accept_phonepe", { p_id: docId });
+    if (error) throw error;
+    await Promise.all([refreshStatements(), refreshPending(), refreshHistory()]);
   } catch (e) {
     chips.forEach(c => c.wrap.remove());
     holdTotals = false; render();
@@ -1218,7 +1304,9 @@ async function rejectPhonepe(docId, btn){
   const item = btn.closest(".pending-item");
   try {
     if (item) { item.classList.add("rejecting"); buzz([20, 50, 20]); await wait(680); }
-    await db.collection("denominations").doc(docId).update({ status: "accepted", ppAdded: false, ppAt: Date.now(), photo: firebase.firestore.FieldValue.delete() });
+    const { error } = await sb.rpc("reject_phonepe", { p_id: docId });
+    if (error) throw error;
+    await Promise.all([refreshPending(), refreshHistory()]);
     showToast("PhonePe not added", "reject");
   } catch (e) {
     if (item) item.classList.remove("rejecting");
@@ -1233,7 +1321,9 @@ async function rejectDenom(docId, btn){
   const item = btn.closest(".pending-item");
   try {
     if (item) { item.classList.add("rejecting"); buzz([20, 50, 20]); await wait(680); }
-    await db.collection("denominations").doc(docId).update({ status: "rejected", rejectedAt: Date.now(), photo: firebase.firestore.FieldValue.delete() });
+    const { error } = await sb.rpc("reject_denomination", { p_id: docId });
+    if (error) throw error;
+    await Promise.all([refreshPending(), refreshHistory()]);
     showToast("Request rejected", "reject");
   } catch (e) {
     if (item) item.classList.remove("rejecting");
@@ -1281,8 +1371,9 @@ function addStatement(){
   }
 
   const id = String(Date.now()) + Math.floor(Math.random()*1000);
-  userCol.doc(id).set({ id, person: name, date, collected, paid, balance: collected - paid, type: isOwner ? "owner" : "person", createdAt: Date.now(), source: "web" })
-    .catch(e => alert("Could not save: " + e.message));
+  sb.from("statements").insert({ id, branch_code: currentProfile.branch_code, person: name, date, collected, paid, balance: collected - paid,
+      type: isOwner ? "owner" : "person", created_at: Date.now(), source: "web" })
+    .then(({ error }) => { if (error) alert("Could not save: " + error.message); else refreshStatements(); });
   clearForm(false);
 }
 
@@ -1315,7 +1406,7 @@ function updatePersonFields(){
 
 function removeStatement(id){
   if(confirm("Delete this statement?")){
-    userCol.doc(String(id)).delete().catch(e => alert("Could not delete: " + e.message));
+    sb.from("statements").delete().eq("id", String(id)).then(({ error }) => { if (error) alert("Could not delete: " + error.message); else refreshStatements(); });
   }
 }
 
@@ -1423,7 +1514,7 @@ function renderHistory(){
         <thead><tr><th>Rider</th><th>Denomination</th><th>Delivery</th><th>Pickup</th></tr></thead>
         <tbody>${items.map(h => `
           <tr>
-            <td><strong>${escapeHtml(h.rider || "")}</strong><div class="small" style="margin:2px 0 0">By ${escapeHtml(h.submitterName || "")}</div></td>
+            <td><strong>${escapeHtml(h.rider || "")}</strong><div class="small" style="margin:2px 0 0">By ${escapeHtml(h.submitterName || "")}</div><div style="margin-top:6px"><span class="badge ${h.status === "rejected" ? "red" : (h.status === "accepted" ? "green" : "blue")}">${h.status === "pp_pending" ? "Cash accepted" : (h.status === "accepted" ? "Accepted" : (h.status === "rejected" ? "Rejected" : "Pending"))}</span></div></td>
             <td><div class="pending-chips" style="margin-bottom:6px">${noteChips(h) || '<span class="chip">No cash</span>'}</div>
               <div class="small" style="margin:0">Cash: <strong>${money(h.cash)}</strong> &middot; PhonePe: <strong>${money(h.phonepe)}</strong></div></td>
             <td><strong>${num(h.delivery)}</strong></td>
@@ -1436,121 +1527,6 @@ function renderHistory(){
 }
 document.getElementById("hFilterDate").onchange = renderHistory;
 document.getElementById("hShowAll").onclick = () => { document.getElementById("hFilterDate").value = ""; renderHistory(); };
-
-/* ---------- HIDDEN HOME LOCK ---------- */
-const PW_SALT = "mystmt|";
-const PW_HASH = "aa4a5debf085f57b34f03a5a1e2c9e10c7e0155cc6ec7a83043d1228a48401ca";
-const IDLE_MS = 900000;     /* auto-lock after 15 min without activity */
-const HIDDEN_MS = 30000;    /* auto-lock if the app was in the background for 30 s */
-let homeUnlocked = false, lastActive = Date.now(), hiddenAt = 0, jumpAfter = false;
-let pwFails = 0, pwBlockUntil = 0, tapN = 0, tapT = 0;
-
-const lockTimerEl = document.getElementById("lockTimer");
-function updateLockTimer(){
-  if (!lockTimerEl) return;
-  if (!homeUnlocked) { lockTimerEl.textContent = ""; return; }
-  const left = Math.max(0, IDLE_MS - (Date.now() - lastActive));
-  const secs = Math.ceil(left / 1000);
-  const mm = String(Math.floor(secs / 60)).padStart(2, "0"), ss = String(secs % 60).padStart(2, "0");
-  lockTimerEl.textContent = mm + ":" + ss;
-  lockTimerEl.classList.toggle("warn", left <= 60000);
-}
-setInterval(updateLockTimer, 1000);
-
-const pwModal = document.getElementById("pwModal");
-const pwInput = document.getElementById("pwInput");
-const pwErr = document.getElementById("pwErr");
-
-async function sha256(str){
-  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
-  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("");
-}
-function openPw(jump){
-  if (homeUnlocked) return;
-  jumpAfter = !!jump;
-  pwErr.textContent = ""; pwInput.value = "";
-  pwModal.classList.remove("hidden");
-  setTimeout(() => pwInput.focus(), 60);
-}
-function closePw(){ pwModal.classList.add("hidden"); pwInput.value = ""; pwErr.textContent = ""; }
-async function tryUnlock(){
-  const now = Date.now();
-  if (now < pwBlockUntil) { pwErr.textContent = "Too many attempts. Try again in " + Math.ceil((pwBlockUntil - now) / 1000) + "s."; return; }
-  let h = "";
-  try { h = await sha256(PW_SALT + pwInput.value); }
-  catch (e) { pwErr.textContent = "Secure context required (open the site with https)."; return; }
-  if (h === PW_HASH) { pwFails = 0; closePw(); unlockHome(); }
-  else {
-    pwFails++; pwInput.value = "";
-    if (pwFails >= 5) { pwFails = 0; pwBlockUntil = Date.now() + 60000; pwErr.textContent = "Too many attempts. Locked for 60 seconds."; }
-    else pwErr.textContent = "Wrong password.";
-  }
-}
-/* premium lock / unlock animation: shutters close or part, golden padlock snaps shut or opens */
-const vaultEl = document.getElementById("vaultFX");
-const vaultTxt = document.getElementById("vaultTxt");
-let vaultBusy = false;
-function vaultFX(mode, swap){
-  const appVisible = !document.getElementById("appScreen").classList.contains("hidden");
-  if (vaultBusy || !appVisible || document.hidden || reduceMotion()) { swap(); return; }
-  vaultBusy = true;
-  const closing = mode === "close";
-  vaultTxt.textContent = closing ? "Locked" : "Unlocked";
-  vaultEl.className = "on " + mode;
-  setTimeout(swap, closing ? 700 : 600);                          /* swap the screen while the shutters are shut */
-  setTimeout(() => vaultEl.classList.add("out"), closing ? 1900 : 1750);
-  setTimeout(() => { vaultEl.className = ""; vaultBusy = false; }, closing ? 2700 : 2550);
-}
-
-function unlockHome(){
-  homeUnlocked = true; lastActive = Date.now();
-  updateLockTimer();
-  startPending();
-  vaultFX("open", () => {
-    document.getElementById("tabsBar").classList.remove("hidden");
-    showTab("home");
-    if (jumpAfter) { jumpAfter = false; goPending(); }
-  });
-}
-function applyLock(){
-  homeUnlocked = false; jumpAfter = false;
-  updateLockTimer();
-  stopPending();
-  closePw();
-  document.getElementById("tabsBar").classList.add("hidden");
-  clearForm(true);
-  showTab("denom");
-}
-function lockHome(animate){
-  if (animate === true && homeUnlocked) {
-    homeUnlocked = false;            /* locked immediately, the animation is only the show */
-    stopPending();
-    vaultFX("close", applyLock);
-  } else applyLock();
-}
-document.getElementById("pwOk").onclick = tryUnlock;
-document.getElementById("pwCancel").onclick = closePw;
-pwInput.addEventListener("keydown", e => { if (e.key === "Enter") tryUnlock(); });
-document.getElementById("tabLock").onclick = () => lockHome(true);
-
-/* the only way in: tap the "My Statement" title 7 times quickly */
-document.getElementById("brandTitle").addEventListener("click", () => {
-  const n = Date.now();
-  tapN = (n - tapT < 1200) ? tapN + 1 : 1; tapT = n;
-  if (tapN >= 7) { tapN = 0; openPw(false); }
-});
-
-["pointerdown", "keydown", "touchstart", "scroll", "input"].forEach(ev =>
-  window.addEventListener(ev, () => { lastActive = Date.now(); }, {passive: true, capture: true}));
-setInterval(() => { if (homeUnlocked && Date.now() - lastActive > IDLE_MS) lockHome(true); }, 5000);
-document.addEventListener("visibilitychange", () => {
-  if (document.hidden) hiddenAt = Date.now();
-  else {
-    if (homeUnlocked && hiddenAt && Date.now() - hiddenAt > HIDDEN_MS) lockHome();
-    hiddenAt = 0;
-  }
-});
-
 
 </script>
 </body>
