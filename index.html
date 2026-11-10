@@ -479,6 +479,83 @@ tbody tr:hover{background:#fbfaf6}
 #loginScreen #loginError,#loginScreen #loginOk{border-radius:12px;font-size:13px}
 @media(max-width:900px){.ax-wrap{grid-template-columns:1fr;max-width:420px}.ax-hero{display:none}}
 @media(prefers-reduced-motion:reduce){#loginScreen *{animation:none!important;transition:none!important}}
+
+/* ===== WELCOME / LANDING PAGE ===== */
+#landing{--ax:#0071e3;--ax2:#5ac8fa;position:relative;overflow:hidden;background:#f5f5f7;color:#1d1d1f;font-family:'Inter',-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',sans-serif;-webkit-font-smoothing:antialiased}
+#landing .ax-orbs{bottom:auto;height:920px;transform:none}
+#landing h1,#landing h2,#landing h3{display:block;margin:0;font-family:inherit;color:#1d1d1f}
+#landing h2::before{content:none}
+.lp-nav{position:sticky;top:0;z-index:20;background:rgba(245,245,247,.72);-webkit-backdrop-filter:saturate(180%) blur(22px);backdrop-filter:saturate(180%) blur(22px);border-bottom:1px solid rgba(0,0,0,.06)}
+.lp-nav-in{max-width:1120px;margin:auto;height:62px;padding:0 20px;display:flex;align-items:center;gap:28px}
+.lp-brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;letter-spacing:-.3px;margin-right:auto}
+.lp-logo{display:none;width:30px;height:30px;border-radius:9px;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.lp-nav a{color:#515154;text-decoration:none;font-size:14px;font-weight:500;transition:color .2s}
+.lp-nav a:hover{color:#1d1d1f}
+#landing .lp-btn{width:auto;height:40px;padding:0 20px;border-radius:980px;font-size:14.5px;font-weight:600;letter-spacing:-.1px;border:0;transition:transform .25s cubic-bezier(.34,1.56,.64,1),box-shadow .3s,filter .3s,background .2s}
+#landing .lp-btn.fill{color:#fff;background:linear-gradient(180deg,#2b8cf0,#0071e3);box-shadow:0 8px 20px -8px #0071e3,inset 0 1px 0 rgba(255,255,255,.3)}
+#landing .lp-btn.fill:hover{filter:brightness(1.07);transform:translateY(-2px)}
+#landing .lp-btn.ghost{color:#0071e3;background:rgba(0,113,227,.08);box-shadow:none}
+#landing .lp-btn.ghost:hover{background:rgba(0,113,227,.15);transform:translateY(-2px);box-shadow:none}
+#landing .lp-btn.lg{height:54px;padding:0 32px;font-size:16.5px}
+#landing .lp-btn:active{transform:scale(.96)}
+.lp-hero{position:relative;z-index:2;max-width:1120px;margin:auto;padding:84px 20px 40px;text-align:center}
+.lp-pill{display:inline-flex;align-items:center;gap:9px;padding:7px 16px;border-radius:980px;background:rgba(255,255,255,.7);border:1px solid rgba(0,0,0,.06);font-size:13px;font-weight:600;color:#515154;box-shadow:0 4px 14px rgba(0,0,0,.04);animation:axUp .8s both}
+.lp-pill i{width:7px;height:7px;border-radius:50%;background:#30d158;box-shadow:0 0 0 4px rgba(48,209,88,.2);animation:blink 2s infinite}
+.lp-hero h1{margin:24px auto 20px;max-width:860px;font-size:76px;line-height:1.02;font-weight:800;letter-spacing:-3.4px;animation:axUp .9s .08s both}
+.lp-grad{background:linear-gradient(100deg,#0071e3,#5e5ce6 50%,#bf5af2);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lp-sub{max-width:600px;margin:0 auto 34px;font-size:21px;line-height:1.5;color:#6e6e73;animation:axUp .9s .16s both}
+.lp-cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;animation:axUp .9s .24s both}
+.lp-note{margin-top:18px;font-size:13px;color:#86868b;animation:axUp .9s .3s both}
+.lp-mock{position:relative;max-width:880px;margin:64px auto 0;padding:18px;border-radius:28px;text-align:left;background:rgba(255,255,255,.75);-webkit-backdrop-filter:blur(30px);backdrop-filter:blur(30px);border:1px solid rgba(255,255,255,.9);box-shadow:0 50px 100px -30px rgba(0,40,100,.28),0 2px 8px rgba(0,0,0,.04)}
+.lp-mbar{display:flex;align-items:center;gap:7px;padding:2px 4px 16px;font-size:13px;font-weight:600;color:#86868b}
+.lp-mbar i{width:11px;height:11px;border-radius:50%;background:#ff5f57}.lp-mbar i:nth-child(2){background:#febc2e}.lp-mbar i:nth-child(3){background:#28c840}
+.lp-mbar span{margin-left:10px}
+.lp-mstats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.lp-mstats div{padding:18px;border-radius:18px;background:linear-gradient(145deg,#1d1d1f,#3a3a3f);color:#fff}
+.lp-mstats small{display:block;font-size:12px;color:rgba(255,255,255,.6);margin-bottom:6px}
+.lp-mstats b{font-size:26px;letter-spacing:-.8px}.lp-mstats b.g{color:#6ee7a0}
+.lp-mrows{margin-top:12px;border-radius:18px;background:#fff;overflow:hidden}
+.lp-mrows div{display:grid;grid-template-columns:1.2fr 1fr auto;gap:12px;align-items:center;padding:15px 20px;border-bottom:1px solid #f0f0f2;font-size:15px}
+.lp-mrows div:last-child{border:0}
+.lp-mrows span{font-weight:600}.lp-mrows em{font-style:normal;color:#6e6e73}
+.lp-mrows u{text-decoration:none;padding:4px 12px;border-radius:980px;background:#e8f7ee;color:#12803f;font-size:13px;font-weight:700}
+.lp-float{position:absolute;padding:11px 18px;border-radius:980px;background:rgba(255,255,255,.92);box-shadow:0 18px 40px -10px rgba(0,0,0,.25);font-size:14px;font-weight:600;animation:axFloat 7s ease-in-out infinite}
+.lp-float.f1{right:-26px;top:70px}.lp-float.f2{left:-26px;bottom:60px;animation-delay:-3s}
+.lp-sec{position:relative;z-index:2;max-width:1120px;margin:auto;padding:110px 20px 0}
+.lp-eyebrow{text-align:center;font-size:14px;font-weight:700;letter-spacing:.4px;color:#0071e3;text-transform:uppercase}
+.lp-h2{max-width:720px;margin:12px auto 54px!important;text-align:center;font-size:46px;line-height:1.08;font-weight:800;letter-spacing:-1.8px}
+.lp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.lp-card{padding:30px 28px;border-radius:26px;background:rgba(255,255,255,.8);border:1px solid rgba(255,255,255,.9);box-shadow:0 2px 6px rgba(0,0,0,.03),0 20px 40px -24px rgba(0,0,0,.18);transition:transform .4s cubic-bezier(.2,.8,.2,1),box-shadow .4s}
+.lp-card:hover{transform:translateY(-6px);box-shadow:0 30px 60px -24px rgba(0,60,140,.3)}
+.lp-ic{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;margin-bottom:20px;font-size:21px;font-weight:700;color:#fff;background:linear-gradient(145deg,#0071e3,#5ac8fa);box-shadow:0 10px 22px -8px #0071e3}
+.lp-card:nth-child(3n+2) .lp-ic{background:linear-gradient(145deg,#5e5ce6,#bf5af2);box-shadow:0 10px 22px -8px #5e5ce6}
+.lp-card:nth-child(3n) .lp-ic{background:linear-gradient(145deg,#30d158,#64e08a);box-shadow:0 10px 22px -8px #30d158}
+.lp-card h3{font-size:20px;font-weight:700;letter-spacing:-.4px;margin-bottom:8px}
+.lp-card p{margin:0;font-size:15.5px;line-height:1.55;color:#6e6e73}
+.lp-step b{display:block;margin-bottom:18px;font-size:64px;line-height:1;font-weight:800;letter-spacing:-3px;background:linear-gradient(145deg,#0071e3,#bf5af2);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lp-roles{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.lp-role{padding:38px 34px;border-radius:30px;background:rgba(255,255,255,.85);box-shadow:0 20px 50px -26px rgba(0,0,0,.25)}
+.lp-role.adm{background:linear-gradient(145deg,#1d1d1f,#2c2c52);color:#fff}
+.lp-role.adm h3{color:#fff}
+.lp-role h3{font-size:28px;font-weight:800;letter-spacing:-1px;margin-bottom:6px}
+.lp-role p{margin:0 0 20px;color:#6e6e73;font-size:15.5px}.lp-role.adm p{color:rgba(255,255,255,.65)}
+.lp-role ul{list-style:none;margin:0 0 28px;padding:0;display:grid;gap:12px;font-size:15px}
+.lp-role li{display:flex;gap:12px;align-items:center}
+.lp-role li::before{content:"\2713";flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:800;color:#fff;background:#0071e3}
+.lp-role.adm li::before{background:#5e5ce6}
+.lp-band{position:relative;z-index:2;max-width:1080px;margin:110px auto 0;padding:72px 24px;border-radius:36px;text-align:center;color:#fff;background:radial-gradient(circle at 20% 0,rgba(94,92,230,.7),transparent 55%),radial-gradient(circle at 90% 100%,rgba(0,113,227,.8),transparent 55%),#1d1d1f;overflow:hidden}
+.lp-band h2{color:#fff!important;font-size:48px;font-weight:800;letter-spacing:-2px;margin-bottom:12px!important}
+.lp-band p{margin:0 0 30px;font-size:19px;color:rgba(255,255,255,.72)}
+#landing .lp-band .lp-btn.fill{color:#1d1d1f;background:#fff;box-shadow:0 10px 26px -8px rgba(0,0,0,.5)}
+#landing .lp-band .lp-btn.ghost{color:#fff;background:rgba(255,255,255,.14)}
+.lp-foot{position:relative;z-index:2;max-width:1120px;margin:auto;padding:46px 20px 40px;text-align:center;font-size:13px;color:#86868b}
+.lp-rv{opacity:0;transform:translateY(34px);transition:opacity .9s cubic-bezier(.2,.8,.2,1),transform .9s cubic-bezier(.2,.8,.2,1)}
+.lp-rv.in{opacity:1;transform:none}
+@media(max-width:900px){.lp-hero h1{font-size:46px;letter-spacing:-2px}.lp-sub{font-size:18px}.lp-nav a{display:none}.lp-grid{grid-template-columns:1fr 1fr}.lp-roles{grid-template-columns:1fr}.lp-h2{font-size:34px}.lp-band h2{font-size:34px}.lp-float{display:none}}
+@media(max-width:560px){.lp-grid{grid-template-columns:1fr}.lp-hero{padding-top:56px}.lp-mstats b{font-size:19px}.lp-mstats div{padding:13px}.lp-mrows div{grid-template-columns:1fr auto;padding:13px 16px}.lp-mrows em{display:none}}
+@media(prefers-reduced-motion:reduce){#landing *{animation:none!important;transition:none!important}.lp-rv{opacity:1;transform:none}}
+#loginScreen .ax-back{all:unset;margin-left:auto;cursor:pointer;color:var(--ax);font-size:13.5px;font-weight:600}
+#loginScreen .ax-back:hover{text-decoration:underline}
 </style>
 </head>
 <body>
@@ -489,8 +566,85 @@ tbody tr:hover{background:#fbfaf6}
 <!-- IMAGE VIEWER -->
 <div id='lightbox'><img alt='' id='lightboxImg'></div>
 
+<!-- WELCOME PAGE -->
+<div id='landing'>
+  <div class='ax-orbs'><i></i><i></i><i></i></div>
+  <nav class='lp-nav'><div class='lp-nav-in'>
+    <div class='lp-brand'><img alt='' class='lp-logo' id='landLogo'><span>My Statement</span></div>
+    <a href='#lpFeatures'>Features</a><a href='#lpHow'>How it works</a><a href='#lpRoles'>Who it&#8217;s for</a>
+    <button class='lp-btn ghost' data-open='login' type='button'>Login</button>
+    <button class='lp-btn fill' data-open='register' type='button'>Register</button>
+  </div></nav>
+
+  <header class='lp-hero'>
+    <span class='lp-pill'><i></i>Daily collection &amp; payment tracker</span>
+    <h1>Every rupee,<br><span class='lp-grad'>perfectly tracked.</span></h1>
+    <p class='lp-sub'>Record collections, payments and cash denominations for your whole branch &#8212; approved in one tap and synced live on every phone.</p>
+    <div class='lp-cta'>
+      <button class='lp-btn fill lg' data-open='register' type='button'>Get started</button>
+      <button class='lp-btn ghost lg' data-open='login' type='button'>Login</button>
+    </div>
+    <div class='lp-note'>Works on every phone &#183; Private to your branch &#183; Live sync</div>
+    <div class='lp-mock lp-rv'>
+      <div class='lp-mbar'><i></i><i></i><i></i><span>My Statement</span></div>
+      <div class='lp-mstats'><div><small>Total collected</small><b>&#8377;48,250</b></div><div><small>Paid to company</small><b>&#8377;41,000</b></div><div><small>Balance left</small><b class='g'>&#8377;7,250</b></div></div>
+      <div class='lp-mrows'>
+        <div><span>Ravi</span><em>&#8377;12,400</em><u>&#8377;1,400</u></div>
+        <div><span>Imran</span><em>&#8377;9,850</em><u>&#8377;850</u></div>
+        <div><span>Suresh</span><em>&#8377;7,600</em><u>&#8377;0.00</u></div>
+      </div>
+      <div class='lp-float f1'>&#10003; Denomination accepted</div>
+      <div class='lp-float f2'>&#9889; Synced just now</div>
+    </div>
+  </header>
+
+  <section class='lp-sec' id='lpFeatures'>
+    <div class='lp-eyebrow lp-rv'>Features</div>
+    <h2 class='lp-h2 lp-rv'>Everything your collections need. Nothing they don&#8217;t.</h2>
+    <div class='lp-grid'>
+      <div class='lp-card lp-rv'><div class='lp-ic'>&#8377;</div><h3>Daily statements</h3><p>Add what each person collected and paid. Balances are calculated automatically.</p></div>
+      <div class='lp-card lp-rv'><div class='lp-ic'>&#10003;</div><h3>One-tap approval</h3><p>Review each denomination request and accept or reject it instantly.</p></div>
+      <div class='lp-card lp-rv'><div class='lp-ic'>&#9889;</div><h3>Real-time sync</h3><p>New requests appear on the admin&#8217;s screen the moment a rider sends them.</p></div>
+      <div class='lp-card lp-rv'><div class='lp-ic'>&#9673;</div><h3>Photo proof</h3><p>Every cash denomination comes with a photo, so nothing gets disputed later.</p></div>
+      <div class='lp-card lp-rv'><div class='lp-ic'>&#9636;</div><h3>Branch-wise privacy</h3><p>Each branch has its own code. Data is visible only inside that branch.</p></div>
+      <div class='lp-card lp-rv'><div class='lp-ic'>&#9776;</div><h3>Complete history</h3><p>Filter by person or date and look back at any day, any time.</p></div>
+    </div>
+  </section>
+
+  <section class='lp-sec' id='lpHow'>
+    <div class='lp-eyebrow lp-rv'>How it works</div>
+    <h2 class='lp-h2 lp-rv'>Up and running in three steps.</h2>
+    <div class='lp-grid'>
+      <div class='lp-step lp-card lp-rv'><b>1</b><h3>Admin creates the branch</h3><p>Register as admin with your own password and choose a unique branch code.</p></div>
+      <div class='lp-step lp-card lp-rv'><b>2</b><h3>Riders join with the code</h3><p>Delivery boys register with their Gmail. The branch code is their password.</p></div>
+      <div class='lp-step lp-card lp-rv'><b>3</b><h3>Send, approve, track</h3><p>Riders send denominations, the admin approves, and totals update live.</p></div>
+    </div>
+  </section>
+
+  <section class='lp-sec' id='lpRoles'>
+    <div class='lp-eyebrow lp-rv'>Who it&#8217;s for</div>
+    <h2 class='lp-h2 lp-rv'>Built for both sides of the counter.</h2>
+    <div class='lp-roles'>
+      <div class='lp-role lp-rv'><h3>Delivery boy</h3><p>Hand in your day without the hassle.</p>
+        <ul><li>Enter notes and coins in seconds</li><li>Attach a photo as proof</li><li>Track delivery and pickup counts</li></ul>
+        <button class='lp-btn fill' data-open='login:delivery' type='button'>Delivery login</button></div>
+      <div class='lp-role adm lp-rv'><h3>Admin</h3><p>Your whole branch, at a glance.</p>
+        <ul><li>Accept or reject requests in one tap</li><li>See collected, paid and balance for every date</li><li>Record owner payments</li></ul>
+        <button class='lp-btn fill' data-open='login:admin' type='button'>Admin login</button></div>
+    </div>
+  </section>
+
+  <section class='lp-band lp-rv'>
+    <h2>Ready to see every rupee?</h2>
+    <p>Create your branch in a minute.</p>
+    <div class='lp-cta'><button class='lp-btn fill lg' data-open='register:admin' type='button'>Register your branch</button><button class='lp-btn ghost lg' data-open='login' type='button'>Login</button></div>
+  </section>
+
+  <footer class='lp-foot'>&#169; <span id='lpYear'></span> My Statement &#183; Daily collection &amp; payment tracker</footer>
+</div>
+
 <!-- LOGIN -->
-<div id='loginScreen' data-role='delivery'>
+<div class='hidden' id='loginScreen' data-role='delivery'>
   <div class='ax-orbs'><i></i><i></i><i></i></div>
   <div class='ax-wrap'>
     <div class='ax-hero'>
@@ -502,7 +656,7 @@ tbody tr:hover{background:#fbfaf6}
       <ul class='ax-points'><li>Daily statements with automatic balance</li><li>Photo proof, approved in one tap</li><li>Private to your branch, always in sync</li></ul>
     </div>
     <div class='ax-card' id='axCard'>
-      <div class='ax-top'><img alt='' class='ax-logo-img' id='loginLogo'><span>My Statement</span></div>
+      <div class='ax-top'><img alt='' class='ax-logo-img' id='loginLogo'><span>My Statement</span><button type='button' class='ax-back' id='axBack'>&#8592; Home</button></div>
       <div class='ax-badge'>
         <div class='ax-ic'>
           <svg class='i-d' viewBox='0 0 24 24'><path d='M21 8l-9-5-9 5v8l9 5 9-5V8z'/><path d='M3 8l9 5 9-5M12 13v8'/></svg>
@@ -735,6 +889,27 @@ function setRegRole(r){
   clearAuthMsgs();
 }
 document.getElementById("eyeBtn").onclick = () => { const p = document.getElementById("lPass"); p.type = p.type === "password" ? "text" : "password"; };
+function openAuth(mode, role){
+  if (role) setRegRole(role);
+  setAuthMode(mode);
+  document.getElementById("landing").classList.add("hidden");
+  document.getElementById("loginScreen").classList.remove("hidden");
+  scrollTo(0, 0);
+}
+function goHome(){
+  document.getElementById("loginScreen").classList.add("hidden");
+  document.getElementById("landing").classList.remove("hidden");
+  scrollTo(0, 0);
+}
+document.querySelectorAll("[data-open]").forEach(b => b.onclick = () => { const p = b.dataset.open.split(":"); openAuth(p[0], p[1] || null); });
+document.getElementById("axBack").onclick = goHome;
+document.getElementById("lpYear").textContent = new Date().getFullYear();
+(function(){
+  const els = document.querySelectorAll(".lp-rv");
+  if (!("IntersectionObserver" in window)) { els.forEach(e => e.classList.add("in")); return; }
+  const io = new IntersectionObserver(es => es.forEach(x => { if (x.isIntersecting) { x.target.classList.add("in"); io.unobserve(x.target); } }), { threshold: .12 });
+  els.forEach((e, i) => { e.style.transitionDelay = (i % 3) * 90 + "ms"; io.observe(e); });
+})();
 addEventListener("pointermove", e => { const s = document.getElementById("loginScreen"); s.style.setProperty("--px", (e.clientX / innerWidth - .5) * 2); s.style.setProperty("--py", (e.clientY / innerHeight - .5) * 2); });
 document.getElementById("atLogin").onclick = () => setAuthMode("login");
 document.getElementById("atReg").onclick = () => setAuthMode("register");
@@ -813,7 +988,7 @@ logoBox.innerHTML =
   + '<div class="logo-name">My Statement</div><div class="logo-tag">Daily collection &amp; payment tracker</div>';
 
 if (LOGO_URL) {
-  ["loginLogo", "headerLogo"].forEach(id => {
+  ["loginLogo", "headerLogo", "landLogo"].forEach(id => {
     const el = document.getElementById(id);
     el.src = LOGO_URL;
     el.style.display = "block";
@@ -986,6 +1161,7 @@ async function handleSession(session){
 
     wasLoggedIn = true;
     playSplash("in", () => {
+      document.getElementById("landing").classList.add("hidden");
       document.getElementById("loginScreen").classList.add("hidden");
       document.getElementById("appScreen").classList.remove("hidden");
     });
@@ -998,8 +1174,12 @@ async function handleSession(session){
     document.getElementById("lPass").value = "";
     renderPending();
     const showLogin = () => {
+      const fromApp = !document.getElementById("appScreen").classList.contains("hidden");
+      const loginOpen = !document.getElementById("loginScreen").classList.contains("hidden");
       document.getElementById("appScreen").classList.add("hidden");
-      document.getElementById("loginScreen").classList.remove("hidden");
+      const toLogin = fromApp || loginOpen;
+      document.getElementById("loginScreen").classList.toggle("hidden", !toLogin);
+      document.getElementById("landing").classList.toggle("hidden", toLogin);
     };
     if (wasLoggedIn) { wasLoggedIn = false; playLogout(showLogin); }
     else showLogin();
