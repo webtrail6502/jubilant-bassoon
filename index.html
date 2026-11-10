@@ -1,0 +1,1557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset='UTF-8'>
+<meta content='width=device-width, initial-scale=1.0' name='viewport'>
+<meta content='#1a0826' name='theme-color'>
+<title>My Statement</title>
+<link href='https://fonts.googleapis.com' rel='preconnect'>
+<link crossorigin='anonymous' href='https://fonts.gstatic.com' rel='preconnect'>
+<link href='https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Sora:wght@600;700;800&amp;display=swap' rel='stylesheet'>
+<style>
+:root{
+  --primary:#7a1f7e;--primary-dark:#5c1560;--primary-soft:#f6eefa;
+  --gold:#f5a524;--gold-soft:#fff6e3;
+  --ink:#16121d;--text:#2a2633;--muted:#7b7689;
+  --bg:#f6f3f9;--card:#ffffff;--border:#ebe6f1;--border-strong:#ddd5e8;
+  --green:#12803f;--green-soft:#e8f7ee;
+  --red:#c62839;--red-soft:#fdecee;
+  --blue:#2457c5;--blue-soft:#ebf1ff;
+  --radius:18px;--radius-sm:12px;
+  --shadow-sm:0 1px 2px rgba(30,10,50,.05),0 2px 8px rgba(30,10,50,.04);
+  --shadow:0 1px 2px rgba(30,10,50,.04),0 12px 32px -8px rgba(60,20,90,.14);
+  --shadow-lg:0 24px 60px -12px rgba(50,10,80,.28);
+  --font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;
+  --display:'Sora','Inter',sans-serif;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:var(--font);font-size:14.5px;line-height:1.5;color:var(--text);-webkit-font-smoothing:antialiased;
+  background:
+    radial-gradient(900px 500px at 0% -5%,rgba(245,165,36,.14),transparent 60%),
+    radial-gradient(900px 600px at 100% 105%,rgba(122,31,126,.14),transparent 60%),
+    var(--bg);
+  background-attachment:fixed}
+::selection{background:rgba(122,31,126,.2)}
+
+/* HEADER */
+header{position:sticky;top:0;z-index:50;color:#fff;padding:14px 18px;
+  background:linear-gradient(115deg,rgba(26,8,38,.96),rgba(70,18,86,.95) 60%,rgba(110,28,112,.95));
+  -webkit-backdrop-filter:saturate(160%) blur(14px);backdrop-filter:saturate(160%) blur(14px);
+  box-shadow:0 10px 30px rgba(40,8,60,.28);position:sticky}
+header::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold) 30%,#ffd27a 50%,var(--gold) 70%,transparent)}
+.header-inner{max-width:1120px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+h1{margin:0;font-family:var(--display);font-size:22px;font-weight:700;letter-spacing:-.3px}
+header p{margin:2px 0 0;font-size:12px;opacity:.72;letter-spacing:.2px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-logo{display:none;width:44px;height:44px;border-radius:12px;border:1.5px solid rgba(255,255,255,.3);box-shadow:0 4px 14px rgba(0,0,0,.35)}
+.user{display:flex;align-items:center;gap:10px;padding:5px 6px 5px 5px;border-radius:40px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16)}
+.user img{width:34px;height:34px;border-radius:50%;border:2px solid rgba(255,255,255,.55);object-fit:cover}
+.user .uname{font-size:12px;line-height:1.25;max-width:170px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.user .uname span{opacity:.7;font-size:11px}
+.user button{width:auto;height:32px;font-size:12.5px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.22);padding:0 14px;border-radius:30px;box-shadow:none}
+.user button:hover{background:rgba(255,255,255,.28)}
+
+main{max-width:1120px;margin:26px auto 60px;padding:0 16px}
+
+/* CARDS */
+.card{position:relative;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;margin-bottom:20px;animation:rise .5s cubic-bezier(.2,.8,.2,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+h2{display:flex;align-items:center;gap:10px;font-family:var(--display);font-size:16.5px;font-weight:700;letter-spacing:-.2px;color:var(--ink);margin:0 0 18px}
+h2::before{content:"";width:4px;height:18px;border-radius:4px;background:linear-gradient(var(--gold),var(--primary))}
+
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+label{display:block;font-size:11.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
+input,select,button{width:100%;height:46px;border-radius:var(--radius-sm);border:1px solid var(--border-strong);padding:0 14px;font-size:15px;font-family:var(--font);color:var(--ink);background:#fcfbfe;transition:border-color .15s,box-shadow .15s,background .15s,transform .1s}
+input::placeholder{color:#b3adc0}
+input:hover,select:hover{border-color:#c9bddb}
+input:focus,select:focus{outline:0;background:#fff;border-color:var(--primary);box-shadow:0 0 0 4px rgba(122,31,126,.13)}
+input:disabled{background:#f1eef5;color:#a59fb3;cursor:not-allowed}
+button{border:0;background:linear-gradient(135deg,#8a2590,#6a1a74);color:#fff;font-weight:700;letter-spacing:.2px;cursor:pointer;box-shadow:0 6px 16px -4px rgba(122,31,126,.5),inset 0 1px 0 rgba(255,255,255,.18)}
+button:hover{background:linear-gradient(135deg,#7a1f7e,#561160);transform:translateY(-1px);box-shadow:0 10px 22px -6px rgba(122,31,126,.55),inset 0 1px 0 rgba(255,255,255,.18)}
+button:active{transform:translateY(0)}
+button:disabled{opacity:.6;cursor:wait;transform:none}
+.secondary{background:#f1eef6;color:#3a3447;box-shadow:none;border:1px solid var(--border)}
+.secondary:hover{background:#e8e2f0;box-shadow:none}
+.danger{background:var(--red-soft);color:var(--red);border:1px solid #f7cfd4;box-shadow:none}
+.danger:hover{background:#fbdde1;box-shadow:none}
+.success{background:linear-gradient(135deg,#17934a,#0f6e37);box-shadow:0 6px 16px -4px rgba(18,128,63,.5)}
+.success:hover{background:linear-gradient(135deg,#128040,#0b5a2d)}
+.actions{display:flex;gap:10px;margin-top:18px}
+.actions button:first-child{flex:2}.actions button:last-child{flex:1}
+
+/* SUMMARY */
+.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.stat{position:relative;overflow:hidden;padding:18px 18px 16px;border-radius:var(--radius-sm);background:linear-gradient(180deg,#fff,#faf8fd);border:1px solid var(--border)}
+.stat::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(var(--gold),var(--primary))}
+.stat span{display:block;color:var(--muted);font-size:11.5px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;margin-bottom:8px}
+.stat strong{font-family:var(--display);font-size:25px;font-weight:700;letter-spacing:-.5px;color:var(--ink);font-variant-numeric:tabular-nums}
+.stat strong.green{color:var(--green)}.stat strong.red{color:var(--red)}
+.green{color:var(--green)}.red{color:var(--red)}
+
+.filters{display:grid;grid-template-columns:1fr 1fr auto;gap:14px;align-items:end}
+.filters button{padding:0 22px;width:auto}
+
+/* TABLE */
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:640px}
+th,td{padding:13px 14px;border-bottom:1px solid var(--border);text-align:left;font-size:14px}
+th{background:#faf8fd;color:var(--muted);font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase}
+tbody tr{transition:background .15s}
+tbody tr:hover{background:#fbf9fd}
+tbody tr:last-child td{border-bottom:0}
+td{font-variant-numeric:tabular-nums}
+.badge{display:inline-block;padding:5px 11px;border-radius:30px;font-size:12px;font-weight:700;font-variant-numeric:tabular-nums}
+.badge.green{background:var(--green-soft)}.badge.red{background:var(--red-soft)}.badge.blue{background:var(--blue-soft);color:var(--blue)}
+.empty{text-align:center;color:var(--muted);padding:40px 20px;border:1.5px dashed var(--border-strong);border-radius:var(--radius-sm);background:#fcfbfe}
+.small{font-size:12px;color:var(--muted);margin-top:10px}
+
+.date-group{border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:18px;overflow:hidden;background:#fff;box-shadow:var(--shadow-sm)}
+.date-header{background:linear-gradient(180deg,#fbf9fd,#f6f2fa);padding:15px 18px;display:flex;justify-content:space-between;align-items:center;gap:15px;border-bottom:1px solid var(--border)}
+.date-title{font-family:var(--display);font-size:15.5px;font-weight:700;color:var(--ink)}
+.date-total{display:flex;gap:18px;flex-wrap:wrap;font-size:12.5px}
+.date-total span{color:var(--muted)}.date-total strong{color:var(--ink);font-variant-numeric:tabular-nums}
+.date-total strong.green{color:var(--green)}.date-total strong.red{color:var(--red)}
+.daily-summary{padding:13px 18px;background:#faf8fd;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:22px;flex-wrap:wrap;font-size:12.5px;color:var(--muted)}
+.daily-summary strong{color:var(--ink);font-variant-numeric:tabular-nums}
+.daily-summary strong.green{color:var(--green)}.daily-summary strong.red{color:var(--red)}
+.owner-row{background:linear-gradient(90deg,#f8f2ff,#fff)}
+.owner-note-box{margin-top:14px;padding:14px 16px;background:linear-gradient(135deg,#f6efff,#fbf8ff);border:1px solid #e4d9ff;border-radius:var(--radius-sm);color:#54339f;font-size:13px;line-height:1.55}
+.global-payment{background:var(--blue-soft);border-top:1px solid #d5e2ff;color:#1c4aa8;padding:11px 18px;font-size:12.5px}
+
+/* TABS */
+.tabs{display:inline-flex;gap:4px;padding:5px;margin-bottom:22px;background:#fff;border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow-sm)}
+.tab{width:auto;min-width:140px;height:40px;background:transparent;color:var(--muted);box-shadow:none;border-radius:12px;font-size:14px}
+.tab:hover{background:var(--primary-soft);color:var(--primary);transform:none;box-shadow:none}
+.tab.active{background:linear-gradient(135deg,#8a2590,#651873);color:#fff;box-shadow:0 6px 16px -4px rgba(122,31,126,.5)}
+.tab.active:hover{background:linear-gradient(135deg,#8a2590,#651873);color:#fff}
+
+/* DENOMINATION */
+.denom-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.denom-row{display:flex;align-items:center;gap:10px;border:1px solid var(--border);border-radius:var(--radius-sm);padding:8px 12px;background:#fcfbfe;transition:border-color .15s,box-shadow .15s}
+.denom-row:focus-within{border-color:var(--primary);box-shadow:0 0 0 4px rgba(122,31,126,.1);background:#fff}
+.denom-row .dn{font-family:var(--display);font-weight:700;min-width:62px;color:var(--primary)}
+.denom-row input{height:38px;width:76px;text-align:center;padding:0 6px;border-radius:9px}
+.denom-row .sub{margin-left:auto;font-size:12.5px;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+.phonepe-row{border-color:#cfe0ff;background:#f3f7ff}
+.phonepe-row .dn{color:#2457c5;min-width:70px}
+.phonepe-row input{width:100%;text-align:left;padding:0 12px}
+.dtotals{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
+.photo-box{margin-top:18px;padding:16px;border:2px dashed #d3bfe0;border-radius:var(--radius-sm);background:linear-gradient(180deg,#fcf9fe,#f8f3fc)}
+.photo-box input[type=file]{height:auto;padding:11px;background:#fff;font-size:13.5px}
+#photoPreview{display:none;max-width:260px;max-height:260px;margin-top:14px;border-radius:12px;border:1px solid var(--border);box-shadow:var(--shadow-sm)}
+.msg-ok{margin-top:14px;padding:12px 14px;border-radius:var(--radius-sm);background:var(--green-soft);color:var(--green);font-size:13.5px;font-weight:600;display:none}
+
+/* RECEIVED BANNER */
+.denom-banner{overflow:hidden;max-height:90px;margin:0 0 20px;opacity:1;transition:max-height .6s cubic-bezier(.6,0,.3,1),margin .6s,opacity .45s}
+.denom-banner.collapsed{max-height:0;margin:0;opacity:0;pointer-events:none}
+.denom-banner .db-in{display:flex;align-items:center;gap:12px;padding:14px 18px;border-radius:var(--radius-sm);color:#fff;font-weight:700;font-size:15px;cursor:pointer;background:linear-gradient(135deg,#1fa456,#0f6e37);box-shadow:0 10px 26px -8px rgba(18,128,63,.6),inset 0 1px 0 rgba(255,255,255,.2)}
+.denom-banner .db-ic{flex:none;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.22);animation:dbPulse 1.8s ease-in-out infinite}
+.denom-banner .db-n{margin-left:auto;min-width:34px;height:34px;padding:0 10px;border-radius:30px;display:flex;align-items:center;justify-content:center;background:#fff;color:#0f6e37;font-family:var(--display);font-size:16px}
+@keyframes dbPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,255,255,.55)}50%{box-shadow:0 0 0 9px rgba(255,255,255,0)}}
+
+/* PENDING */
+.pending-card{border:1px solid #f6d99b;background:linear-gradient(180deg,#fffaf0,#fffdf8)}
+.pending-card h2{color:#8a5200}
+.pending-card h2::before{background:linear-gradient(#ffcb5c,#e88b00)}
+.pending-item{display:grid;grid-template-columns:200px 1fr;gap:18px;background:#fff;border:1px solid #f3e3bd;border-radius:var(--radius-sm);padding:14px;margin-bottom:14px;box-shadow:var(--shadow-sm)}
+.pending-item:last-child{margin-bottom:0}
+.pending-item img.pphoto{width:200px;height:200px;object-fit:cover;border-radius:12px;border:1px solid var(--border);cursor:zoom-in;background:#eee;transition:transform .2s}
+.pending-item img.pphoto:hover{transform:scale(1.02)}
+.pending-info h3{margin:0 0 3px;font-family:var(--display);font-size:16px;color:var(--ink)}
+.pending-info .meta{font-size:12px;color:var(--muted);margin-bottom:12px}
+.pending-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.chip{background:var(--primary-soft);color:var(--primary-dark);border:1px solid #ead9f2;border-radius:30px;padding:4px 11px;font-size:12px;font-weight:700}
+.pending-totals{display:flex;gap:20px;flex-wrap:wrap;font-size:13.5px;margin-bottom:14px;color:var(--muted)}
+.pending-totals strong{color:var(--ink);font-variant-numeric:tabular-nums}
+.pending-totals{align-items:center;justify-content:space-between}
+.pt-left{display:flex;gap:20px;flex-wrap:wrap}
+.cod-box{margin-left:auto;text-align:right;padding:8px 16px;border-radius:12px;background:linear-gradient(135deg,#fff6e3,#ffecc2);border:1px solid #f3d189}
+.cod-box span{display:block;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#8a5200}
+.cod-box strong{font-family:var(--display);font-size:20px;color:#5c3400}
+@media(max-width:520px){.cod-box{width:100%;text-align:left;margin-left:0}}
+.pending-actions{display:flex;gap:10px}
+.pending-actions button{height:42px}
+#lightbox{position:fixed;inset:0;background:rgba(15,5,25,.88);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);z-index:10001;display:none;align-items:center;justify-content:center;padding:16px;cursor:zoom-out}
+#lightbox img{max-width:100%;max-height:100%;border-radius:14px;box-shadow:var(--shadow-lg)}
+
+/* LOGIN */
+.aurora{position:relative;overflow:hidden;background:radial-gradient(circle at 20% 15%,rgba(255,159,0,.32),transparent 45%),radial-gradient(circle at 85% 85%,rgba(225,29,116,.30),transparent 45%),linear-gradient(135deg,#1d0730,#431055 55%,#6a1a6b)}
+.aurora::after{content:"";position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(rgba(255,255,255,.12) 1.2px,transparent 1.2px);background-size:26px 26px;-webkit-mask-image:radial-gradient(circle at center,#000 15%,transparent 78%);mask-image:radial-gradient(circle at center,#000 15%,transparent 78%)}
+.orbs{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.orbs i{position:absolute;border-radius:50%;filter:blur(38px);opacity:.55;animation:floatOrb 9s ease-in-out infinite}
+.orbs i:nth-child(1){width:280px;height:280px;background:#ff9f00;top:-90px;left:-70px}
+.orbs i:nth-child(2){width:320px;height:320px;background:#e11d74;bottom:-120px;right:-90px;animation-delay:-3s}
+.orbs i:nth-child(3){width:200px;height:200px;background:#7c5ce5;top:55%;left:10%;animation-delay:-5s}
+.orbs i:nth-child(4){width:170px;height:170px;background:#ffb84d;top:10%;right:12%;opacity:.4;animation-delay:-7s}
+@keyframes floatOrb{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(30px,-40px) scale(1.12)}}
+#loginScreen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.login-card{position:relative;z-index:2;background:rgba(255,255,255,.93);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.7);border-radius:28px;padding:40px 30px 32px;max-width:400px;width:100%;text-align:center;box-shadow:0 40px 90px rgba(15,0,35,.55),inset 0 1px 0 #fff;animation:rise .7s cubic-bezier(.2,.8,.2,1) both}
+.login-logo{display:none;width:92px;height:92px;border-radius:24px;margin:-84px auto 18px;box-shadow:0 16px 36px rgba(60,0,60,.4),0 0 0 5px rgba(255,255,255,.95)}
+.login-card h1{color:var(--ink);font-size:28px;margin-bottom:6px}
+.login-card p{color:var(--muted);margin:0 0 28px;font-size:14px}
+.google-btn{display:flex;align-items:center;justify-content:center;gap:12px;background:#fff;color:#3c4043;border:1px solid #dadce0;height:50px;font-size:15px;font-weight:600;box-shadow:var(--shadow-sm);border-radius:14px}
+.google-btn:hover{background:#fafafa;box-shadow:0 6px 18px rgba(0,0,0,.12);transform:translateY(-1px)}
+.google-btn svg{width:20px;height:20px}
+#loginError{color:var(--red);font-size:13px;margin-top:16px;display:none;line-height:1.5;background:var(--red-soft);padding:10px 12px;border-radius:10px}
+.hidden{display:none!important}
+
+/* SPLASH */
+#splash{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center}
+#splash.show{display:flex}
+#logoBox{position:relative;z-index:2;text-align:center;color:#fff;will-change:transform,opacity}
+#logoBox .logo-img{position:relative;width:150px;height:150px;object-fit:contain;display:block;margin:0 auto;border-radius:16%;box-shadow:0 0 0 6px rgba(255,255,255,.14),0 24px 60px rgba(255,159,0,.35),0 10px 30px rgba(0,0,0,.4)}
+#logoBox .logo-name{margin-top:22px;font-family:var(--display);font-size:24px;font-weight:700;letter-spacing:.4px;text-shadow:0 2px 12px rgba(0,0,0,.35)}
+#logoBox .logo-tag{margin-top:6px;font-size:13px;opacity:.8;letter-spacing:.4px}
+#logoBox::before,#logoBox::after{content:"";position:absolute;left:50%;top:75px;width:190px;height:190px;margin:-95px 0 0 -95px;border-radius:50%;border:2px solid rgba(255,183,77,.55);animation:ringPulse 1.8s ease-out infinite;z-index:-1}
+#logoBox::after{animation-delay:.9s}
+@keyframes ringPulse{0%{transform:scale(.6);opacity:.9}100%{transform:scale(3.2);opacity:0}}
+@keyframes splashFadeIn{from{opacity:0}to{opacity:1}}
+@keyframes splashFadeOut{from{opacity:1}to{opacity:0}}
+@keyframes logoCinema{0%{transform:scale(.72);opacity:0;filter:blur(10px)}18%{transform:scale(.86);opacity:1;filter:blur(0)}55%{transform:scale(1.04);opacity:1;filter:blur(0)}100%{transform:scale(3.4);opacity:0;filter:blur(14px)}}
+@keyframes logoCinemaRev{0%{transform:scale(3.4);opacity:0;filter:blur(14px)}45%{transform:scale(1.04);opacity:1;filter:blur(0)}82%{transform:scale(.86);opacity:1;filter:blur(0)}100%{transform:scale(.72);opacity:0;filter:blur(10px)}}
+
+@media(max-width:800px){
+  .grid{grid-template-columns:1fr 1fr}.summary{grid-template-columns:1fr}
+  .filters{grid-template-columns:1fr 1fr}.filters button{grid-column:1/-1;width:100%}
+  .date-header{flex-direction:column;align-items:flex-start}
+  .denom-grid{grid-template-columns:1fr 1fr}.dtotals{grid-template-columns:1fr}
+  .pending-item{grid-template-columns:1fr}.pending-item img.pphoto{width:100%;height:auto;max-height:320px}
+  .tabs{display:flex}.tab{flex:1;min-width:0}
+}
+@media(max-width:520px){
+  .grid{grid-template-columns:1fr}.actions{flex-direction:column}h1{font-size:19px}
+  .date-total{flex-direction:column;gap:4px}.denom-grid{grid-template-columns:1fr}
+  .card{padding:18px 16px}.user .uname{display:none}.user{padding:4px}
+  .user button{height:30px}
+}
+
+/* ===== PREMIUM LOGIN ===== */
+#loginScreen{min-height:100vh;min-height:100dvh;display:flex;align-items:center;justify-content:center;padding:28px 20px}
+.login-wrap{position:relative;z-index:2;width:100%;max-width:1020px;display:grid;grid-template-columns:1.1fr .9fr;gap:64px;align-items:center}
+.login-hero{color:#fff;animation:rise .8s cubic-bezier(.2,.8,.2,1) both}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;padding:8px 16px;border-radius:40px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);font-size:11.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#ffd9a0;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.eyebrow i{width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px rgba(245,165,36,.28);animation:blink 2s ease-in-out infinite}
+@keyframes blink{50%{opacity:.35}}
+.hero-title{margin:22px 0 14px;font-family:var(--display);font-size:50px;line-height:1.08;font-weight:800;letter-spacing:-1.6px}
+.hero-title .grad{background:linear-gradient(100deg,#ffd27a,#f5a524 40%,#ff6fa8);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.hero-sub{margin:0 0 30px;font-size:16px;line-height:1.6;color:rgba(255,255,255,.72);max-width:440px}
+.hero-list{list-style:none;margin:0 0 30px;padding:0;display:grid;gap:12px;max-width:440px}
+.hero-list li{display:flex;align-items:center;gap:14px;padding:13px 16px;border-radius:16px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.13);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.hero-list b{flex:none;width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:18px;color:#2a1033;background:linear-gradient(135deg,#ffd27a,#f5a524);box-shadow:0 6px 16px rgba(245,165,36,.35)}
+.hero-list strong{display:block;font-size:14px;font-weight:700}
+.hero-list span{display:block;font-size:12.5px;color:rgba(255,255,255,.6);margin-top:1px}
+.login-card{margin-top:54px;padding:70px 34px 30px;max-width:420px;justify-self:center;border-radius:32px;background:rgba(255,255,255,.94);box-shadow:0 50px 100px rgba(10,0,30,.6),0 0 0 1px rgba(255,255,255,.5),inset 0 1px 0 #fff}
+.login-card h1{font-size:30px;letter-spacing:-.8px;margin-bottom:8px}
+.login-card p{margin:0 0 26px;font-size:14.5px}
+.logo-ring{position:absolute;top:-52px;left:50%;translate:-50% 0;width:104px;height:104px;display:flex;align-items:center;justify-content:center}
+.logo-ring::before{content:"";position:absolute;inset:-5px;border-radius:34px;background:conic-gradient(from 0deg,#f5a524,#e11d74,#7c5ce5,#f5a524);animation:spinRing 5s linear infinite;box-shadow:0 14px 40px rgba(225,29,116,.4)}
+.logo-ring::after{content:"";position:absolute;inset:0;border-radius:30px;background:#fff}
+@keyframes spinRing{to{transform:rotate(360deg)}}
+.login-logo{margin:0!important;width:92px!important;height:92px!important;position:relative;z-index:2;box-shadow:none!important;border-radius:26px!important;object-fit:contain}
+.google-btn{position:relative;overflow:hidden;height:56px;border-radius:16px;font-size:16px;letter-spacing:.1px}
+.google-btn::after{content:"";position:absolute;top:0;bottom:0;width:60px;left:-90px;background:linear-gradient(100deg,transparent,rgba(122,31,126,.12),transparent);transform:skewX(-20deg);animation:shine 3.4s ease-in-out infinite}
+@keyframes shine{0%,55%{left:-90px}100%{left:120%}}
+.secure{margin-top:20px;font-size:12px;color:var(--muted);display:flex;align-items:center;justify-content:center;gap:6px}
+@media(max-width:900px){
+  .login-wrap{grid-template-columns:1fr;gap:0;max-width:420px}
+  .login-hero{display:none}
+}
+
+/* ===== BIGGER MOBILE BUTTONS ===== */
+@media(max-width:800px){
+  #addBtn,#dSubmit,.actions .secondary{height:58px;font-size:17px;border-radius:16px;letter-spacing:.3px}
+  .pending-actions button{height:52px;font-size:15.5px;border-radius:14px}
+}
+@media(max-width:520px){
+  .actions{gap:12px}
+  .actions button{flex:none!important}
+  .login-card{padding:68px 24px 26px;border-radius:28px}
+}
+
+
+/* ===== DELIVERY / PICKUP / HISTORY / LOCK ===== */
+.dc-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.dc-grid .denom-row .dn{min-width:0;font-size:13px;color:var(--ink)}
+.dc-grid .denom-row input{width:100%;text-align:left;padding:0 12px}
+@media(max-width:520px){.dc-grid{grid-template-columns:1fr}}
+.tab.lock{min-width:90px;color:var(--red)}
+.tab.lock:hover{background:var(--red-soft);color:var(--red)}
+.tab.lock .lk-t{display:inline-block;margin-left:8px;padding:2px 8px;border-radius:20px;background:var(--red-soft);border:1px solid #f7cfd4;font-size:11.5px;font-weight:700;font-variant-numeric:tabular-nums}
+.tab.lock .lk-t.warn{background:var(--red);color:#fff;border-color:var(--red)}
+#brandTitle{user-select:none;-webkit-user-select:none;cursor:default}
+#pwModal{position:fixed;inset:0;z-index:10005;display:flex;align-items:center;justify-content:center;padding:18px;background:rgba(15,5,25,.78);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.pw-card{width:100%;max-width:340px;background:#fff;border-radius:22px;padding:24px;box-shadow:var(--shadow-lg)}
+.pw-card h2{margin-bottom:14px}
+.pw-err{color:var(--red);font-size:13px;min-height:18px;margin-top:8px}
+
+
+/* ===== PREMIUM LOCK / UNLOCK ANIMATION ===== */
+#vaultFX{position:fixed;inset:0;z-index:10006;display:none;overflow:hidden}
+#vaultFX.on{display:block}
+#vaultFX .vp{position:absolute;left:0;right:0;height:50.6%;background:radial-gradient(120% 140% at 50% 50%,#4a1356 0%,#2a0a3a 55%,#16061f 100%)}
+#vaultFX .vp.t{top:0;transform:translateY(-101%);border-bottom:2px solid rgba(255,190,80,.9);box-shadow:0 6px 40px rgba(255,159,0,.45)}
+#vaultFX .vp.b{bottom:0;transform:translateY(101%);border-top:2px solid rgba(255,190,80,.9);box-shadow:0 -6px 40px rgba(255,159,0,.45)}
+#vaultFX .vlock{position:absolute;left:50%;top:50%;width:132px;height:132px;margin:-76px 0 0 -66px;opacity:0;transform:scale(.4);filter:drop-shadow(0 12px 30px rgba(255,159,0,.55))}
+#vaultFX .vlock svg{width:100%;height:100%;overflow:visible}
+#vaultFX .shackle{transform-box:view-box;transform-origin:72px 52px;fill:none;stroke:#ffd27a;stroke-width:9;stroke-linecap:round}
+#vaultFX .vbody{fill:url(#vxGold)}
+#vaultFX .vkey{fill:#2a0a3a}
+#vaultFX .vring{position:absolute;left:50%;top:50%;width:132px;height:132px;margin:-76px 0 0 -66px;border-radius:50%;border:3px solid rgba(255,200,100,.9);opacity:0}
+#vaultFX .vtxt{position:absolute;left:0;right:0;top:50%;margin-top:78px;text-align:center;font-family:var(--display);font-weight:800;font-size:15px;letter-spacing:7px;text-transform:uppercase;color:#ffd27a;opacity:0}
+/* closing */
+#vaultFX.close .vp.t{animation:vxTopIn .55s cubic-bezier(.7,0,.2,1) forwards}
+#vaultFX.close .vp.b{animation:vxBotIn .55s cubic-bezier(.7,0,.2,1) forwards}
+#vaultFX.close .vlock{animation:vxLockPop .5s .38s cubic-bezier(.2,.9,.3,1.25) forwards}
+#vaultFX.close .shackle{animation:vxShackClose .5s .7s cubic-bezier(.3,1.6,.5,1) both}
+#vaultFX.close .vring{animation:vxRing .85s 1.1s ease-out forwards}
+#vaultFX.close .vtxt{animation:vxFade .4s 1.05s ease-out forwards}
+/* opening */
+#vaultFX.open .vp.t{animation:vxTopIn .4s cubic-bezier(.7,0,.2,1) forwards}
+#vaultFX.open .vp.b{animation:vxBotIn .4s cubic-bezier(.7,0,.2,1) forwards}
+#vaultFX.open .vlock{animation:vxLockPop .45s .25s cubic-bezier(.2,.9,.3,1.25) forwards}
+#vaultFX.open .shackle{animation:vxShackOpen .55s .7s cubic-bezier(.3,1.4,.4,1) forwards}
+#vaultFX.open .vring{animation:vxRing .9s 1.05s ease-out forwards}
+#vaultFX.open .vtxt{animation:vxFade .4s 1s ease-out forwards}
+/* parting / revealing */
+#vaultFX.out .vp.t{animation:vxTopOut .75s cubic-bezier(.75,0,.25,1) forwards}
+#vaultFX.out .vp.b{animation:vxBotOut .75s cubic-bezier(.75,0,.25,1) forwards}
+#vaultFX.out .vlock,#vaultFX.out .vtxt,#vaultFX.out .vring{animation:vxGone .35s ease-in forwards}
+#vaultFX.out .vlock{opacity:1;transform:scale(1)}
+#vaultFX.out .vtxt{opacity:1}
+@keyframes vxTopIn{from{transform:translateY(-101%)}to{transform:translateY(0)}}
+@keyframes vxBotIn{from{transform:translateY(101%)}to{transform:translateY(0)}}
+@keyframes vxTopOut{from{transform:translateY(0)}to{transform:translateY(-101%)}}
+@keyframes vxBotOut{from{transform:translateY(0)}to{transform:translateY(101%)}}
+@keyframes vxLockPop{from{opacity:0;transform:scale(.4)}to{opacity:1;transform:scale(1)}}
+@keyframes vxShackClose{from{transform:translateY(-15px) rotate(-22deg)}to{transform:translateY(0) rotate(0)}}
+@keyframes vxShackOpen{from{transform:translateY(0) rotate(0)}to{transform:translateY(-15px) rotate(-22deg)}}
+@keyframes vxRing{from{opacity:.95;transform:scale(1)}to{opacity:0;transform:scale(2.7)}}
+@keyframes vxFade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@keyframes vxGone{to{opacity:0}}
+
+/* ===== ACCEPT / REJECT ANIMATIONS ===== */
+.fly{position:fixed;left:0;top:0;z-index:10002;pointer-events:none;will-change:transform}
+.fly-in{position:relative;isolation:isolate;display:inline-flex;align-items:center;padding:10px 17px;border-radius:40px;font-family:var(--display);font-weight:700;font-size:15px;color:#fff;white-space:nowrap;translate:-50% -50%;box-shadow:0 12px 30px rgba(0,0,0,.3),0 0 0 4px rgba(255,255,255,.4);animation:chipPop .35s cubic-bezier(.2,.9,.3,1.3) both}
+.fly-in::before{content:"";position:absolute;inset:-4px;border-radius:44px;background:inherit;filter:blur(14px);opacity:.75;z-index:-1}
+.fly-in.cash{background:linear-gradient(135deg,#1fa456,#0f6e37)}
+.fly-in.pp{background:linear-gradient(135deg,#4d80f0,#2457c5)}
+@keyframes chipPop{from{opacity:0;scale:.4}to{opacity:1;scale:1}}
+.spark{position:fixed;z-index:10003;width:9px;height:9px;border-radius:50%;pointer-events:none}
+.stat.pulse{animation:statPulse .95s ease-out}
+@keyframes statPulse{0%{box-shadow:0 0 0 0 rgba(245,165,36,.75)}50%{transform:scale(1.035)}100%{box-shadow:0 0 0 22px rgba(245,165,36,0)}}
+.toast{position:fixed;left:50%;translate:-50% 0;bottom:calc(26px + env(safe-area-inset-bottom,0px));z-index:10004;display:flex;align-items:center;gap:12px;padding:12px 22px 12px 12px;border-radius:50px;background:#16121d;color:#fff;font-size:14.5px;font-weight:600;box-shadow:0 20px 50px rgba(20,5,35,.45);white-space:nowrap;max-width:92vw}
+.toast .ti{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;background:#17934a}
+.toast.reject .ti{background:#c62839}
+.pending-item{position:relative}
+.pending-item.rejecting{animation:rejectOut .7s cubic-bezier(.6,0,.4,1) forwards;pointer-events:none}
+.pending-item.rejecting::after{content:"\2715";position:absolute;inset:0;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:72px;font-weight:800;color:#c62839;background:rgba(253,236,238,.88);animation:xPop .45s cubic-bezier(.2,.9,.3,1.3) both}
+@keyframes xPop{from{opacity:0;scale:.5}to{opacity:1;scale:1}}
+@keyframes rejectOut{0%{transform:none}15%{transform:translateX(-9px)}30%{transform:translateX(9px)}45%{transform:translateX(-5px)}60%{transform:none;opacity:1}100%{transform:scale(.92) translateY(12px);opacity:0;filter:blur(3px)}}
+</style>
+</head>
+<body>
+
+<!-- SPLASH -->
+<div class='aurora' id='splash'><div class='orbs'><i></i><i></i><i></i><i></i></div><div id='logoBox'></div></div>
+
+<!-- IMAGE VIEWER -->
+<div id='lightbox'><img alt='' id='lightboxImg'></div>
+
+<!-- PASSWORD MODAL -->
+<div class='hidden' id='pwModal'><div class='pw-card'>
+  <h2>Enter password</h2>
+  <input autocomplete='off' id='pwInput' placeholder='Password' type='password'>
+  <div class='pw-err' id='pwErr'></div>
+  <div class='actions'><button id='pwOk'>Unlock</button><button class='secondary' id='pwCancel'>Cancel</button></div>
+</div></div>
+
+<!-- LOCK / UNLOCK ANIMATION -->
+<div id='vaultFX'>
+  <div class='vp t'></div><div class='vp b'></div>
+  <div class='vring'></div>
+  <div class='vlock'>
+    <svg viewBox='0 0 100 100'>
+      <defs><linearGradient id='vxGold' x1='0' x2='1' y1='0' y2='1'><stop offset='0' stop-color='#ffd98a'></stop><stop offset='1' stop-color='#f08c00'></stop></linearGradient></defs>
+      <path class='shackle' d='M28 52 V36 a22 22 0 0 1 44 0 V52'></path>
+      <rect class='vbody' height='44' rx='12' width='68' x='16' y='50'></rect>
+      <circle class='vkey' cx='50' cy='68' r='6'></circle>
+      <rect class='vkey' height='13' rx='2.5' width='5' x='47.5' y='70'></rect>
+    </svg>
+  </div>
+  <div class='vtxt' id='vaultTxt'>Locked</div>
+</div>
+
+<!-- LOGIN -->
+<div class='aurora' id='loginScreen'>
+  <div class='orbs'><i></i><i></i><i></i><i></i></div>
+  <div class='login-wrap'>
+    <div class='login-hero'>
+      <span class='eyebrow'><i></i>Daily Meesho tracker</span>
+      <div class='hero-title'>Every rupee,<br><span class='grad'>perfectly tracked.</span></div>
+      <p class='hero-sub'>Record collections, payments and cash denominations in one beautiful place &#8212; synced live across all your devices.</p>
+      <ul class='hero-list'>
+        <li><b>&#8377;</b><div><strong>Collections &amp; payments</strong><span>Daily statements with automatic balance</span></div></li>
+        <li><b>&#10003;</b><div><strong>Denomination approval</strong><span>Photo proof, accept or reject in one tap</span></div></li>
+        <li><b>&#9889;</b><div><strong>Real-time sync</strong><span>Always up to date on every phone</span></div></li>
+      </ul>
+    </div>
+    <div class='login-card'>
+      <div class='logo-ring'><img alt='' class='login-logo' id='loginLogo'></div>
+      <h1>My Statement</h1>
+      <p>Sign in to continue to your dashboard</p>
+      <button class='google-btn' id='loginBtn'>
+        <svg viewBox='0 0 48 48'><path d='M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.6 17.7 9.5 24 9.5z' fill='#EA4335'></path><path d='M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.2 5.5-4.7 7.2l7.6 5.9c4.4-4.1 6.9-10.1 6.9-17.6z' fill='#4285F4'></path><path d='M10.5 28.7A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.2.8-4.7l-7.9-6.1A24 24 0 0 0 0 24c0 3.9.9 7.5 2.6 10.8l7.9-6.1z' fill='#FBBC05'></path><path d='M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.6-5.9c-2.1 1.4-4.9 2.3-8.3 2.3-6.3 0-11.6-4.1-13.5-9.8l-7.9 6.1C6.5 42.6 14.6 48 24 48z' fill='#34A853'></path></svg>
+        Continue with Google
+      </button>
+      <div id='loginError'></div>
+      <div class='secure'>🔒 Secure sign-in powered by Google</div>
+    </div>
+  </div>
+</div>
+
+<!-- APP -->
+<div class='hidden' id='appScreen'>
+<header>
+  <div class='header-inner'>
+    <div class='brand'><img alt='' class='brand-logo' id='headerLogo'><div><h1 id='brandTitle'>My Statement</h1><p>Daily Meesho collection &amp; payment tracker</p></div></div>
+    <div class='user'>
+      <img alt='' id='userPhoto'>
+      <div class='uname'><strong id='userName'></strong><br><span id='userEmail'></span></div>
+      <button id='logoutBtn'>Logout</button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<div class='denom-banner collapsed' id='denomBanner'><div class='db-in' id='denomBannerIn'><span class='db-ic'>&#10003;</span><span id='denomBannerText'>Denomination received</span><span class='db-n' id='denomBannerNum'>0</span></div></div>
+
+<div class='tabs hidden' id='tabsBar'>
+  <button class='tab' id='tabHome'>Home</button>
+  <button class='tab' id='tabDenom'>Denomination</button>
+  <button class='tab lock' id='tabLock'>Lock<span class='lk-t' id='lockTimer'></span></button>
+</div>
+
+<!-- ================= HOME PAGE ================= -->
+<div class='hidden' id='homeView'>
+
+<section class='card'>
+  <h2>Add Daily Statement</h2>
+  <div class='grid'>
+    <div>
+      <label for='person'>Person Name</label>
+      <input autocomplete='off' id='person' list='personList' placeholder='Type name or Owner' type='text'>
+      <datalist id='personList'><option value='Owner'></option></datalist>
+    </div>
+    <div><label for='date'>Date</label><input id='date' type='date'></div>
+    <div>
+      <label for='collected'>Total Collected (&#8377;)</label>
+      <input id='collected' min='0' placeholder='0' step='0.01' type='number'>
+      <div class='small' id='ownerNote' style='display:none'>Owner: collection amount is not required.</div>
+    </div>
+    <div><label for='paid'>Paid to Meesho (&#8377;)</label><input id='paid' min='0' placeholder='0' step='0.01' type='number'></div>
+  </div>
+  <div class='owner-note-box' id='ownerInfo' style='display:none'>
+    <strong>Owner Payment</strong><br>
+    Enter the amount the Owner pays to Meesho. This payment will reduce the <strong>overall balance across all dates</strong>.<br><br>
+    Current total balance: <strong id='ownerCurrentBalance'>&#8377;0.00</strong>
+  </div>
+  <div class='actions'>
+    <button id='addBtn'>+ Add Statement</button>
+    <button class='secondary' id='clearBtn'>Clear</button>
+  </div>
+  <div class='small'>Normal person: Balance = Collected &#8722; Paid to Meesho. Owner: enter only the payment made to Meesho.</div>
+</section>
+
+<section class='card pending-card hidden' id='pendingSection'>
+  <h2>Denomination Requests <span class='badge blue' id='pendingCount'>0</span></h2>
+  <div id='pendingList'></div>
+</section>
+
+<section class='card'>
+  <h2>Overall Summary</h2>
+  <div class='summary'>
+    <div class='stat'><span>Total Collected - All Dates</span><strong id='totalCollected'>&#8377;0.00</strong></div>
+    <div class='stat'><span>Total Paid to Meesho - All Dates</span><strong id='totalPaid'>&#8377;0.00</strong></div>
+    <div class='stat'><span>Total Balance Left - All Dates</span><strong class='green' id='totalBalance'>&#8377;0.00</strong></div>
+  </div>
+</section>
+
+<section class='card'>
+  <h2>Statement</h2>
+  <div class='filters'>
+    <div>
+      <label for='filterPerson'>Filter by Person</label>
+      <select id='filterPerson'><option value='ALL'>All People</option><option value='Owner'>Owner</option></select>
+    </div>
+    <div><label for='filterDate'>Date</label><input id='filterDate' type='date'></div>
+    <button class='secondary' id='showAllBtn'>Show All Dates</button>
+  </div>
+  <div id='statementContainer' style='margin-top:18px'></div>
+</section>
+
+</div>
+
+<!-- ================= DENOMINATION PAGE ================= -->
+<div id='denomView'>
+<section class='card'>
+  <h2>Cash Denomination</h2>
+  <div class='grid' style='grid-template-columns:1fr 1fr;margin-bottom:18px'>
+    <div><label for='dRider'>Rider Name</label><input autocomplete='off' id='dRider' placeholder='Rider name' type='text'></div>
+    <div><label for='dDate'>Date</label><input id='dDate' type='date'></div>
+  </div>
+
+  <label>Enter number of notes / coins (&#8377;)</label>
+  <div class='denom-grid' id='denomGrid'></div>
+
+  <div class='denom-row phonepe-row' style='margin-top:12px'>
+    <span class='dn'>PhonePe</span>
+    <input id='dPhonepe' min='0' placeholder='PhonePe amount (₹)' step='0.01' type='number'>
+  </div>
+  <div class='small'>PhonePe is saved with the denomination but is not counted as cash and does not change any totals.</div>
+
+  <div class='dc-grid'>
+    <div class='denom-row'><span class='dn'>Delivery given</span><input id='dDelivery' min='0' placeholder='0' step='1' type='number'></div>
+    <div class='denom-row'><span class='dn'>Pickup to take</span><input id='dPickup' min='0' placeholder='0' step='1' type='number'></div>
+  </div>
+
+  <div class='dtotals'>
+    <div class='stat'><span>Total Cash</span><strong id='dCash'>&#8377;0.00</strong></div>
+    <div class='stat'><span>PhonePe</span><strong id='dPP'>&#8377;0.00</strong></div>
+    <div class='stat'><span>Grand Total Collected</span><strong id='dGrand'>&#8377;0.00</strong></div>
+  </div>
+
+  <div class='photo-box'>
+    <label for='dPhoto'>Attach Photo (required)</label>
+    <input accept='image/*' id='dPhoto' type='file'>
+    <img alt='Preview' id='photoPreview'>
+  </div>
+
+  <div class='actions'>
+    <button id='dSubmit'>Send for Approval</button>
+    <button class='secondary' id='dClear'>Clear</button>
+  </div>
+  <div class='msg-ok' id='dMsg'></div>
+</section>
+
+<section class='card'>
+  <h2>Denomination History</h2>
+  <div class='filters' style='grid-template-columns:1fr auto'>
+    <div><label for='hFilterDate'>Date</label><input id='hFilterDate' type='date'></div>
+    <button class='secondary' id='hShowAll'>Show All Dates</button>
+  </div>
+  <div id='histContainer' style='margin-top:18px'></div>
+</section>
+</div>
+
+</main>
+</div>
+<script src='https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js'></script>
+<script src='https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js'></script>
+<script src='https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js'></script>
+<script>
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAiPWaRx1tN-_6EjFwqRUJqKABgTNMlFAs",
+  authDomain: "my-statement-4406a.firebaseapp.com",
+  projectId: "my-statement-4406a",
+  storageBucket: "my-statement-4406a.firebasestorage.app",
+  messagingSenderId: "536032086229",
+  appId: "1:536032086229:web:49b1b066a7648abd80ba5c",
+  measurementId: "G-QKV0Z4PD7K"
+};
+
+const configMissing = firebaseConfig.apiKey === "YOUR_API_KEY";
+const loginError = document.getElementById("loginError");
+function showLoginError(msg){ loginError.style.display = "block"; loginError.textContent = msg; }
+
+let auth = null, db = null, userCol = null, unsub = null, unsubPending = null, unsubOwn = null;
+let currentUser = null;
+if (!configMissing) {
+  firebase.initializeApp(firebaseConfig);
+  auth = firebase.auth();
+  db = firebase.firestore();
+}
+
+document.getElementById("loginBtn").onclick = () => {
+  if (configMissing) { showLoginError("Firebase is not configured yet. Paste your firebaseConfig in the script."); return; }
+  loginError.style.display = "none";
+  auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).catch(err => {
+    if (err.code === "auth/unauthorized-domain") {
+      showLoginError("This domain is not authorized. Add it in Firebase Console → Authentication → Settings → Authorized domains.");
+    } else if (err.code !== "auth/popup-closed-by-user") {
+      showLoginError("Login failed: " + err.message);
+    }
+  });
+};
+document.getElementById("logoutBtn").onclick = () => auth.signOut();
+
+const LOGO_URL = "data:image/png;base64,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";
+
+const splash = document.getElementById("splash");
+const logoBox = document.getElementById("logoBox");
+logoBox.innerHTML =
+  (LOGO_URL
+    ? '<img class="logo-img" alt="" src="' + LOGO_URL + '"/>'
+    : '<svg class="logo-img" viewBox="0 0 64 64" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22h40l-3 32H15L12 22z" fill="rgba(255,255,255,.15)"/><path d="M22 22v-4a10 10 0 0 1 20 0v4"/></svg>')
+  + '<div class="logo-name">My Statement</div><div class="logo-tag">Daily collection &amp; payment tracker</div>';
+
+if (LOGO_URL) {
+  ["loginLogo", "headerLogo"].forEach(id => {
+    const el = document.getElementById(id);
+    el.src = LOGO_URL;
+    el.style.display = "block";
+  });
+}
+
+function playSplash(mode, swapScreens){
+  splash.style.animation = "none";
+  logoBox.style.animation = "none";
+  void splash.offsetWidth;
+  splash.classList.add("show");
+  const finish = () => { splash.classList.remove("show"); splash.style.animation = ""; logoBox.style.animation = ""; };
+  const total = mode === "in" ? 3400 : 2800;
+  splash.style.animation = "splashFadeIn .4s ease forwards";
+  if (mode === "in") {
+    logoBox.style.animation = "logoCinema " + (total / 1000) + "s cubic-bezier(.45,0,.35,1) forwards";
+  } else {
+    logoBox.style.animation = "logoCinemaRev " + (total / 1000) + "s cubic-bezier(.65,0,.55,1) forwards";
+  }
+  setTimeout(() => {
+    swapScreens();
+    splash.style.animation = "splashFadeOut .9s ease forwards";
+    setTimeout(finish, 920);
+  }, total - 900);
+}
+
+function playLogout(showLogin){
+  const target = document.getElementById("loginLogo");
+  const hasTarget = !!LOGO_URL && target;
+
+  showLogin();
+  if (!hasTarget) return;
+  target.style.visibility = "hidden";
+
+  splash.style.animation = "none";
+  logoBox.style.animation = "none";
+  splash.getAnimations().forEach(a => a.cancel());
+  logoBox.getAnimations().forEach(a => a.cancel());
+  logoBox.style.visibility = "hidden";
+  splash.classList.add("show");
+
+  const to = target.getBoundingClientRect();
+  const fly = document.createElement("img");
+  fly.src = LOGO_URL;
+  fly.alt = "";
+  fly.style.cssText = "position:fixed;z-index:10000;object-fit:contain;pointer-events:none;" +
+    "left:" + to.left + "px;top:" + to.top + "px;width:" + to.width + "px;height:" + to.height + "px;" +
+    "border-radius:22px;transform-origin:50% 50%;will-change:transform,opacity,filter";
+  document.body.appendChild(fly);
+
+  const dur = 1400;
+  const ease = "cubic-bezier(.22,1,.36,1)";
+  splash.animate([{opacity:1},{opacity:0}], {duration:dur, easing:"ease-out", fill:"forwards"});
+  const fl = fly.animate([
+    {transform:"scale(3.2)", opacity:0, filter:"blur(12px)",
+     boxShadow:"0 0 0 6px rgba(255,255,255,.14),0 24px 60px rgba(255,159,0,.35)"},
+    {transform:"scale(1)", opacity:1, filter:"blur(0)",
+     boxShadow:"0 14px 34px rgba(60,0,60,.4),0 0 0 5px rgba(255,255,255,.95)"}
+  ], {duration:dur, easing:ease, fill:"forwards"});
+  fly.animate([{opacity:0},{opacity:1}], {duration:dur*0.35, easing:"ease-out", fill:"forwards"});
+
+  fl.onfinish = () => {
+    target.style.visibility = "";
+    fly.remove();
+    splash.getAnimations().forEach(a => a.cancel());
+    splash.classList.remove("show");
+    splash.style.animation = "";
+    logoBox.style.animation = "";
+    logoBox.style.visibility = "";
+  };
+}
+
+/* ---------- APP STATE ---------- */
+let statements = [];
+let pending = [];
+let denomHistory = [];
+let wasLoggedIn = false;
+
+if (auth) {
+  auth.onAuthStateChanged(user => {
+    if (user) {
+      currentUser = user;
+      userCol = db.collection("users").doc(user.uid).collection("statements");
+      document.getElementById("userName").textContent = user.displayName || "User";
+      document.getElementById("userEmail").textContent = user.email || "";
+      const photo = document.getElementById("userPhoto");
+      if (user.photoURL) { photo.src = user.photoURL; photo.style.display = ""; } else { photo.style.display = "none"; }
+      clearForm(true);
+      document.getElementById("filterDate").value = "";
+      resetDenomForm();
+      lockHome();
+
+      if (unsub) unsub();
+      let first = true;
+      unsub = userCol.onSnapshot(snap => {
+        if (first && snap.empty) {
+          const old = JSON.parse(localStorage.getItem("meesho_statement_v2_" + user.uid) || "[]");
+          if (old.length) {
+            const batch = db.batch();
+            old.forEach((o, n) => batch.set(userCol.doc(String(o.id)), Object.assign({createdAt: Date.now() - n, source: "web"}, o)));
+            batch.commit();
+          }
+        }
+        first = false;
+        statements = snap.docs.map(d => d.data()).sort((x, y) => (y.createdAt || 0) - (x.createdAt || 0));
+        render();
+        updatePersonFields();
+      }, err => alert("Could not load data: " + err.message));
+
+      /* denomination history: each user only receives and sees their OWN submissions */
+      if (unsubOwn) unsubOwn();
+      unsubOwn = db.collection("denominations").where("submittedBy", "==", user.uid).onSnapshot(snap => {
+        denomHistory = snap.docs.map(d => Object.assign({docId: d.id}, d.data())).sort((x, y) => (y.createdAt || 0) - (x.createdAt || 0));
+        renderHistory();
+      }, err => console.error("Denomination history load failed: " + err.message));
+
+      wasLoggedIn = true;
+      playSplash("in", () => {
+        document.getElementById("loginScreen").classList.add("hidden");
+        document.getElementById("appScreen").classList.remove("hidden");
+      });
+    } else {
+      currentUser = null;
+      if (unsub) { unsub(); unsub = null; }
+      if (unsubPending) { unsubPending(); unsubPending = null; }
+      if (unsubOwn) { unsubOwn(); unsubOwn = null; }
+      userCol = null;
+      statements = [];
+      pending = [];
+      denomHistory = [];
+      lockHome();
+      const showLogin = () => {
+        document.getElementById("appScreen").classList.add("hidden");
+        document.getElementById("loginScreen").classList.remove("hidden");
+      };
+      if (wasLoggedIn) { wasLoggedIn = false; playLogout(showLogin); }
+      else showLogin();
+    }
+  });
+}
+
+const money = n => "₹" + Number(n || 0).toLocaleString("en-IN", {minimumFractionDigits:2, maximumFractionDigits:2});
+const today = () => { const d = new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); };
+const formatDate = d => { if(!d) return ""; const p = d.split("-"); return p[2]+"-"+p[1]+"-"+p[0]; };
+function escapeHtml(v){
+  return String(v).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+}
+
+/* ---------- TABS ---------- */
+function showTab(t){
+  if (t === "home" && !homeUnlocked) t = "denom";
+  const home = t === "home";
+  document.getElementById("homeView").classList.toggle("hidden", !home);
+  document.getElementById("denomView").classList.toggle("hidden", home);
+  document.getElementById("tabHome").classList.toggle("active", home);
+  document.getElementById("tabDenom").classList.toggle("active", !home);
+  window.scrollTo(0, 0);
+}
+document.getElementById("tabHome").onclick = () => showTab("home");
+document.getElementById("tabDenom").onclick = () => showTab("denom");
+
+/* ---------- IMAGE VIEWER ---------- */
+const lightbox = document.getElementById("lightbox");
+lightbox.onclick = () => { lightbox.style.display = "none"; };
+function openImage(src){ document.getElementById("lightboxImg").src = src; lightbox.style.display = "flex"; }
+
+/* ---------- DENOMINATION PAGE ---------- */
+const NOTES = [500, 200, 100, 50, 20, 10, 5, 2, 1];
+
+(function buildDenomGrid(){
+  document.getElementById("denomGrid").innerHTML = NOTES.map(n =>
+    '<div class="denom-row"><span class="dn">₹' + n + ' ×</span>' +
+    '<input type="number" min="0" step="1" placeholder="0" data-note="' + n + '"/>' +
+    '<span class="sub" id="sub' + n + '">₹0</span></div>'
+  ).join("");
+})();
+
+function readNotes(){
+  const notes = {};
+  let cash = 0;
+  document.querySelectorAll("#denomGrid input").forEach(inp => {
+    const n = Number(inp.getAttribute("data-note"));
+    const c = Math.max(0, Math.floor(Number(inp.value) || 0));
+    notes[n] = c;
+    cash += c * n;
+  });
+  return { notes, cash };
+}
+
+function updateDenomTotals(){
+  const r = readNotes();
+  NOTES.forEach(n => {
+    document.getElementById("sub" + n).textContent = "₹" + (r.notes[n] * n).toLocaleString("en-IN");
+  });
+  const pp = Math.max(0, parseFloat(document.getElementById("dPhonepe").value) || 0);
+  document.getElementById("dCash").textContent = money(r.cash);
+  document.getElementById("dPP").textContent = money(pp);
+  document.getElementById("dGrand").textContent = money(r.cash + pp);
+}
+document.getElementById("denomGrid").addEventListener("input", updateDenomTotals);
+document.getElementById("dPhonepe").addEventListener("input", updateDenomTotals);
+
+let photoData = "";
+function compressImage(file){
+  return new Promise((resolve, reject) => {
+    const fr = new FileReader();
+    fr.onerror = () => reject(new Error("Could not read the photo."));
+    fr.onload = () => {
+      const img = new Image();
+      img.onerror = () => reject(new Error("This file is not a valid image."));
+      img.onload = () => {
+        let max = 900, q = 0.65, out = "";
+        for (let i = 0; i < 5; i++) {
+          const sc = Math.min(1, max / Math.max(img.width, img.height));
+          const c = document.createElement("canvas");
+          c.width = Math.round(img.width * sc);
+          c.height = Math.round(img.height * sc);
+          c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+          out = c.toDataURL("image/jpeg", q);
+          if (out.length < 600000) break;
+          max = Math.round(max * 0.8); q = Math.max(0.4, q - 0.08);
+        }
+        if (out.length >= 900000) reject(new Error("Photo is too large. Please use a smaller photo."));
+        else resolve(out);
+      };
+      img.src = fr.result;
+    };
+    fr.readAsDataURL(file);
+  });
+}
+
+document.getElementById("dPhoto").addEventListener("change", async e => {
+  const f = e.target.files[0];
+  const prev = document.getElementById("photoPreview");
+  photoData = "";
+  prev.style.display = "none";
+  if (!f) return;
+  try {
+    photoData = await compressImage(f);
+    prev.src = photoData;
+    prev.style.display = "block";
+  } catch (err) {
+    alert(err.message);
+    e.target.value = "";
+  }
+});
+
+function resetDenomForm(){
+  document.querySelectorAll("#denomGrid input").forEach(i => i.value = "");
+  document.getElementById("dPhonepe").value = "";
+  document.getElementById("dDelivery").value = "";
+  document.getElementById("dPickup").value = "";
+  document.getElementById("dPhoto").value = "";
+  document.getElementById("photoPreview").style.display = "none";
+  document.getElementById("dDate").value = today();
+  document.getElementById("dRider").value = (currentUser && currentUser.displayName) || "";
+  photoData = "";
+  updateDenomTotals();
+}
+document.getElementById("dClear").onclick = () => { resetDenomForm(); document.getElementById("dMsg").style.display = "none"; };
+
+document.getElementById("dSubmit").onclick = async () => {
+  const rider = document.getElementById("dRider").value.trim();
+  const date = document.getElementById("dDate").value;
+  const r = readNotes();
+  const pp = Math.max(0, parseFloat(document.getElementById("dPhonepe").value) || 0);
+  const delivery = Math.max(0, Math.floor(Number(document.getElementById("dDelivery").value) || 0));
+  const pickup = Math.max(0, Math.floor(Number(document.getElementById("dPickup").value) || 0));
+  if (!rider || !date) { alert("Please enter rider name and date."); return; }
+  if (r.cash <= 0 && pp <= 0) { alert("Please enter the denomination or PhonePe amount."); return; }
+  if (!photoData) { alert("Please attach a photo."); return; }
+  const btn = document.getElementById("dSubmit");
+  btn.disabled = true; btn.textContent = "Sending...";
+  try {
+    const id = String(Date.now()) + Math.floor(Math.random() * 1000);
+    await db.collection("denominations").doc(id).set({
+      id, rider, date, notes: r.notes, cash: r.cash, phonepe: pp, delivery, pickup, photo: photoData,
+      status: "pending", submittedBy: currentUser.uid,
+      submitterName: currentUser.displayName || currentUser.email || "User",
+      createdAt: Date.now()
+    });
+    resetDenomForm();
+    const m = document.getElementById("dMsg");
+    m.textContent = "Sent for approval.";
+    m.style.display = "block";
+    setTimeout(() => { m.style.display = "none"; }, 6000);
+  } catch (e) {
+    alert("Could not send: " + e.message);
+  } finally {
+    btn.disabled = false; btn.textContent = "Send for Approval";
+  }
+};
+
+/* ---------- PENDING APPROVALS (home) ---------- */
+/* Pending requests and the notification banner exist ONLY while the password has been entered. */
+function startPending(){
+  if (unsubPending || !db || !currentUser) return;
+  unsubPending = db.collection("denominations").onSnapshot(snap => {
+    const all = snap.docs.map(d => Object.assign({docId: d.id}, d.data()));
+    pending = all.filter(x => x.status === "pending" || x.status === "pp_pending").sort((x, y) => (y.createdAt || 0) - (x.createdAt || 0));
+    renderPending();
+  }, err => console.error("Pending load failed: " + err.message));
+}
+function stopPending(){
+  if (unsubPending) { unsubPending(); unsubPending = null; }
+  pending = [];
+  renderPending();
+}
+function updateBanner(n){
+  const b = document.getElementById("denomBanner");
+  if (n > 0 && homeUnlocked) {
+    document.getElementById("denomBannerNum").textContent = n;
+    document.getElementById("denomBannerText").textContent = n === 1 ? "1 denomination received" : n + " denominations received";
+    b.classList.remove("collapsed");
+  } else {
+    b.classList.add("collapsed");   /* all accepted/rejected -> banner collapses */
+  }
+}
+function goPending(){
+  showTab("home");
+  const sec = document.getElementById("pendingSection");
+  if (sec && !sec.classList.contains("hidden")) setTimeout(() => sec.scrollIntoView({behavior:"smooth", block:"start"}), 50);
+}
+document.getElementById("denomBannerIn").onclick = () => {
+  if (!homeUnlocked) { openPw(true); return; }
+  goPending();
+};
+
+function noteChips(p){
+  return NOTES.filter(n => (p.notes && p.notes[n]) > 0)
+    .map(n => '<span class="chip">₹' + n + ' × ' + p.notes[n] + ' = ₹' + (n * p.notes[n]).toLocaleString("en-IN") + '</span>').join("");
+}
+
+function renderPending(){
+  updateBanner(pending.length);
+  const sec = document.getElementById("pendingSection");
+  if (!pending.length) { sec.classList.add("hidden"); document.getElementById("pendingList").innerHTML = ""; return; }
+  sec.classList.remove("hidden");
+  document.getElementById("pendingCount").textContent = pending.length;
+  document.getElementById("pendingList").innerHTML = pending.map(p => {
+    const chips = noteChips(p);
+    const ppStage = p.status === "pp_pending";
+    const totalsHtml = ppStage
+      ? '<div class="pending-totals">' +
+          '<div class="pt-left">' +
+            '<span>Denomination (cash): <strong data-cash="1" class="green">' + money(p.cash) + ' &#10003; added</strong></span>' +
+            '<span>PhonePe: <strong data-pp="1">' + money(p.phonepe) + '</strong></span>' +
+          '</div>' +
+          '<div class="cod-box"><span>Add to Paid to Meesho?</span><strong>' + money(p.phonepe) + '</strong></div>' +
+        '</div>'
+      : '<div class="pending-totals">' +
+          '<div class="pt-left">' +
+            '<span>Denomination (cash): <strong data-cash="1">' + money(p.cash) + '</strong></span>' +
+            '<span>PhonePe: <strong data-pp="1">' + money(p.phonepe) + '</strong></span>' +
+          '</div>' +
+          '<div class="cod-box"><span>In Hand COD</span><strong>' + money(Number(p.cash || 0) + Number(p.phonepe || 0)) + '</strong></div>' +
+        '</div>';
+    const actionsHtml = ppStage
+      ? '<div class="small" style="margin:0 0 10px">Cash accepted. Accept to add the PhonePe amount to <strong>Paid to Meesho</strong>, or Reject to skip it.</div>' +
+        '<div class="pending-actions">' +
+          '<button class="success" data-ppaccept="' + escapeHtml(p.docId) + '">Accept PhonePe</button>' +
+          '<button class="danger" data-ppreject="' + escapeHtml(p.docId) + '">Reject</button>' +
+        '</div>'
+      : '<div class="pending-actions">' +
+          '<button class="success" data-accept="' + escapeHtml(p.docId) + '">Accept</button>' +
+          '<button class="danger" data-reject="' + escapeHtml(p.docId) + '">Reject</button>' +
+        '</div>';
+    return '<div class="pending-item">' +
+      '<img class="pphoto" alt="Photo" src="' + p.photo + '" data-view="' + escapeHtml(p.docId) + '"/>' +
+      '<div class="pending-info">' +
+        '<h3>' + escapeHtml(p.rider) + ' &#8212; ' + formatDate(p.date) + '</h3>' +
+        '<div class="meta">Sent by ' + escapeHtml(p.submitterName || "") + '</div>' +
+        '<div class="pending-chips">' + (chips || '<span class="chip">No cash</span>') + '</div>' +
+        '<div class="pending-chips"><span class="chip">Delivery given: ' + Number(p.delivery || 0) + '</span><span class="chip">Pickup to take: ' + Number(p.pickup || 0) + '</span></div>' +
+        totalsHtml + actionsHtml +
+      '</div></div>';
+  }).join("");
+}
+
+document.getElementById("pendingList").addEventListener("click", e => {
+  const v = e.target.getAttribute("data-view");
+  const a = e.target.getAttribute("data-accept");
+  const r = e.target.getAttribute("data-reject");
+  if (v) { const p = pending.find(x => x.docId === v); if (p) openImage(p.photo); }
+  const pa = e.target.getAttribute("data-ppaccept");
+  const pr = e.target.getAttribute("data-ppreject");
+  if (a) acceptDenom(a, e.target);
+  if (r) rejectDenom(r, e.target);
+  if (pa) acceptPhonepe(pa, e.target);
+  if (pr) rejectPhonepe(pr, e.target);
+});
+
+let holdTotals = false;
+const wait = ms => new Promise(r => setTimeout(r, ms));
+const buzz = p => { try { navigator.vibrate && navigator.vibrate(p); } catch (e) {} };
+const reduceMotion = () => window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+function totals(){
+  const c = statements.reduce((s,i) => s + Number(i.collected||0), 0);
+  const p = statements.reduce((s,i) => s + Number(i.paid||0), 0);
+  return { c, p, b: c - p };
+}
+
+function showToast(msg, type){
+  const t = document.createElement("div");
+  t.className = "toast " + (type || "ok");
+  t.innerHTML = '<span class="ti">' + (type === "reject" ? "&#10005;" : "&#10003;") + '</span><span></span>';
+  t.lastChild.textContent = msg;
+  document.body.appendChild(t);
+  t.animate([{opacity:0, transform:"translateY(26px) scale(.92)"},{opacity:1, transform:"none"}], {duration:380, easing:"cubic-bezier(.2,.9,.3,1.2)", fill:"forwards"});
+  setTimeout(() => {
+    t.animate([{opacity:1},{opacity:0, transform:"translateY(14px)"}], {duration:300, fill:"forwards"}).onfinish = () => t.remove();
+  }, 2800);
+}
+
+function burst(x, y, color){
+  for (let i = 0; i < 16; i++) {
+    const s = document.createElement("i");
+    s.className = "spark";
+    s.style.cssText = "left:" + x + "px;top:" + y + "px;background:" + (i % 2 ? color : "#f5a524");
+    document.body.appendChild(s);
+    const ang = Math.PI * 2 * i / 16 + Math.random() * 0.4, d = 36 + Math.random() * 48;
+    s.animate([
+      {transform:"translate(-50%,-50%) scale(1)", opacity:1},
+      {transform:"translate(calc(-50% + " + Math.cos(ang) * d + "px),calc(-50% + " + Math.sin(ang) * d + "px)) scale(0)", opacity:0}
+    ], {duration:650 + Math.random() * 250, easing:"cubic-bezier(.2,.8,.3,1)", fill:"forwards"}).onfinish = () => s.remove();
+  }
+}
+
+function pulse(el){
+  const s = el.closest(".stat");
+  if (!s) return;
+  s.classList.remove("pulse"); void s.offsetWidth; s.classList.add("pulse");
+  setTimeout(() => s.classList.remove("pulse"), 1000);
+  el.animate([{transform:"scale(1)"},{transform:"scale(1.18)"},{transform:"scale(1)"}], {duration:600, easing:"ease-out"});
+}
+
+function countTo(el, from, to, dur){
+  const t0 = performance.now();
+  (function step(t){
+    const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+    el.textContent = money(from + (to - from) * e);
+    if (k < 1) requestAnimationFrame(step); else el.textContent = money(to);
+  })(t0);
+}
+
+function makeChip(rect, text, cls, target){
+  const sx = rect.left + rect.width / 2, sy = rect.top + rect.height / 2;
+  const wrap = document.createElement("div");
+  wrap.className = "fly";
+  wrap.style.cssText = "left:" + sx + "px;top:" + sy + "px";
+  const chip = document.createElement("div");
+  chip.className = "fly-in " + cls;
+  chip.textContent = text;
+  wrap.appendChild(chip);
+  document.body.appendChild(wrap);
+  return { wrap, chip, sx, sy, target, cls };
+}
+
+function launchChip(c, toEl, delay, onLand){
+  const tr = toEl.getBoundingClientRect();
+  const tx = tr.left + tr.width / 2, ty = tr.top + tr.height / 2;
+  const dx = tx - c.sx, dy = ty - c.sy, dur = 1150;
+  c.wrap.animate([{transform:"translateX(0)"},{transform:"translateX(" + dx + "px)"}], {duration:dur, delay, easing:"cubic-bezier(.45,.05,.25,1)", fill:"both"});
+  const anim = c.chip.animate([
+    {transform:"translateY(0) scale(1)", offset:0},
+    {transform:"translateY(" + (Math.min(0, dy) - 90) + "px) scale(1.18)", offset:0.35},
+    {transform:"translateY(" + dy + "px) scale(.45)", opacity:0.85, offset:1}
+  ], {duration:dur, delay, easing:"ease-in-out", fill:"both"});
+  return new Promise(res => {
+    anim.onfinish = () => {
+      c.wrap.remove();
+      burst(tx, ty, c.cls === "pp" ? "#4d80f0" : "#1fa456");
+      buzz(18);
+      onLand();
+      res();
+    };
+  });
+}
+
+function waitScrollEnd(){
+  return new Promise(res => {
+    let last = -1, same = 0;
+    const iv = setInterval(() => {
+      const y = window.scrollY;
+      if (Math.abs(y - last) < 1) { if (++same >= 4) { clearInterval(iv); res(); } }
+      else { same = 0; last = y; }
+    }, 60);
+    setTimeout(() => { clearInterval(iv); res(); }, 1800);
+  });
+}
+async function scrollToSummary(){
+  const sum = document.getElementById("totalBalance").closest(".card");
+  const hdr = document.querySelector("header");
+  const off = (hdr ? hdr.offsetHeight : 0) + 12;
+  for (let i = 0; i < 3; i++) {
+    const top = Math.max(0, sum.getBoundingClientRect().top + window.scrollY - off);
+    if (Math.abs(window.scrollY - top) < 4) break;
+    window.scrollTo({ top, behavior: "smooth" });
+    await waitScrollEnd();
+  }
+}
+
+async function playAcceptFX(chips, before, exp){
+  const balEl = document.getElementById("totalBalance");
+  const paidEl = document.getElementById("totalPaid");
+  const colEl = document.getElementById("totalCollected");
+  await wait(450);          /* let the accepted request leave the list and the layout settle */
+  await scrollToSummary();  /* bring all 3 boxes into view */
+  await wait(250);
+  let colDone = false;
+  const doCol = () => { if (!colDone) { colDone = true; countTo(colEl, before.c, exp.c, 900); pulse(colEl); } };
+  const jobs = chips.map((c, i) => launchChip(c, c.target === "paid" ? paidEl : balEl, i * 230, () => {
+    if (c.target === "paid") { countTo(paidEl, before.p, exp.p, 900); pulse(paidEl); }
+    else { countTo(balEl, before.b, exp.b, 900); pulse(balEl); }
+    doCol();
+  }));
+  if (!chips.length) {
+    countTo(balEl, before.b, exp.b, 900); countTo(paidEl, before.p, exp.p, 900); doCol();
+  }
+  await Promise.all(jobs);
+  await wait(1000);
+  holdTotals = false;
+  render();
+}
+
+async function acceptDenom(docId, btn){
+  if (!userCol) return;
+  const p = pending.find(x => x.docId === docId);
+  btn.disabled = true;
+  const item = btn.closest(".pending-item");
+  const before = totals();
+  const chips = [];
+  if (p && item && !reduceMotion()) {
+    const mk = (sel, amt, cls, target) => {
+      const el = item.querySelector(sel);
+      if (el && amt > 0) chips.push(makeChip(el.getBoundingClientRect(), "+" + money(amt), cls, target));
+    };
+    mk("[data-cash]", p.cash, "cash", "bal");
+  }
+  holdTotals = true;
+  setTimeout(() => { if (holdTotals) { holdTotals = false; render(); } }, 8000);
+  try {
+    const ref = db.collection("denominations").doc(docId);
+    await db.runTransaction(async tx => {
+      const snap = await tx.get(ref);
+      if (!snap.exists || snap.data().status !== "pending") throw new Error("This request was already handled.");
+      const d = snap.data();
+      const sid = "den" + d.id;
+      /* Only the cash denomination goes into the statement (Collected = Balance = cash, Paid = 0).
+         PhonePe, delivery and pickup are kept in the history record only and never touch the totals. */
+      tx.set(userCol.doc(sid), {
+        id: sid, person: d.rider, date: d.date,
+        collected: d.cash, paid: 0, balance: d.cash,
+        type: "person", createdAt: Date.now(), source: "denomination",
+        denomination: { notes: d.notes, cash: d.cash, phonepe: d.phonepe }
+      });
+      if (Number(d.phonepe || 0) > 0) {
+        /* cash accepted; the same request box stays for the PhonePe accept / reject step */
+        tx.update(ref, { status: "pp_pending", acceptedAt: Date.now() });
+      } else {
+        tx.update(ref, { status: "accepted", acceptedAt: Date.now(), photo: firebase.firestore.FieldValue.delete() });
+      }
+    });
+  } catch (e) {
+    chips.forEach(c => c.wrap.remove());
+    holdTotals = false; render();
+    alert(e.message);
+    btn.disabled = false;
+    return;
+  }
+  buzz(30);
+  showToast(p && Number(p.phonepe || 0) > 0 ? "Cash added \u2014 now confirm PhonePe" : "Accepted \u2014 totals updated", "ok");
+  const cash = p ? Number(p.cash || 0) : 0, pp = p ? Number(p.phonepe || 0) : 0;
+  const exp = { c: before.c + cash, p: before.p, b: before.b + cash };
+  playAcceptFX(chips, before, exp);
+}
+
+async function acceptPhonepe(docId, btn){
+  if (!userCol) return;
+  btn.disabled = true;
+  const p = pending.find(x => x.docId === docId);
+  const item = btn.closest(".pending-item");
+  const before = totals();
+  const chips = [];
+  const pp = p ? Number(p.phonepe || 0) : 0;
+  if (p && item && !reduceMotion()) {
+    const el = item.querySelector("[data-pp]");
+    if (el && pp > 0) chips.push(makeChip(el.getBoundingClientRect(), "+" + money(pp), "pp", "paid"));
+  }
+  holdTotals = true;
+  setTimeout(() => { if (holdTotals) { holdTotals = false; render(); } }, 8000);
+  try {
+    const ref = db.collection("denominations").doc(docId);
+    await db.runTransaction(async tx => {
+      const snap = await tx.get(ref);
+      if (!snap.exists || snap.data().status !== "pp_pending") throw new Error("This request was already handled.");
+      const d = snap.data();
+      const ppv = Number(d.phonepe || 0), cashv = Number(d.cash || 0);
+      tx.update(userCol.doc("den" + d.id), { paid: ppv, balance: cashv - ppv });
+      tx.update(ref, { status: "accepted", ppAdded: true, ppAt: Date.now(), photo: firebase.firestore.FieldValue.delete() });
+    });
+  } catch (e) {
+    chips.forEach(c => c.wrap.remove());
+    holdTotals = false; render();
+    alert(e.message);
+    btn.disabled = false;
+    return;
+  }
+  buzz(30);
+  showToast("PhonePe added to Paid to Meesho", "ok");
+  playAcceptFX(chips, before, { c: before.c, p: before.p + pp, b: before.b - pp });
+}
+
+async function rejectPhonepe(docId, btn){
+  btn.disabled = true;
+  const item = btn.closest(".pending-item");
+  try {
+    if (item) { item.classList.add("rejecting"); buzz([20, 50, 20]); await wait(680); }
+    await db.collection("denominations").doc(docId).update({ status: "accepted", ppAdded: false, ppAt: Date.now(), photo: firebase.firestore.FieldValue.delete() });
+    showToast("PhonePe not added", "reject");
+  } catch (e) {
+    if (item) item.classList.remove("rejecting");
+    alert("Could not reject: " + e.message);
+    btn.disabled = false;
+  }
+}
+
+async function rejectDenom(docId, btn){
+  if (!confirm("Reject this denomination request?")) return;
+  btn.disabled = true;
+  const item = btn.closest(".pending-item");
+  try {
+    if (item) { item.classList.add("rejecting"); buzz([20, 50, 20]); await wait(680); }
+    await db.collection("denominations").doc(docId).update({ status: "rejected", rejectedAt: Date.now(), photo: firebase.firestore.FieldValue.delete() });
+    showToast("Request rejected", "reject");
+  } catch (e) {
+    if (item) item.classList.remove("rejecting");
+    alert("Could not reject: " + e.message);
+    btn.disabled = false;
+  }
+}
+
+/* ---------- ORIGINAL STATEMENT LOGIC ---------- */
+function updateDynamicDropdowns(){
+  const names = [];
+  statements.forEach(i => { if(i.person !== "Owner" && names.indexOf(i.person) === -1) names.push(i.person); });
+  names.sort();
+  document.getElementById("personList").innerHTML = '<option value="Owner"></option>' + names.map(n => '<option value="'+escapeHtml(n)+'"></option>').join("");
+  const fs = document.getElementById("filterPerson");
+  const cur = fs.value;
+  fs.innerHTML = '<option value="ALL">All People</option><option value="Owner">Owner</option>' + names.map(n => '<option value="'+escapeHtml(n)+'">'+escapeHtml(n)+'</option>').join("");
+  if(cur) fs.value = cur;
+}
+
+function getGlobalBalance(){
+  return statements.reduce((s,i) => s + Number(i.collected||0), 0) - statements.reduce((s,i) => s + Number(i.paid||0), 0);
+}
+
+function addStatement(){
+  const person = document.getElementById("person").value.trim();
+  const date = document.getElementById("date").value;
+  const paid = parseFloat(document.getElementById("paid").value) || 0;
+  const isOwner = person.toLowerCase() === "owner";
+  const name = isOwner ? "Owner" : person;
+
+  if(!name || !date){ alert("Please enter a person name and date."); return; }
+  if(paid < 0){ alert("Amount cannot be negative."); return; }
+
+  let collected = 0;
+  if(!isOwner){
+    collected = parseFloat(document.getElementById("collected").value) || 0;
+    if(collected < 0){ alert("Collection cannot be negative."); return; }
+    if(paid > collected && !confirm("Paid to Meesho is greater than this person's collection. Continue?")) return;
+  } else {
+    if(paid <= 0){ alert("For Owner, enter the amount paid to Meesho."); return; }
+    const gb = getGlobalBalance();
+    if(gb <= 0){ alert("There is no outstanding balance to clear."); return; }
+    if(paid > gb){ alert("Owner payment cannot be greater than the total outstanding balance.\n\nTotal balance: " + money(gb)); return; }
+  }
+
+  const id = String(Date.now()) + Math.floor(Math.random()*1000);
+  userCol.doc(id).set({ id, person: name, date, collected, paid, balance: collected - paid, type: isOwner ? "owner" : "person", createdAt: Date.now(), source: "web" })
+    .catch(e => alert("Could not save: " + e.message));
+  clearForm(false);
+}
+
+function clearForm(resetDate = true){
+  document.getElementById("person").value = "";
+  document.getElementById("collected").value = "";
+  document.getElementById("paid").value = "";
+  document.getElementById("collected").disabled = false;
+  document.getElementById("collected").placeholder = "0";
+  document.getElementById("ownerNote").style.display = "none";
+  document.getElementById("ownerInfo").style.display = "none";
+  if(resetDate) document.getElementById("date").value = today();
+}
+
+function updatePersonFields(){
+  const isOwner = document.getElementById("person").value.trim().toLowerCase() === "owner";
+  const c = document.getElementById("collected");
+  c.disabled = isOwner;
+  if(isOwner){
+    c.value = ""; c.placeholder = "Not required for Owner";
+    document.getElementById("ownerNote").style.display = "block";
+    document.getElementById("ownerInfo").style.display = "block";
+    document.getElementById("ownerCurrentBalance").textContent = money(getGlobalBalance());
+  } else {
+    c.placeholder = "0";
+    document.getElementById("ownerNote").style.display = "none";
+    document.getElementById("ownerInfo").style.display = "none";
+  }
+}
+
+function removeStatement(id){
+  if(confirm("Delete this statement?")){
+    userCol.doc(String(id)).delete().catch(e => alert("Could not delete: " + e.message));
+  }
+}
+
+function clearFilters(){
+  document.getElementById("filterPerson").value = "ALL";
+  document.getElementById("filterDate").value = "";
+  render();
+}
+
+function render(){
+  updateDynamicDropdowns();
+  const fp = document.getElementById("filterPerson").value;
+  const fd = document.getElementById("filterDate").value;
+  const filtered = statements.filter(i => (fp === "ALL" || i.person === fp) && (!fd || i.date === fd));
+
+  const allC = statements.reduce((s,i) => s + Number(i.collected||0), 0);
+  const allP = statements.reduce((s,i) => s + Number(i.paid||0), 0);
+  if (!holdTotals) {
+    document.getElementById("totalCollected").textContent = money(allC);
+    document.getElementById("totalPaid").textContent = money(allP);
+    const be = document.getElementById("totalBalance");
+    be.textContent = money(allC - allP);
+    be.className = (allC - allP) >= 0 ? "green" : "red";
+  }
+
+  const container = document.getElementById("statementContainer");
+  if(!filtered.length){ container.innerHTML = '<div class="empty">No statements found.</div>'; return; }
+
+  const groups = {};
+  filtered.forEach(i => { (groups[i.date] = groups[i.date] || []).push(i); });
+  const dates = Object.keys(groups).sort((a,b) => b.localeCompare(a));
+
+  container.innerHTML = dates.map(date => {
+    const items = groups[date];
+    const dc = items.reduce((s,i) => s + Number(i.collected||0), 0);
+    const dp = items.reduce((s,i) => s + Number(i.paid||0), 0);
+    const dbal = dc - dp;
+    const ownerPay = items.filter(i => i.person === "Owner").reduce((s,i) => s + Number(i.paid||0), 0);
+    const cls = dbal >= 0 ? "green" : "red";
+    return `
+    <div class="date-group">
+      <div class="date-header">
+        <div class="date-title">${formatDate(date)}</div>
+        <div class="date-total">
+          <span>Collected: <strong>${money(dc)}</strong></span>
+          <span>Paid: <strong>${money(dp)}</strong></span>
+          <span>Balance: <strong class="${cls}">${money(dbal)}</strong></span>
+        </div>
+      </div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Person</th><th>Collected</th><th>Paid to Meesho</th><th>Balance</th><th>Action</th></tr></thead>
+        <tbody>${items.map(i => `
+          <tr class="${i.person === "Owner" ? "owner-row" : ""}">
+            <td><strong>${escapeHtml(i.person)}</strong></td>
+            <td>${i.person === "Owner" ? "—" : money(i.collected)}</td>
+            <td>${money(i.paid)}</td>
+            <td>${i.person === "Owner"
+              ? '<span class="badge blue">Owner Paid: '+money(i.paid)+'</span>'
+              : '<span class="badge '+(i.balance >= 0 ? "green" : "red")+'">'+money(i.balance)+'</span>'}</td>
+            <td><button class="danger" style="width:auto;height:34px;font-size:13px" data-del="${escapeHtml(i.id)}">Delete</button></td>
+          </tr>`).join("")}
+        </tbody>
+      </table></div>
+      ${ownerPay > 0 ? '<div class="global-payment">Owner payment recorded: <strong>'+money(ownerPay)+'</strong> — this payment reduces the overall balance across all dates.</div>' : ""}
+      <div class="daily-summary">
+        <span>Daily Collected: <strong>${money(dc)}</strong></span>
+        <span>Daily Paid: <strong>${money(dp)}</strong></span>
+        <span>Daily Balance: <strong class="${cls}">${money(dbal)}</strong></span>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+document.getElementById("person").addEventListener("input", updatePersonFields);
+document.getElementById("addBtn").onclick = addStatement;
+document.getElementById("clearBtn").onclick = () => clearForm(true);
+document.getElementById("showAllBtn").onclick = clearFilters;
+document.getElementById("filterPerson").onchange = render;
+document.getElementById("filterDate").onchange = render;
+document.getElementById("statementContainer").addEventListener("click", e => {
+  const id = e.target.getAttribute("data-del");
+  if(id) removeStatement(id);
+});
+
+/* ---------- DENOMINATION HISTORY (record only - never changes any totals) ---------- */
+function renderHistory(){
+  const box = document.getElementById("histContainer");
+  if (!box) return;
+  const fd = document.getElementById("hFilterDate").value;
+  const list = denomHistory.filter(h => !fd || h.date === fd);
+  if (!list.length) { box.innerHTML = '<div class="empty">No denomination history yet.</div>'; return; }
+  const groups = {};
+  list.forEach(h => { (groups[h.date] = groups[h.date] || []).push(h); });
+  const dates = Object.keys(groups).sort((a,b) => String(b).localeCompare(String(a)));
+  const num = v => (v === undefined || v === null) ? "—" : Number(v);
+  box.innerHTML = dates.map(date => {
+    const items = groups[date];
+    return `
+    <div class="date-group">
+      <div class="date-header">
+        <div class="date-title">${formatDate(date)}</div>
+        <div class="date-total"><span>Entries: <strong>${items.length}</strong></span></div>
+      </div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Rider</th><th>Denomination</th><th>Delivery</th><th>Pickup</th></tr></thead>
+        <tbody>${items.map(h => `
+          <tr>
+            <td><strong>${escapeHtml(h.rider || "")}</strong><div class="small" style="margin:2px 0 0">By ${escapeHtml(h.submitterName || "")}</div></td>
+            <td><div class="pending-chips" style="margin-bottom:6px">${noteChips(h) || '<span class="chip">No cash</span>'}</div>
+              <div class="small" style="margin:0">Cash: <strong>${money(h.cash)}</strong> &middot; PhonePe: <strong>${money(h.phonepe)}</strong></div></td>
+            <td><strong>${num(h.delivery)}</strong></td>
+            <td><strong>${num(h.pickup)}</strong></td>
+          </tr>`).join("")}
+        </tbody>
+      </table></div>
+    </div>`;
+  }).join("");
+}
+document.getElementById("hFilterDate").onchange = renderHistory;
+document.getElementById("hShowAll").onclick = () => { document.getElementById("hFilterDate").value = ""; renderHistory(); };
+
+/* ---------- HIDDEN HOME LOCK ---------- */
+const PW_SALT = "mystmt|";
+const PW_HASH = "aa4a5debf085f57b34f03a5a1e2c9e10c7e0155cc6ec7a83043d1228a48401ca";
+const IDLE_MS = 900000;     /* auto-lock after 15 min without activity */
+const HIDDEN_MS = 30000;    /* auto-lock if the app was in the background for 30 s */
+let homeUnlocked = false, lastActive = Date.now(), hiddenAt = 0, jumpAfter = false;
+let pwFails = 0, pwBlockUntil = 0, tapN = 0, tapT = 0;
+
+const lockTimerEl = document.getElementById("lockTimer");
+function updateLockTimer(){
+  if (!lockTimerEl) return;
+  if (!homeUnlocked) { lockTimerEl.textContent = ""; return; }
+  const left = Math.max(0, IDLE_MS - (Date.now() - lastActive));
+  const secs = Math.ceil(left / 1000);
+  const mm = String(Math.floor(secs / 60)).padStart(2, "0"), ss = String(secs % 60).padStart(2, "0");
+  lockTimerEl.textContent = mm + ":" + ss;
+  lockTimerEl.classList.toggle("warn", left <= 60000);
+}
+setInterval(updateLockTimer, 1000);
+
+const pwModal = document.getElementById("pwModal");
+const pwInput = document.getElementById("pwInput");
+const pwErr = document.getElementById("pwErr");
+
+async function sha256(str){
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("");
+}
+function openPw(jump){
+  if (homeUnlocked) return;
+  jumpAfter = !!jump;
+  pwErr.textContent = ""; pwInput.value = "";
+  pwModal.classList.remove("hidden");
+  setTimeout(() => pwInput.focus(), 60);
+}
+function closePw(){ pwModal.classList.add("hidden"); pwInput.value = ""; pwErr.textContent = ""; }
+async function tryUnlock(){
+  const now = Date.now();
+  if (now < pwBlockUntil) { pwErr.textContent = "Too many attempts. Try again in " + Math.ceil((pwBlockUntil - now) / 1000) + "s."; return; }
+  let h = "";
+  try { h = await sha256(PW_SALT + pwInput.value); }
+  catch (e) { pwErr.textContent = "Secure context required (open the site with https)."; return; }
+  if (h === PW_HASH) { pwFails = 0; closePw(); unlockHome(); }
+  else {
+    pwFails++; pwInput.value = "";
+    if (pwFails >= 5) { pwFails = 0; pwBlockUntil = Date.now() + 60000; pwErr.textContent = "Too many attempts. Locked for 60 seconds."; }
+    else pwErr.textContent = "Wrong password.";
+  }
+}
+/* premium lock / unlock animation: shutters close or part, golden padlock snaps shut or opens */
+const vaultEl = document.getElementById("vaultFX");
+const vaultTxt = document.getElementById("vaultTxt");
+let vaultBusy = false;
+function vaultFX(mode, swap){
+  const appVisible = !document.getElementById("appScreen").classList.contains("hidden");
+  if (vaultBusy || !appVisible || document.hidden || reduceMotion()) { swap(); return; }
+  vaultBusy = true;
+  const closing = mode === "close";
+  vaultTxt.textContent = closing ? "Locked" : "Unlocked";
+  vaultEl.className = "on " + mode;
+  setTimeout(swap, closing ? 700 : 600);                          /* swap the screen while the shutters are shut */
+  setTimeout(() => vaultEl.classList.add("out"), closing ? 1900 : 1750);
+  setTimeout(() => { vaultEl.className = ""; vaultBusy = false; }, closing ? 2700 : 2550);
+}
+
+function unlockHome(){
+  homeUnlocked = true; lastActive = Date.now();
+  updateLockTimer();
+  startPending();
+  vaultFX("open", () => {
+    document.getElementById("tabsBar").classList.remove("hidden");
+    showTab("home");
+    if (jumpAfter) { jumpAfter = false; goPending(); }
+  });
+}
+function applyLock(){
+  homeUnlocked = false; jumpAfter = false;
+  updateLockTimer();
+  stopPending();
+  closePw();
+  document.getElementById("tabsBar").classList.add("hidden");
+  clearForm(true);
+  showTab("denom");
+}
+function lockHome(animate){
+  if (animate === true && homeUnlocked) {
+    homeUnlocked = false;            /* locked immediately, the animation is only the show */
+    stopPending();
+    vaultFX("close", applyLock);
+  } else applyLock();
+}
+document.getElementById("pwOk").onclick = tryUnlock;
+document.getElementById("pwCancel").onclick = closePw;
+pwInput.addEventListener("keydown", e => { if (e.key === "Enter") tryUnlock(); });
+document.getElementById("tabLock").onclick = () => lockHome(true);
+
+/* the only way in: tap the "My Statement" title 7 times quickly */
+document.getElementById("brandTitle").addEventListener("click", () => {
+  const n = Date.now();
+  tapN = (n - tapT < 1200) ? tapN + 1 : 1; tapT = n;
+  if (tapN >= 7) { tapN = 0; openPw(false); }
+});
+
+["pointerdown", "keydown", "touchstart", "scroll", "input"].forEach(ev =>
+  window.addEventListener(ev, () => { lastActive = Date.now(); }, {passive: true, capture: true}));
+setInterval(() => { if (homeUnlocked && Date.now() - lastActive > IDLE_MS) lockHome(true); }, 5000);
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden) hiddenAt = Date.now();
+  else {
+    if (homeUnlocked && hiddenAt && Date.now() - hiddenAt > HIDDEN_MS) lockHome();
+    hiddenAt = 0;
+  }
+});
+
+
+</script>
+</body>
+</html>
