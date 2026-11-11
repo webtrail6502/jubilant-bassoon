@@ -628,6 +628,10 @@ header h1{font-size:20px;font-weight:700;letter-spacing:-.5px}
 #loginScreen .ax-forgot{all:unset;cursor:pointer;display:block;margin:-4px 4px 0 auto;font-size:13.5px;font-weight:600;color:var(--ax)}
 #loginScreen .ax-forgot:hover{text-decoration:underline}
 #fCode{text-transform:uppercase}
+/* performance: cheaper effects (no big blur filters, lighter glass) */
+.orbs i,.ax-orbs i{filter:none!important;-webkit-mask-image:radial-gradient(closest-side,#000 25%,transparent 100%);mask-image:radial-gradient(closest-side,#000 25%,transparent 100%);will-change:transform}
+#appScreen .card{-webkit-backdrop-filter:none!important;backdrop-filter:none!important;background:rgba(255,255,255,.95)!important}
+@media(max-width:700px){.ax-orbs i,.orbs i{animation:none!important}.ax-card,.login-card{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}}
 </style>
 </head>
 <body>
@@ -1162,7 +1166,7 @@ function playSplash(mode, swapScreens){
   void splash.offsetWidth;
   splash.classList.add("show");
   const finish = () => { splash.classList.remove("show"); splash.style.animation = ""; logoBox.style.animation = ""; };
-  const total = mode === "in" ? 3400 : 2800;
+  const total = mode === "in" ? 1500 : 1300;
   splash.style.animation = "splashFadeIn .4s ease forwards";
   if (mode === "in") {
     logoBox.style.animation = "logoCinema " + (total / 1000) + "s cubic-bezier(.45,0,.35,1) forwards";
@@ -1171,9 +1175,9 @@ function playSplash(mode, swapScreens){
   }
   setTimeout(() => {
     swapScreens();
-    splash.style.animation = "splashFadeOut .9s ease forwards";
-    setTimeout(finish, 920);
-  }, total - 900);
+    splash.style.animation = "splashFadeOut .5s ease forwards";
+    setTimeout(finish, 520);
+  }, total - 500);
 }
 
 function playLogout(showLogin){
