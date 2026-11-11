@@ -472,9 +472,6 @@ tbody tr:hover{background:#fbfaf6}
 #loginScreen .ax-btn:active{transform:scale(.97)}
 #loginScreen .ax-btn:disabled{opacity:.75;transform:none}
 #loginScreen .ax-btn:disabled::after{content:"";display:inline-block;width:15px;height:15px;margin-left:10px;vertical-align:-2px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:axSpin .7s linear infinite}
-.ax-forgot{text-align:right;margin:-4px 2px 0}
-#loginScreen .ax-forgot button{all:unset;cursor:pointer;font-size:13px;font-weight:600;color:var(--ax)}
-#loginScreen .ax-forgot button:hover{text-decoration:underline}
 .ax-switch{margin:18px 0 0;text-align:center;font-size:14px;color:#6e6e73}
 #loginScreen .ax-switch button{all:unset;cursor:pointer;color:var(--ax);font-weight:600}
 #loginScreen .ax-switch button:hover{text-decoration:underline}
@@ -687,7 +684,7 @@ header h1{font-size:20px;font-weight:700;letter-spacing:-.5px}
     <h2 class='lp-h2 lp-rv'>Up and running in three steps.</h2>
     <div class='lp-grid'>
       <div class='lp-step lp-card lp-rv'><b>1</b><h3>Admin creates the branch</h3><p>Register as admin with your own password and choose a unique branch code.</p></div>
-      <div class='lp-step lp-card lp-rv'><b>2</b><h3>Riders join with the code</h3><p>Delivery boys register with their Gmail, their own password and the branch code.</p></div>
+      <div class='lp-step lp-card lp-rv'><b>2</b><h3>Riders join with the code</h3><p>Delivery boys register with their Gmail. The branch code is their password.</p></div>
       <div class='lp-step lp-card lp-rv'><b>3</b><h3>Send, approve, track</h3><p>Riders send denominations, the admin approves, and totals update live.</p></div>
     </div>
   </section>
@@ -733,7 +730,7 @@ header h1{font-size:20px;font-weight:700;letter-spacing:-.5px}
           <svg class='i-d' viewBox='0 0 24 24'><path d='M21 8l-9-5-9 5v8l9 5 9-5V8z'/><path d='M3 8l9 5 9-5M12 13v8'/></svg>
           <svg class='i-a' viewBox='0 0 24 24'><path d='M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z'/><path d='M8.5 12l2.5 2.5 4.5-5'/></svg>
         </div>
-        <div><h1 id='axTitle'>Delivery sign in</h1><p id='authSub'>Sign in with your email and password</p></div>
+        <div><h1 id='axTitle'>Delivery sign in</h1><p id='authSub'>Sign in with your email and branch code</p></div>
       </div>
       <div class='ax-seg' id='roleSeg'><i></i>
         <button type='button' id='roleDelivery'>Delivery boy</button>
@@ -742,24 +739,10 @@ header h1{font-size:20px;font-weight:700;letter-spacing:-.5px}
 
       <form class='ax-form' id='loginForm' novalidate>
         <div class='ax-field'><input autocomplete='email' id='lEmail' placeholder=' ' type='email'><label for='lEmail'>Gmail address</label></div>
-        <div class='ax-field'><input autocomplete='current-password' id='lPass' placeholder=' ' type='password'><label for='lPass' id='lPassLbl'>Password</label>
-          <button type='button' class='ax-eye' id='eyeBtn' aria-label='Show password'><svg viewBox='0 0 24 24'><path d='M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z'/><circle cx='12' cy='12' r='3'/></svg></button></div>
-        <div class='ax-hint' id='loginHint'>Use the password you created when you registered.</div>
-        <div class='ax-forgot'><button type='button' id='atForgot'>Forgot password?</button></div>
+        <div class='ax-field'><input autocomplete='current-password' id='lPass' placeholder=' ' type='password'><label for='lPass' id='lPassLbl'>Branch code</label>
+          <button type='button' class='ax-eye' id='eyeBtn' aria-label='Show branch code'><svg viewBox='0 0 24 24'><path d='M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z'/><circle cx='12' cy='12' r='3'/></svg></button></div>
+        <div class='ax-hint' id='loginHint'>Your branch code is your password.</div>
         <button class='ax-btn' id='loginBtn' type='submit'>Continue</button>
-      </form>
-
-      <form class='ax-form hidden' id='fpForm' novalidate>
-        <div class='ax-field'><input autocomplete='email' id='fEmail' placeholder=' ' type='email'><label for='fEmail'>Gmail address</label></div>
-        <div class='ax-hint' id='fpHint'>We will email you a link. Tap it to set a new password.</div>
-        <button class='ax-btn' id='fpBtn' type='submit'>Send reset link</button>
-      </form>
-
-      <form class='ax-form hidden' id='npForm' novalidate>
-        <div class='ax-field'><input autocomplete='new-password' id='nPass' placeholder=' ' type='password'><label for='nPass'>New password</label></div>
-        <div class='ax-field'><input autocomplete='new-password' id='nPass2' placeholder=' ' type='password'><label for='nPass2'>Confirm new password</label></div>
-        <div class='ax-hint'>Minimum 6 characters.</div>
-        <button class='ax-btn' id='npBtn' type='submit'>Save new password</button>
       </form>
 
       <form class='ax-form hidden' id='regForm' novalidate>
@@ -937,55 +920,26 @@ function showLoginError(msg){ loginOk.style.display = "none"; loginError.style.d
 function showLoginOk(msg){ loginError.style.display = "none"; loginOk.style.display = "block"; loginOk.textContent = msg; }
 function clearAuthMsgs(){ loginError.style.display = "none"; loginOk.style.display = "none"; }
 
-const RECOVERY_LOAD = /type=recovery/.test(location.hash);                /* opened from the reset email link */
-const LINK_EXPIRED = /error_code=otp_expired|error=access_denied/.test(location.hash);
 let sb = null, currentUser = null, currentProfile = null, isAdmin = false, rtChannel = null;
 if (!configMissing) sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-/* ---- remembered registered name (stored inside the website, per email) ---- */
-const NAME_KEY = "ms_registered_names", LAST_KEY = "ms_last_name";
-function saveRegName(email, name){
-  try {
-    const m = JSON.parse(localStorage.getItem(NAME_KEY) || "{}");
-    m[String(email).trim().toLowerCase()] = name;
-    localStorage.setItem(NAME_KEY, JSON.stringify(m));
-    localStorage.setItem(LAST_KEY, name);
-  } catch (e) {}
-}
-function getRegName(email){
-  try {
-    const m = JSON.parse(localStorage.getItem(NAME_KEY) || "{}");
-    return m[String(email || "").trim().toLowerCase()] || "";
-  } catch (e) { return ""; }
-}
-function myName(){
-  return (currentProfile && currentProfile.name) || (currentUser && getRegName(currentUser.email)) || "";
-}
+const pwFromCode = c => "BC-" + String(c || "").trim().toUpperCase();   /* branch code is the password */
 let regRole = "delivery", pendingRole = null;
 function paintAuth(){
   const reg = !document.getElementById("regForm").classList.contains("hidden");
   const adm = regRole === "admin";
   document.getElementById("loginScreen").dataset.role = regRole;
-  const fp = !document.getElementById("fpForm").classList.contains("hidden");
-  const np = !document.getElementById("npForm").classList.contains("hidden");
-  document.getElementById("axTitle").textContent = (fp || np) ? (np ? "New password" : "Reset password") : (adm ? "Admin" : "Delivery") + (reg ? " account" : " sign in");
-  document.getElementById("authSub").textContent = np ? "Choose a new password for your account" : fp ? "We will email you a reset link" : reg ? "Create your account in a minute" : "Sign in with your email and password";
-  document.getElementById("lPassLbl").textContent = "Password";
-  document.getElementById("loginHint").textContent = "Use the password you created when you registered.";
+  document.getElementById("axTitle").textContent = (adm ? "Admin" : "Delivery") + (reg ? " account" : " sign in");
+  document.getElementById("authSub").textContent = reg ? "Create your account in a minute" : (adm ? "Sign in with your email and password" : "Sign in with your email and branch code");
+  document.getElementById("lPassLbl").textContent = adm ? "Password" : "Branch code";
+  document.getElementById("loginHint").textContent = adm ? "Use the password you created for your admin account." : "Your branch code is your password.";
 }
-let resetting = RECOVERY_LOAD;
 function setAuthMode(m){
-  const reg = m === "register", fp = m === "forgot", np = m === "newpass";
-  document.getElementById("loginForm").classList.toggle("hidden", reg || fp || np);
+  const reg = m === "register";
+  document.getElementById("loginForm").classList.toggle("hidden", reg);
   document.getElementById("regForm").classList.toggle("hidden", !reg);
-  document.getElementById("fpForm").classList.toggle("hidden", !fp);
-  document.getElementById("npForm").classList.toggle("hidden", !np);
-  document.getElementById("swLogin").classList.toggle("hidden", reg || fp || np);
-  document.getElementById("swReg").classList.toggle("hidden", !(reg || fp));
-  if (fp) {
-    document.getElementById("fEmail").value = document.getElementById("lEmail").value;
-    document.getElementById("fpBtn").textContent = "Send reset link";
-  }
+  document.getElementById("swLogin").classList.toggle("hidden", reg);
+  document.getElementById("swReg").classList.toggle("hidden", !reg);
   paintAuth();
   clearAuthMsgs();
 }
@@ -993,12 +947,12 @@ function setRegRole(r){
   regRole = r;
   const adm = r === "admin";
   document.getElementById("rBranchNameWrap").classList.toggle("hidden", !adm);
-  document.getElementById("rPassWrap").classList.remove("hidden");
+  document.getElementById("rPassWrap").classList.toggle("hidden", !adm);
   const lp = document.getElementById("lPass"); lp.value = ""; lp.type = "password";
   document.getElementById("rCodeLbl").textContent = adm ? "Create branch code" : "Branch code";
   document.getElementById("rCodeHint").textContent = adm
-    ? "Choose a unique code (4-12 letters/numbers). Share it with your delivery boys so they can join your branch. Everyone signs in with their own password."
-    : "Ask your admin for the branch code. It only links you to the branch - you sign in with your own password.";
+    ? "Choose a unique code (4-12 letters/numbers). Share it with your delivery boys - it is their password. You sign in with your own password."
+    : "Ask your admin for the branch code. It is also your password.";
   paintAuth();
   clearAuthMsgs();
 }
@@ -1027,7 +981,6 @@ document.getElementById("lpYear").textContent = new Date().getFullYear();
 addEventListener("pointermove", e => { const s = document.getElementById("loginScreen"); s.style.setProperty("--px", (e.clientX / innerWidth - .5) * 2); s.style.setProperty("--py", (e.clientY / innerHeight - .5) * 2); });
 document.getElementById("atLogin").onclick = () => setAuthMode("login");
 document.getElementById("atReg").onclick = () => setAuthMode("register");
-document.getElementById("atForgot").onclick = () => setAuthMode("forgot");
 document.getElementById("roleDelivery").onclick = () => setRegRole("delivery");
 document.getElementById("roleAdmin").onclick = () => setRegRole("admin");
 
@@ -1040,13 +993,13 @@ document.getElementById("loginForm").addEventListener("submit", async e => {
   const email = document.getElementById("lEmail").value.trim();
   const adm = regRole === "admin";
   const raw = document.getElementById("lPass").value;
-  if (!email || !raw) { showLoginError("Enter your email and password."); return; }
+  if (!email || !raw.trim()) { showLoginError(adm ? "Enter your email and password." : "Enter your email and branch code."); return; }
   const btn = document.getElementById("loginBtn");
   busy(btn, true, "Signing in");
   pendingRole = regRole;
-  const { error } = await sb.auth.signInWithPassword({ email, password: raw });
+  const { error } = await sb.auth.signInWithPassword({ email, password: adm ? raw : pwFromCode(raw) });
   busy(btn, false, "Continue");
-  if (error) { pendingRole = null; showLoginError(/invalid login/i.test(error.message) ? "Wrong email or password." : error.message); }
+  if (error) { pendingRole = null; showLoginError(/invalid login/i.test(error.message) ? (adm ? "Wrong email or password." : "Wrong email or branch code.") : error.message); }
 });
 
 document.getElementById("regForm").addEventListener("submit", async e => {
@@ -1058,8 +1011,8 @@ document.getElementById("regForm").addEventListener("submit", async e => {
   const code = document.getElementById("rCode").value.trim().toUpperCase();
   const branchName = document.getElementById("rBranchName").value.trim();
   const adm = regRole === "admin";
-  const password = document.getElementById("rPass").value;
-  if (password.length < 6) { showLoginError("Password must be at least 6 characters."); return; }
+  const password = adm ? document.getElementById("rPass").value : pwFromCode(code);
+  if (adm && password.length < 6) { showLoginError("Password must be at least 6 characters."); return; }
   if (!name) { showLoginError("Enter your name."); return; }
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { showLoginError("Enter a valid Gmail address."); return; }
   if (!/^[A-Z0-9]{4,12}$/.test(code)) { showLoginError("Branch code must be 4-12 letters or numbers (no spaces)."); return; }
@@ -1075,7 +1028,6 @@ document.getElementById("regForm").addEventListener("submit", async e => {
       email, password,
       options: { data: { name, role: regRole, branch_code: code, branch_name: branchName } }
     });
-    if (!error) saveRegName(email, name);
     if (error) {
       showLoginError(/database error/i.test(error.message) ? "Registration failed. Check the branch code and try again." : error.message);
       return;
@@ -1090,39 +1042,6 @@ document.getElementById("regForm").addEventListener("submit", async e => {
   } finally {
     busy(btn, false, "Create account");
   }
-});
-document.getElementById("fpForm").addEventListener("submit", async e => {
-  e.preventDefault();
-  clearAuthMsgs();
-  if (configMissing) { showLoginError("Supabase is not configured yet. Paste your URL and anon key in the script."); return; }
-  const email = document.getElementById("fEmail").value.trim();
-  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { showLoginError("Enter your registered Gmail address."); return; }
-  if (location.protocol === "file:") { showLoginError("Open this website from its hosted web address (not as a file) to use password reset."); return; }
-  const btn = document.getElementById("fpBtn");
-  busy(btn, true, "Sending...");
-  const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: location.origin + location.pathname });
-  busy(btn, false, "Send reset link");
-  if (error) { showLoginError(error.message); return; }
-  showLoginOk("Reset link sent to " + email + ". Open it from your Gmail (check Spam too).");
-});
-
-document.getElementById("npForm").addEventListener("submit", async e => {
-  e.preventDefault();
-  clearAuthMsgs();
-  const pw = document.getElementById("nPass").value, pw2 = document.getElementById("nPass2").value;
-  if (pw.length < 6) { showLoginError("Password must be at least 6 characters."); return; }
-  if (pw !== pw2) { showLoginError("The two passwords do not match."); return; }
-  const btn = document.getElementById("npBtn");
-  busy(btn, true, "Saving...");
-  const { error } = await sb.auth.updateUser({ password: pw });
-  busy(btn, false, "Save new password");
-  if (error) { showLoginError(/expired|session|missing/i.test(error.message) ? "This reset link has expired. Go to Forgot password and request a new one." : error.message); return; }
-  await sb.auth.signOut();
-  resetting = false; loadedUid = null;
-  history.replaceState(null, "", location.pathname + location.search);
-  ["nPass", "nPass2"].forEach(id => document.getElementById(id).value = "");
-  setAuthMode("login");
-  showLoginOk("Password changed. Sign in with your new password.");
 });
 document.getElementById("logoutBtn").onclick = () => { if (sb) sb.auth.signOut(); };
 
@@ -1268,7 +1187,6 @@ function stopData(){
 }
 
 async function handleSession(session){
-  if (resetting) return;                              /* password reset in progress */
   if (session && session.user) {
     if (loadedUid === session.user.id) return;          /* token refresh etc. */
     loadedUid = session.user.id;
@@ -1292,8 +1210,6 @@ async function handleSession(session){
     currentProfile.branch_name = br ? br.name : prof.branch_code;
     isAdmin = prof.role === "admin";
 
-    if (!prof.name) prof.name = getRegName(prof.email || currentUser.email);
-    if (prof.name) saveRegName(prof.email || currentUser.email, prof.name);
     document.getElementById("userName").textContent = prof.name;
     document.getElementById("userEmail").textContent = prof.email;
     document.getElementById("userPhoto").style.display = "none";
@@ -1337,12 +1253,7 @@ async function handleSession(session){
     else showLogin();
   }
 }
-if (sb) sb.auth.onAuthStateChange((event, session) => {
-  if (event === "PASSWORD_RECOVERY") { resetting = true; setTimeout(() => openAuth("newpass"), 0); return; }
-  setTimeout(() => handleSession(session), 0);
-});
-if (RECOVERY_LOAD) openAuth("newpass");                                     /* reset link opened */
-else if (LINK_EXPIRED) { openAuth("forgot"); showLoginError("That reset link has expired or was already used. Request a new one."); }
+if (sb) sb.auth.onAuthStateChange((event, session) => { setTimeout(() => handleSession(session), 0); });
 
 const money = n => "₹" + Number(n || 0).toLocaleString("en-IN", {minimumFractionDigits:2, maximumFractionDigits:2});
 const today = () => { const d = new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); };
@@ -1458,7 +1369,7 @@ function resetDenomForm(){
   document.getElementById("dPhoto").value = "";
   document.getElementById("photoPreview").style.display = "none";
   document.getElementById("dDate").value = today();
-  document.getElementById("dRider").value = myName();
+  document.getElementById("dRider").value = (currentProfile && currentProfile.name) || "";
   photoData = "";
   updateDenomTotals();
 }
@@ -1851,7 +1762,7 @@ function addStatement(){
 }
 
 function clearForm(resetDate = true){
-  document.getElementById("person").value = myName();
+  document.getElementById("person").value = "";
   document.getElementById("collected").value = "";
   document.getElementById("paid").value = "";
   document.getElementById("collected").disabled = false;
