@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+<meta content='width=device-width, initial-scale=1.0' name='viewport'>
+<meta content='#06131f' name='theme-color'>
+<title>Team - My Statement</title>
+<link href='https://fonts.googleapis.com' rel='preconnect'>
+<link crossorigin='anonymous' href='https://fonts.gstatic.com' rel='preconnect'>
+<link href='https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=DM+Sans:wght@400;500;600;700&amp;family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,800&amp;display=swap' rel='stylesheet'>
+<link rel='stylesheet' href='css/style.css'>
+</head>
+<body data-page='team'>
+<div id='appScreen'>
+<header>
+  <div class='header-inner'>
+    <div class='brand'><img alt='' class='brand-logo' id='headerLogo'><div><h1>My Statement</h1><p>Branch team</p></div></div>
+    <div class='user'>
+      <button id='backBtn'>&#8592; Back</button>
+      <button id='logoutBtn'>Logout</button>
+    </div>
+  </div>
+</header>
+<main>
+  <section class='card'>
+    <h2>Branch code</h2>
+    <div style='background:#eef5ff;border:1px solid #d3e6ff;border-radius:16px;padding:20px;text-align:center'>
+      <div class='small' id='tBranchName' style='margin:0 0 6px'>Branch</div>
+      <strong id='tCode' style='font-size:34px;letter-spacing:5px;color:#0058b0'>&#8212;</strong>
+    </div>
+  </section>
+  <section class='card'>
+    <h2>Members <span class='small' id='tCount' style='margin:0'></span></h2>
+    <div id='tList'><div class='empty'>Loading...</div></div>
+  </section>
+</main>
+</div>
+<script src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2'></script>
+<script src='js/common.js'></script>
+<script src='js/team.js'></script>
+</body>
+</html>
