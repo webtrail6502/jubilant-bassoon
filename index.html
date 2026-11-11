@@ -751,12 +751,15 @@ header h1{font-size:20px;font-weight:700;letter-spacing:-.5px}
 
       <form class='ax-form hidden' id='fpForm' novalidate>
         <div class='ax-field'><input autocomplete='email' id='fEmail' placeholder=' ' type='email'><label for='fEmail'>Gmail address</label></div>
-        <div id='fpStep2' class='hidden' style='display:grid;gap:14px'>
-          <div class='ax-field'><input autocomplete='one-time-code' id='fCode' inputmode='numeric' maxlength='8' placeholder=' ' type='text'><label for='fCode'>6-digit code from Gmail</label></div>
-          <div class='ax-field'><input autocomplete='new-password' id='fPass' placeholder=' ' type='password'><label for='fPass'>New password</label></div>
-        </div>
-        <div class='ax-hint' id='fpHint'>We will email a 6-digit code to your Gmail.</div>
-        <button class='ax-btn' id='fpBtn' type='submit'>Send code</button>
+        <div class='ax-hint' id='fpHint'>We will email you a link. Tap it to set a new password.</div>
+        <button class='ax-btn' id='fpBtn' type='submit'>Send reset link</button>
+      </form>
+
+      <form class='ax-form hidden' id='npForm' novalidate>
+        <div class='ax-field'><input autocomplete='new-password' id='nPass' placeholder=' ' type='password'><label for='nPass'>New password</label></div>
+        <div class='ax-field'><input autocomplete='new-password' id='nPass2' placeholder=' ' type='password'><label for='nPass2'>Confirm new password</label></div>
+        <div class='ax-hint'>Minimum 6 characters.</div>
+        <button class='ax-btn' id='npBtn' type='submit'>Save new password</button>
       </form>
 
       <form class='ax-form hidden' id='regForm' novalidate>
@@ -934,6 +937,8 @@ function showLoginError(msg){ loginOk.style.display = "none"; loginError.style.d
 function showLoginOk(msg){ loginError.style.display = "none"; loginOk.style.display = "block"; loginOk.textContent = msg; }
 function clearAuthMsgs(){ loginError.style.display = "none"; loginOk.style.display = "none"; }
 
+const RECOVERY_LOAD = /type=recovery/.test(location.hash);                /* opened from the reset email link */
+const LINK_EXPIRED = /error_code=otp_expired|error=access_denied/.test(location.hash);
 let sb = null, currentUser = null, currentProfile = null, isAdmin = false, rtChannel = null;
 if (!configMissing) sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -962,26 +967,24 @@ function paintAuth(){
   const adm = regRole === "admin";
   document.getElementById("loginScreen").dataset.role = regRole;
   const fp = !document.getElementById("fpForm").classList.contains("hidden");
-  document.getElementById("axTitle").textContent = fp ? "Reset password" : (adm ? "Admin" : "Delivery") + (reg ? " account" : " sign in");
-  document.getElementById("authSub").textContent = fp ? "Get a code in Gmail and set a new password" : reg ? "Create your account in a minute" : "Sign in with your email and password";
+  const np = !document.getElementById("npForm").classList.contains("hidden");
+  document.getElementById("axTitle").textContent = (fp || np) ? (np ? "New password" : "Reset password") : (adm ? "Admin" : "Delivery") + (reg ? " account" : " sign in");
+  document.getElementById("authSub").textContent = np ? "Choose a new password for your account" : fp ? "We will email you a reset link" : reg ? "Create your account in a minute" : "Sign in with your email and password";
   document.getElementById("lPassLbl").textContent = "Password";
   document.getElementById("loginHint").textContent = "Use the password you created when you registered.";
 }
-let resetting = false;
+let resetting = RECOVERY_LOAD;
 function setAuthMode(m){
-  const reg = m === "register", fp = m === "forgot";
-  document.getElementById("loginForm").classList.toggle("hidden", reg || fp);
+  const reg = m === "register", fp = m === "forgot", np = m === "newpass";
+  document.getElementById("loginForm").classList.toggle("hidden", reg || fp || np);
   document.getElementById("regForm").classList.toggle("hidden", !reg);
   document.getElementById("fpForm").classList.toggle("hidden", !fp);
-  document.getElementById("swLogin").classList.toggle("hidden", reg || fp);
+  document.getElementById("npForm").classList.toggle("hidden", !np);
+  document.getElementById("swLogin").classList.toggle("hidden", reg || fp || np);
   document.getElementById("swReg").classList.toggle("hidden", !(reg || fp));
   if (fp) {
-    document.getElementById("fpStep2").classList.add("hidden");
-    document.getElementById("fpBtn").textContent = "Send code";
-    document.getElementById("fpHint").textContent = "We will email a 6-digit code to your Gmail.";
-    document.getElementById("fEmail").readOnly = false;
     document.getElementById("fEmail").value = document.getElementById("lEmail").value;
-    resetting = false;
+    document.getElementById("fpBtn").textContent = "Send reset link";
   }
   paintAuth();
   clearAuthMsgs();
@@ -1093,44 +1096,33 @@ document.getElementById("fpForm").addEventListener("submit", async e => {
   clearAuthMsgs();
   if (configMissing) { showLoginError("Supabase is not configured yet. Paste your URL and anon key in the script."); return; }
   const email = document.getElementById("fEmail").value.trim();
-  const step2 = !document.getElementById("fpStep2").classList.contains("hidden");
-  const btn = document.getElementById("fpBtn");
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { showLoginError("Enter your registered Gmail address."); return; }
-  if (!step2) {
-    busy(btn, true, "Sending code...");
-    const { error } = await sb.auth.resetPasswordForEmail(email);
-    busy(btn, false, "Reset password");
-    if (error) { btn.textContent = "Send code"; showLoginError(error.message); return; }
-    document.getElementById("fEmail").readOnly = true;
-    document.getElementById("fpStep2").classList.remove("hidden");
-    document.getElementById("fpHint").textContent = "Code sent. Check your Gmail (and Spam), then enter it with your new password.";
-    showLoginOk("Code sent to " + email);
-    return;
-  }
-  const code = document.getElementById("fCode").value.trim();
-  const pw = document.getElementById("fPass").value;
-  if (!/^\d{6,8}$/.test(code)) { showLoginError("Enter the 6-digit code from your email."); return; }
-  if (pw.length < 6) { showLoginError("New password must be at least 6 characters."); return; }
-  busy(btn, true, "Resetting...");
-  resetting = true;                                   /* keep the app closed while we reset */
-  try {
-    const v = await sb.auth.verifyOtp({ email, token: code, type: "recovery" });
-    if (v.error) throw v.error;
-    const u = await sb.auth.updateUser({ password: pw });
-    if (u.error) throw u.error;
-    await sb.auth.signOut();
-    resetting = false; loadedUid = null;
-    setAuthMode("login");
-    document.getElementById("lEmail").value = email;
-    document.getElementById("lPass").value = "";
-    ["fCode", "fPass"].forEach(id => document.getElementById(id).value = "");
-    showLoginOk("Password changed. Sign in with your new password.");
-  } catch (err) {
-    resetting = false;
-    showLoginError(/expired|invalid/i.test(err.message) ? "Wrong or expired code. Tap Sign in, then Forgot password to get a new one." : err.message);
-  } finally {
-    busy(btn, false, "Reset password");
-  }
+  if (location.protocol === "file:") { showLoginError("Open this website from its hosted web address (not as a file) to use password reset."); return; }
+  const btn = document.getElementById("fpBtn");
+  busy(btn, true, "Sending...");
+  const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: location.origin + location.pathname });
+  busy(btn, false, "Send reset link");
+  if (error) { showLoginError(error.message); return; }
+  showLoginOk("Reset link sent to " + email + ". Open it from your Gmail (check Spam too).");
+});
+
+document.getElementById("npForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  clearAuthMsgs();
+  const pw = document.getElementById("nPass").value, pw2 = document.getElementById("nPass2").value;
+  if (pw.length < 6) { showLoginError("Password must be at least 6 characters."); return; }
+  if (pw !== pw2) { showLoginError("The two passwords do not match."); return; }
+  const btn = document.getElementById("npBtn");
+  busy(btn, true, "Saving...");
+  const { error } = await sb.auth.updateUser({ password: pw });
+  busy(btn, false, "Save new password");
+  if (error) { showLoginError(/expired|session|missing/i.test(error.message) ? "This reset link has expired. Go to Forgot password and request a new one." : error.message); return; }
+  await sb.auth.signOut();
+  resetting = false; loadedUid = null;
+  history.replaceState(null, "", location.pathname + location.search);
+  ["nPass", "nPass2"].forEach(id => document.getElementById(id).value = "");
+  setAuthMode("login");
+  showLoginOk("Password changed. Sign in with your new password.");
 });
 document.getElementById("logoutBtn").onclick = () => { if (sb) sb.auth.signOut(); };
 
@@ -1345,7 +1337,12 @@ async function handleSession(session){
     else showLogin();
   }
 }
-if (sb) sb.auth.onAuthStateChange((event, session) => { setTimeout(() => handleSession(session), 0); });
+if (sb) sb.auth.onAuthStateChange((event, session) => {
+  if (event === "PASSWORD_RECOVERY") { resetting = true; setTimeout(() => openAuth("newpass"), 0); return; }
+  setTimeout(() => handleSession(session), 0);
+});
+if (RECOVERY_LOAD) openAuth("newpass");                                     /* reset link opened */
+else if (LINK_EXPIRED) { openAuth("forgot"); showLoginError("That reset link has expired or was already used. Request a new one."); }
 
 const money = n => "₹" + Number(n || 0).toLocaleString("en-IN", {minimumFractionDigits:2, maximumFractionDigits:2});
 const today = () => { const d = new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); };
