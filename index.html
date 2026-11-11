@@ -624,6 +624,10 @@ header h1{font-size:20px;font-weight:700;letter-spacing:-.5px}
 #logoBox::before,#logoBox::after{border-color:rgba(0,113,227,.4)}
 #vaultFX .vp{background:radial-gradient(120% 140% at 50% 50%,#3a3a3f,#1d1d1f)}
 #vaultFX .vp.t,#vaultFX .vp.b{border-color:#5ac8fa;box-shadow:0 0 40px rgba(0,113,227,.5)}
+/* forgot password */
+#loginScreen .ax-forgot{all:unset;cursor:pointer;display:block;margin:-4px 4px 0 auto;font-size:13.5px;font-weight:600;color:var(--ax)}
+#loginScreen .ax-forgot:hover{text-decoration:underline}
+#fCode{text-transform:uppercase}
 </style>
 </head>
 <body>
@@ -742,6 +746,7 @@ header h1{font-size:20px;font-weight:700;letter-spacing:-.5px}
         <div class='ax-field'><input autocomplete='current-password' id='lPass' placeholder=' ' type='password'><label for='lPass' id='lPassLbl'>Branch code</label>
           <button type='button' class='ax-eye' id='eyeBtn' aria-label='Show branch code'><svg viewBox='0 0 24 24'><path d='M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z'/><circle cx='12' cy='12' r='3'/></svg></button></div>
         <div class='ax-hint' id='loginHint'>Your branch code is your password.</div>
+        <button type='button' class='ax-forgot' id='atForgot'>Forgot password?</button>
         <button class='ax-btn' id='loginBtn' type='submit'>Continue</button>
       </form>
 
@@ -755,8 +760,17 @@ header h1{font-size:20px;font-weight:700;letter-spacing:-.5px}
         <button class='ax-btn' id='regBtn' type='submit'>Create account</button>
       </form>
 
+      <form class='ax-form hidden' id='forgotForm' novalidate>
+        <div class='ax-field'><input autocomplete='off' id='fCode' maxlength='12' placeholder=' ' type='text'><label for='fCode'>Branch code</label></div>
+        <div class='ax-field'><input autocomplete='email' id='fEmail' placeholder=' ' type='email'><label for='fEmail'>Email address</label></div>
+        <input type='text' id='fHoney' tabindex='-1' autocomplete='off' style='position:absolute;left:-9999px;opacity:0;height:0' aria-hidden='true'>
+        <div class='ax-hint'>Enter your branch code and the email you registered with. Our support team will receive your request and help you reset your password.</div>
+        <button class='ax-btn' id='forgotBtn' type='submit'>Send</button>
+      </form>
+
       <p class='ax-switch' id='swLogin'>New here? <button type='button' id='atReg'>Create an account</button></p>
       <p class='ax-switch hidden' id='swReg'>Already registered? <button type='button' id='atLogin'>Sign in</button></p>
+      <p class='ax-switch hidden' id='swForgot'><button type='button' id='fBack'>&#8592; Back to sign in</button></p>
       <div id='loginError'></div>
       <div id='loginOk'></div>
       <div class='ax-secure'>&#128274; Your branch data is private to your branch</div>
@@ -937,6 +951,9 @@ function paintAuth(){
 }
 function setAuthMode(m){
   const reg = m === "register";
+  document.getElementById("forgotForm").classList.add("hidden");
+  document.getElementById("swForgot").classList.add("hidden");
+  document.getElementById("roleSeg").classList.remove("hidden");
   document.getElementById("loginForm").classList.toggle("hidden", reg);
   document.getElementById("regForm").classList.toggle("hidden", !reg);
   document.getElementById("swLogin").classList.toggle("hidden", reg);
@@ -1003,6 +1020,67 @@ document.getElementById("loginForm").addEventListener("submit", async e => {
   }
   busy(btn, false, "Continue");
   if (error) { pendingRole = null; showLoginError(/invalid login/i.test(error.message) ? "Wrong email or password." : error.message); }
+});
+
+/* ---------- FORGOT PASSWORD (request goes to support inbox) ---------- */
+const SUPPORT_EMAIL = "support.gkadda@gmail.com";
+const FORGOT_HASH = "#forgot-password";
+function openForgot(push){
+  clearAuthMsgs();
+  ["loginForm","regForm","swLogin","swReg","roleSeg"].forEach(id => document.getElementById(id).classList.add("hidden"));
+  document.getElementById("forgotForm").classList.remove("hidden");
+  document.getElementById("swForgot").classList.remove("hidden");
+  document.getElementById("axTitle").textContent = "Forgot password";
+  document.getElementById("authSub").textContent = "We'll send your request to our support team";
+  const le = document.getElementById("lEmail").value.trim();
+  if (le && !document.getElementById("fEmail").value) document.getElementById("fEmail").value = le;
+  if (push !== false && location.hash !== FORGOT_HASH) history.pushState({ forgot: 1 }, "", FORGOT_HASH);
+  scrollTo(0, 0);
+}
+function closeForgot(){
+  setAuthMode("login");
+}
+document.getElementById("atForgot").onclick = () => openForgot();
+document.getElementById("fBack").onclick = () => { if (location.hash === FORGOT_HASH) history.back(); else closeForgot(); };
+addEventListener("popstate", () => {
+  const open = !document.getElementById("forgotForm").classList.contains("hidden");
+  if (location.hash === FORGOT_HASH && !open) openForgot(false);
+  else if (location.hash !== FORGOT_HASH && open) closeForgot();
+});
+document.getElementById("fCode").addEventListener("input", e => { e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, ""); });
+
+document.getElementById("forgotForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  clearAuthMsgs();
+  const code = document.getElementById("fCode").value.trim().toUpperCase();
+  const email = document.getElementById("fEmail").value.trim();
+  if (document.getElementById("fHoney").value) return;   /* bot */
+  if (!/^[A-Z0-9]{4,12}$/.test(code)) { showLoginError("Enter your branch code (4-12 letters or numbers)."); return; }
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { showLoginError("Enter a valid email address."); return; }
+  const btn = document.getElementById("forgotBtn");
+  busy(btn, true, "Sending");
+  try {
+    const res = await fetch("https://formsubmit.co/ajax/" + SUPPORT_EMAIL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify({
+        _subject: "Forgot password request - Branch " + code,
+        _template: "table",
+        _captcha: "false",
+        "Branch code": code,
+        email: email,
+        "Requested at": new Date().toLocaleString()
+      })
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok || String(data.success) !== "true") throw new Error(data.message || "Could not send the request.");
+    document.getElementById("fCode").value = "";
+    document.getElementById("fEmail").value = "";
+    showLoginOk("Request sent. Our support team will contact you on your email shortly.");
+  } catch (err) {
+    showLoginError("Could not send your request. Check your internet and try again. (" + err.message + ")");
+  }
+  busy(btn, false, "Send");
 });
 
 document.getElementById("regForm").addEventListener("submit", async e => {
