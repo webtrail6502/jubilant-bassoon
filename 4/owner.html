@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Owner Dashboard</title>
+<style>
+:root{color-scheme:light dark;--bg:#f3f8f9;--card:#fff;--ink:#121a1d;--muted:#768389;--bd:#e0e9ec;--pri:#217c78;--priText:#fff;--red:#c62839;--green:#12803f;--soft:#f8fcfd}
+@media(prefers-color-scheme:dark){:root{--bg:#0e1517;--card:#162024;--ink:#e8f0f2;--muted:#8fa0a6;--bd:#26343a;--pri:#3bb0aa;--priText:#06201f;--red:#ff7a88;--green:#4cd08a;--soft:#1b282d}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+.wrap{max-width:1180px;margin:auto;padding:20px 16px 60px}
+h1{font-size:22px;margin:0 0 4px}
+.muted{color:var(--muted)}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:18px;margin-bottom:16px}
+input,button{font:inherit;height:42px;border-radius:10px;border:1px solid var(--bd);padding:0 14px;background:var(--card);color:var(--ink)}
+button{background:var(--pri);color:var(--priText);border:0;font-weight:700;cursor:pointer}
+button.sec{background:var(--soft);color:var(--ink);border:1px solid var(--bd)}
+button.sm{height:32px;padding:0 12px;font-size:13px}
+#login{max-width:420px;margin:12vh auto}
+#login input{width:100%;margin:12px 0}
+#login button{width:100%}
+.err{color:var(--red);margin-top:10px;min-height:20px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:16px}
+.stat{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px}
+.stat span{display:block;font-size:11.5px;text-transform:uppercase;letter-spacing:.4px;color:var(--muted)}
+.stat b{font-size:22px}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.bar input{flex:1;min-width:180px}
+.tab{background:var(--soft);color:var(--ink);border:1px solid var(--bd)}
+.tab.on{background:var(--pri);color:var(--priText);border-color:var(--pri)}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:700px}
+th,td{padding:10px 12px;border-bottom:1px solid var(--bd);text-align:left;white-space:nowrap}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);background:var(--soft)}
+.tag{padding:3px 10px;border-radius:20px;font-size:12px;font-weight:700;background:var(--soft);border:1px solid var(--bd)}
+.g{color:var(--green)}.r{color:var(--red)}
+.hidden{display:none}
+tr.pwrow td{background:var(--soft);white-space:normal}
+.pwbox{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.pwbox input{flex:1;min-width:170px;max-width:260px}
+.pwmsg{width:100%;font-size:13px}.pwmsg:empty{display:none}.pwmsg.bad{color:var(--red)}.pwmsg.ok{color:var(--green);font-weight:600}
+</style>
+</head>
+<body>
+
+<div id="login" class="card">
+  <h1>Owner access</h1>
+  <div class="muted">Enter your private owner key.</div>
+  <input id="key" type="password" placeholder="Owner key" autocomplete="off">
+  <button id="go">Open dashboard</button>
+  <div class="err" id="lerr"></div>
+</div>
+
+<div id="app" class="wrap hidden">
+  <div class="top">
+    <div><h1>Owner Dashboard</h1><div class="muted" id="stamp"></div></div>
+    <div><button class="sec" id="refresh">Refresh</button> <button class="sec" id="out">Lock</button></div>
+  </div>
+  <div class="stats" id="stats"></div>
+  <div class="card">
+    <div class="bar" id="tabs"></div>
+    <div class="bar"><input id="q" placeholder="Search anything in this table..."><button class="sec" id="csv">Download CSV</button></div>
+    <div class="tw"><table><thead id="thead"></thead><tbody id="tbody"></tbody></table></div>
+    <div class="muted" id="note" style="margin-top:12px"></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = "https://zqaequyzdrngxnifdkty.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_oqXbagCuLh4DUAy4F-Cfmw_kigOJE8T";
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+let ownerKey = "", D = null, tab = "users", view = {cols: [], rows: []};
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const money = n => "₹" + Number(n || 0).toLocaleString("en-IN", {minimumFractionDigits: 2, maximumFractionDigits: 2});
+const when = v => v ? new Date(v).toLocaleString() : "—";
+
+async function load() {
+  const {data, error} = await sb.rpc("owner_overview", {p_key: ownerKey});
+  if (error) throw error;
+  D = data;
+  $("stamp").textContent = "Updated " + new Date().toLocaleTimeString();
+  const u = D.users, s = D.statements;
+  const c = s.reduce((a, i) => a + Number(i.collected || 0), 0), p = s.reduce((a, i) => a + Number(i.paid || 0), 0);
+  $("stats").innerHTML = [
+    ["Branches", D.branches.length], ["Admins", u.filter(x => x.role === "admin").length],
+    ["Delivery boys", u.filter(x => x.role !== "admin").length], ["Collected", money(c)],
+    ["Paid", money(p)], ["Balance", money(c - p)]
+  ].map(x => `<div class="stat"><span>${x[0]}</span><b>${esc(x[1])}</b></div>`).join("");
+  drawTabs(); draw();
+}
+
+const TABS = {users: "Users", branches: "Branches", statements: "Statements", denominations: "Denominations"};
+function drawTabs() {
+  $("tabs").innerHTML = Object.keys(TABS).map(k =>
+    `<button class="tab ${k === tab ? "on" : ""}" data-t="${k}">${TABS[k]} (${D[k].length})</button>`).join("");
+}
+
+function build() {
+  const nameOf = code => (D.branches.find(b => b.code === code) || {}).name || code || "";
+  if (tab === "users") {
+    view.cols = ["Name", "Email", "Role", "Branch", "Branch code", "Joined", "Last login", "Password"];
+    view.rows = D.users.map(x => [x.name, x.email, x.role, nameOf(x.branch_code), x.branch_code, when(x.joined_at), when(x.last_sign_in_at),
+      "RESET"]);
+  } else if (tab === "branches") {
+    view.cols = ["Branch", "Code", "Admin", "Admin email", "Delivery boys"];
+    view.rows = D.branches.map(b => {
+      const a = D.users.find(x => x.role === "admin" && x.branch_code === b.code) || {};
+      return [b.name, b.code, a.name || "—", a.email || "—", D.users.filter(x => x.role !== "admin" && x.branch_code === b.code).length];
+    });
+  } else if (tab === "statements") {
+    view.cols = ["Date", "Branch", "Person", "Collected", "Paid", "Balance"];
+    view.rows = D.statements.map(i => [i.date, nameOf(i.branch_code), i.person, money(i.collected), money(i.paid), money(i.balance)]);
+  } else {
+    view.cols = ["Date", "Branch", "Rider", "Status", "Cash", "PhonePe", "Delivery", "Pickup"];
+    view.rows = D.denominations.map(h => [h.date, nameOf(h.branch_code), h.rider, h.status, money(h.cash), money(h.phonepe), h.delivery, h.pickup]);
+  }
+}
+
+function draw() {
+  build();
+  const q = $("q").value.trim().toLowerCase();
+  const rows = view.rows.filter(r => !q || r.join(" ").toLowerCase().includes(q));
+  $("thead").innerHTML = "<tr>" + view.cols.map(c => `<th>${esc(c)}</th>`).join("") + "</tr>";
+  $("tbody").innerHTML = rows.length ? rows.map(r => "<tr>" + r.map((v, i) => {
+    if (tab === "users" && v === "RESET") return `<td><button class="sm" data-reset="${esc(r[1])}">Set new password</button></td>`;
+    if (tab === "users" && i === 2) return `<td><span class="tag">${esc(v)}</span></td>`;
+    return `<td>${esc(v)}</td>`;
+  }).join("") + "</tr>").join("") : `<tr><td colspan="${view.cols.length}" class="muted">No data.</td></tr>`;
+  $("note").textContent = tab === "users"
+    ? "Passwords are stored encrypted and cannot be shown. Use “Set new password” for any admin or delivery boy."
+    : rows.length + " row(s)";
+}
+
+async function open() {
+  $("lerr").textContent = "";
+  ownerKey = $("key").value;
+  try {
+    await load();
+    $("login").classList.add("hidden"); $("app").classList.remove("hidden");
+  } catch (e) { ownerKey = ""; $("lerr").textContent = /invalid owner key/i.test(e.message) ? "Wrong owner key." : e.message; }
+}
+
+$("go").onclick = open;
+$("key").onkeydown = e => { if (e.key === "Enter") open(); };
+$("refresh").onclick = () => load().catch(e => alert(e.message));
+$("out").onclick = () => { ownerKey = ""; D = null; $("key").value = ""; $("app").classList.add("hidden"); $("login").classList.remove("hidden"); };
+$("q").oninput = draw;
+$("tabs").onclick = e => { const t = e.target.dataset.t; if (t) { tab = t; $("q").value = ""; drawTabs(); draw(); } };
+$("tbody").onclick = async e => {
+  const cancel = e.target.closest(".pwcancel");
+  if (cancel) { cancel.closest("tr").remove(); return; }
+  const save = e.target.closest(".pwsave");
+  if (save) {
+    const tr = save.closest("tr"), em = tr.dataset.email, msg = tr.querySelector(".pwmsg");
+    const p1 = tr.querySelector(".pw1").value, p2 = tr.querySelector(".pw2").value;
+    msg.className = "pwmsg";
+    if (p1.length < 6) { msg.textContent = "Minimum 6 characters."; msg.classList.add("bad"); return; }
+    if (p1 !== p2) { msg.textContent = "Passwords do not match. Nothing was changed."; msg.classList.add("bad"); return; }
+    save.disabled = true;
+    const {data, error} = await sb.rpc("owner_set_password", {p_key: ownerKey, p_email: em, p_new: p1});
+    save.disabled = false;
+    if (error) { msg.textContent = "Failed: " + error.message; msg.classList.add("bad"); return; }
+    msg.textContent = data + ". Tell them the new password; they can change it again from inside the app.";
+    msg.classList.add("ok");
+    tr.querySelector(".pw1").value = ""; tr.querySelector(".pw2").value = "";
+    return;
+  }
+  const btn = e.target.closest("[data-reset]"); if (!btn) return;
+  const row = btn.closest("tr"), open = row.nextElementSibling && row.nextElementSibling.classList.contains("pwrow");
+  document.querySelectorAll("tr.pwrow").forEach(x => x.remove());
+  if (open) return;
+  const tr = document.createElement("tr");
+  tr.className = "pwrow"; tr.dataset.email = btn.dataset.reset;
+  tr.innerHTML = `<td colspan="${view.cols.length}"><div class="pwbox"><b>New password for ${esc(btn.dataset.reset)}</b>
+    <input type="password" class="pw1" placeholder="New password (min 6)" autocomplete="new-password">
+    <input type="password" class="pw2" placeholder="Confirm password" autocomplete="new-password">
+    <button class="sm pwsave">Save</button><button class="sm sec pwcancel">Cancel</button><div class="pwmsg" aria-live="polite"></div></div></td>`;
+  row.after(tr);
+  tr.querySelector(".pw1").focus();
+};
+$("tbody").onkeydown = e => { if (e.key === "Enter" && e.target.closest(".pwrow")) { e.preventDefault(); e.target.closest("tr").querySelector(".pwsave").click(); } };
+$("csv").onclick = () => {
+  const q = $("q").value.trim().toLowerCase();
+  const rows = view.rows.filter(r => !q || r.join(" ").toLowerCase().includes(q)).map(r => r.map(v => v === "RESET" ? "" : v));
+  const csv = [view.cols].concat(rows).map(r => r.map(v => '"' + String(v == null ? "" : v).replace(/"/g, '""') + '"').join(",")).join("\r\n");
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob(["\ufeff" + csv], {type: "text/csv"}));
+  a.download = "owner-" + tab + ".csv"; a.click();
+};
+</script>
+</body>
+</html>
