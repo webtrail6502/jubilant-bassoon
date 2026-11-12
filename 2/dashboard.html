@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+<meta content='width=device-width, initial-scale=1.0' name='viewport'>
+<meta content='#06131f' name='theme-color'>
+<title>Dashboard - My Statement</title>
+<link href='https://fonts.googleapis.com' rel='preconnect'>
+<link crossorigin='anonymous' href='https://fonts.gstatic.com' rel='preconnect'>
+<link href='https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=DM+Sans:wght@400;500;600;700&amp;family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,800&amp;display=swap' rel='stylesheet'>
+<link rel='stylesheet' href='css/style.css'>
+</head>
+<body data-page='dashboard'>
+
+<!-- SPLASH -->
+<div class='aurora' id='splash'><div class='orbs'><i></i><i></i><i></i><i></i></div><div id='logoBox'></div></div>
+
+<!-- IMAGE VIEWER -->
+<div id='lightbox'><img alt='' id='lightboxImg'></div>
+
+<!-- APP -->
+<div class='hidden' id='appScreen'>
+<header>
+  <div class='header-inner'>
+    <div class='brand'><img alt='' class='brand-logo' id='headerLogo'><div><h1 id='brandTitle'>My Statement</h1><p>Daily collection &amp; payment tracker</p></div></div>
+    <div class='branch-chip hidden' id='branchChip'><span class='rl' id='roleLbl' role='link' tabindex='0' title='See everyone in this branch'></span><span id='branchLbl'></span></div>
+    <div class='user'>
+      <img alt='' id='userPhoto'>
+      <div class='uname'><strong id='userName'></strong><br><span id='userEmail'></span></div>
+      <button id='pwBtn' class='hidden'>Change password</button>
+      <button id='logoutBtn'>Logout</button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<div class='denom-banner collapsed' id='denomBanner'><div class='db-in' id='denomBannerIn'><span class='db-ic'>&#10003;</span><span id='denomBannerText'>Denomination received</span><span class='db-n' id='denomBannerNum'>0</span></div></div>
+
+<div class='tabs hidden' id='tabsBar'>
+  <button class='tab hidden' id='tabHome'>Home</button>
+  <button class='tab' id='tabDenom'>Denomination</button>
+  <button class='tab hidden' id='tabRequests'>Denomination Request <span class='badge blue hidden' id='reqTabCount'>0</span></button>
+  <button class='tab hidden' id='tabStatement'>Statement</button>
+</div>
+
+<!-- ================= HOME PAGE ================= -->
+<div class='hidden' id='homeView'>
+
+<section class='card'>
+  <h2>Add Daily Statement</h2>
+  <div class='grid'>
+    <div>
+      <label for='person'>Person Name</label>
+      <input autocomplete='off' id='person' list='personList' placeholder='Type name or Owner' type='text'>
+      <datalist id='personList'><option value='Owner'></option></datalist>
+    </div>
+    <div><label for='date'>Date</label><input id='date' type='date'></div>
+    <div>
+      <label for='collected'>Total Collected (&#8377;)</label>
+      <input id='collected' min='0' placeholder='0' step='0.01' type='number'>
+      <div class='small' id='ownerNote' style='display:none'>Owner: collection amount is not required.</div>
+    </div>
+    <div><label for='paid'>Paid to Company (&#8377;)</label><input id='paid' min='0' placeholder='0' step='0.01' type='number'></div>
+  </div>
+  <div class='owner-note-box' id='ownerInfo' style='display:none'>
+    <strong>Owner Payment</strong><br>
+    Enter the amount the Owner pays to the company. This payment will reduce the <strong>overall balance across all dates</strong>.<br><br>
+    Current total balance: <strong id='ownerCurrentBalance'>&#8377;0.00</strong>
+  </div>
+  <div class='actions'>
+    <button id='addBtn'>+ Add Statement</button>
+    <button class='secondary' id='clearBtn'>Clear</button>
+  </div>
+  <div class='small'>Normal person: Balance = Collected &#8722; Paid to Company. Owner: enter only the payment made to the company.</div>
+</section>
+
+
+
+<section class='card'>
+  <h2>Overall Summary</h2>
+  <div class='summary'>
+    <div class='stat'><span>Total Collected - All Dates</span><strong id='totalCollected'>&#8377;0.00</strong></div>
+    <div class='stat'><span>Total Paid to Company - All Dates</span><strong id='totalPaid'>&#8377;0.00</strong></div>
+    <div class='stat'><span>Total Balance Left - All Dates</span><strong class='green' id='totalBalance'>&#8377;0.00</strong></div>
+  </div>
+</section>
+
+<section class='card'>
+  <h2>Statement</h2>
+  <div class='filters'>
+    <div>
+      <label for='filterPerson'>Filter by Person</label>
+      <select id='filterPerson'><option value='ALL'>All People</option><option value='Owner'>Owner</option></select>
+    </div>
+    <div><label for='filterDate'>Date</label><input id='filterDate' type='date'></div>
+    <button class='secondary' id='showAllBtn'>Show All Dates</button>
+  </div>
+  <div id='statementContainer' style='margin-top:18px'></div>
+</section>
+
+</div>
+
+<!-- ================= DENOMINATION PAGE ================= -->
+<div class='hidden' id='denomView'>
+<section class='card'>
+  <h2>Cash Denomination</h2>
+  <div class='owner-note-box' id='denomBranchNote' style='margin:-6px 0 18px'></div>
+  <div class='grid' style='grid-template-columns:1fr 1fr;margin-bottom:18px'>
+    <div><label for='dRider'>Rider Name</label><input autocomplete='off' id='dRider' placeholder='Rider name' type='text'></div>
+    <div><label for='dDate'>Date</label><input id='dDate' type='date'></div>
+  </div>
+
+  <label>Enter number of notes / coins (&#8377;)</label>
+  <div class='denom-grid' id='denomGrid'></div>
+
+  <div class='denom-row phonepe-row' style='margin-top:12px'>
+    <span class='dn'>PhonePe</span>
+    <input id='dPhonepe' min='0' placeholder='PhonePe amount (₹)' step='0.01' type='number'>
+  </div>
+  <div class='small'>PhonePe is saved with the denomination but is not counted as cash and does not change any totals.</div>
+
+  <div class='dc-grid'>
+    <div class='denom-row'><span class='dn'>Delivery given</span><input id='dDelivery' min='0' placeholder='0' step='1' type='number'></div>
+    <div class='denom-row'><span class='dn'>Pickup to take</span><input id='dPickup' min='0' placeholder='0' step='1' type='number'></div>
+  </div>
+
+  <div class='dtotals'>
+    <div class='stat'><span>Total Cash</span><strong id='dCash'>&#8377;0.00</strong></div>
+    <div class='stat'><span>PhonePe</span><strong id='dPP'>&#8377;0.00</strong></div>
+    <div class='stat'><span>Grand Total Collected</span><strong id='dGrand'>&#8377;0.00</strong></div>
+  </div>
+
+  <div class='photo-box'>
+    <label for='dPhoto'>Attach Photo (required)</label>
+    <input accept='image/*' id='dPhoto' type='file'>
+    <img alt='Preview' id='photoPreview'>
+  </div>
+
+  <div class='actions'>
+    <button id='dSubmit'>Send for Approval</button>
+    <button class='secondary' id='dClear'>Clear</button>
+  </div>
+  <div class='msg-ok' id='dMsg'></div>
+</section>
+
+
+</div>
+
+<!-- ================= DENOMINATION REQUEST PAGE (admin) ================= -->
+<div class='hidden' id='requestView'>
+<section class='card pending-card' id='pendingSection'>
+  <h2>Denomination Requests <span class='badge blue' id='pendingCount'>0</span></h2>
+  <div id='pendingList'></div>
+  <div class='empty' id='pendingEmpty'>No new denomination requests.</div>
+</section>
+</div>
+
+<!-- ================= STATEMENT PAGE (delivery) ================= -->
+<div class='hidden' id='statementView'>
+<section class='card' id='histCard'>
+  <h2 id='histTitle'>Denomination History</h2>
+  <div class='filters' style='grid-template-columns:1fr auto'>
+    <div><label for='hFilterDate'>Date</label><input id='hFilterDate' type='date'></div>
+    <button class='secondary' id='hShowAll'>Show All Dates</button>
+  </div>
+  <div id='histContainer' style='margin-top:18px'></div>
+</section>
+</div>
+
+</main>
+</div>
+
+
+<script src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2'></script>
+<script src='js/common.js'></script>
+<script src='js/dashboard.js'></script>
+</body>
+</html>

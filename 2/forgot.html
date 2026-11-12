@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+<meta content='width=device-width, initial-scale=1.0' name='viewport'>
+<meta content='#06131f' name='theme-color'>
+<title>Forgot password - My Statement</title>
+<link href='https://fonts.googleapis.com' rel='preconnect'>
+<link crossorigin='anonymous' href='https://fonts.gstatic.com' rel='preconnect'>
+<link href='https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=DM+Sans:wght@400;500;600;700&amp;family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,800&amp;display=swap' rel='stylesheet'>
+<link rel='stylesheet' href='css/style.css'>
+</head>
+<body data-page='forgot'>
+<div id='loginScreen' data-role='admin'>
+  <div class='ax-orbs'><i></i><i></i><i></i></div>
+  <div class='ax-wrap'>
+    <div class='ax-hero'>
+      <div class='ax-heads'>
+        <div class='ax-hl d' style='opacity:1;transform:none'>Locked out?<br><span>We&#8217;ll help you back in.</span></div>
+      </div>
+      <p class='ax-sub'>Send us your branch code and email address. We&#8217;ll reset your password and get back to you.</p>
+    </div>
+    <div class='ax-card' id='axCard'>
+      <div class='ax-top'><img alt='' class='ax-logo-img' id='loginLogo'><span>My Statement</span><button type='button' class='ax-back' id='axBack'>&#8592; Login</button></div>
+      <div class='ax-badge'>
+        <div class='ax-ic'><svg viewBox='0 0 24 24'><rect x='4' y='11' width='16' height='10' rx='2'/><path d='M8 11V7a4 4 0 0 1 8 0v4'/></svg></div>
+        <div><h1>Forgot password</h1><p>Fill in the form and submit</p></div>
+      </div>
+      <form class='ax-form' id='forgotForm' novalidate>
+        <div class='ax-field'><input autocomplete='off' id='fCode' placeholder=' ' type='text' maxlength='12' style='text-transform:uppercase'><label for='fCode'>Branch code</label></div>
+        <div class='ax-field'><input autocomplete='email' id='fEmail' placeholder=' ' type='email'><label for='fEmail'>Email address</label></div>
+        <button class='ax-btn' id='fBtn' type='submit'>Submit</button>
+      </form>
+      <div id='loginError'></div>
+      <div id='loginOk'></div>
+      <div class='ax-secure'>&#128274; Your request goes only to the support team</div>
+    </div>
+  </div>
+</div>
+<script src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2'></script>
+<script src='js/common.js'></script>
+<script src='js/forgot.js'></script>
+</body>
+</html>
