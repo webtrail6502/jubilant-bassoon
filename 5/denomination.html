@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+<meta content='width=device-width, initial-scale=1.0' name='viewport'>
+<meta content='#06131f' name='theme-color'>
+<title>Denomination - My Statement</title>
+<link href='https://cdn.jsdelivr.net' rel='preconnect' crossorigin>
+<link href='https://zqaequyzdrngxnifdkty.supabase.co' rel='preconnect' crossorigin>
+<link href='https://fonts.googleapis.com' rel='preconnect'>
+<link crossorigin='anonymous' href='https://fonts.gstatic.com' rel='preconnect'>
+<link href='https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=DM+Sans:wght@400;500;600;700&amp;family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,800&amp;display=swap' rel='stylesheet' media='print' onload=\"this.media='all'\">
+<link rel='stylesheet' href='css/style.css'>
+</head>
+<body data-page='denom'>
+
+<!-- SPLASH -->
+<div class='aurora' id='splash'><div class='orbs'><i></i><i></i><i></i><i></i></div><div id='logoBox'></div></div>
+
+<!-- IMAGE VIEWER -->
+<div id='lightbox'><img alt='' id='lightboxImg'></div>
+
+<!-- APP -->
+<div class='hidden' id='appScreen'>
+<header>
+  <div class='header-inner'>
+    <div class='brand'><img alt='' class='brand-logo' id='headerLogo'><div><h1 id='brandTitle'>My Statement</h1><p>Daily collection &amp; payment tracker</p></div></div>
+    <div class='branch-chip hidden' id='branchChip'><span class='rl' id='roleLbl' role='link' tabindex='0' title='See everyone in this branch'></span><span id='branchLbl'></span></div>
+    <div class='user'>
+      <img alt='' id='userPhoto'>
+      <div class='uname'><strong id='userName'></strong><br><span id='userEmail'></span></div>
+      <button id='pwBtn' class='hidden'>Change password</button>
+      <button id='logoutBtn'>Logout</button>
+    </div>
+  </div>
+</header>
+
+<main>
+<div class='denom-banner collapsed' id='denomBanner'><div class='db-in' id='denomBannerIn'><span class='db-ic'>&#10003;</span><span id='denomBannerText'>Denomination received</span><span class='db-n' id='denomBannerNum'>0</span></div></div>
+
+<div class='tabs hidden' id='tabsBar'></div>
+
+
+<section class='card'>
+  <h2>Cash Denomination</h2>
+  <div class='owner-note-box' id='denomBranchNote' style='margin:-6px 0 18px'></div>
+  <div class='grid' style='grid-template-columns:1fr 1fr;margin-bottom:18px'>
+    <div><label for='dRider'>Rider Name</label><input autocomplete='off' id='dRider' placeholder='Rider name' type='text'></div>
+    <div><label for='dDate'>Date</label><input id='dDate' type='date'></div>
+  </div>
+
+  <label>Enter number of notes / coins (&#8377;)</label>
+  <div class='denom-grid' id='denomGrid'></div>
+
+  <div class='denom-row phonepe-row' style='margin-top:12px'>
+    <span class='dn'>PhonePe</span>
+    <input id='dPhonepe' min='0' placeholder='PhonePe amount (₹)' step='0.01' type='number'>
+  </div>
+  <div class='small'>PhonePe is saved with the denomination but is not counted as cash and does not change any totals.</div>
+
+  <div class='dc-grid'>
+    <div class='denom-row'><span class='dn'>Delivery given</span><input id='dDelivery' min='0' placeholder='0' step='1' type='number'></div>
+    <div class='denom-row'><span class='dn'>Pickup to take</span><input id='dPickup' min='0' placeholder='0' step='1' type='number'></div>
+  </div>
+
+  <div class='dtotals'>
+    <div class='stat'><span>Total Cash</span><strong id='dCash'>&#8377;0.00</strong></div>
+    <div class='stat'><span>PhonePe</span><strong id='dPP'>&#8377;0.00</strong></div>
+    <div class='stat'><span>Grand Total Collected</span><strong id='dGrand'>&#8377;0.00</strong></div>
+  </div>
+
+  <div class='photo-box'>
+    <label for='dPhoto'>Attach Photo (required)</label>
+    <input accept='image/*' id='dPhoto' type='file'>
+    <img alt='Preview' id='photoPreview'>
+  </div>
+
+  <div class='actions'>
+    <button id='dSubmit'>Send for Approval</button>
+    <button class='secondary' id='dClear'>Clear</button>
+  </div>
+  <div class='msg-ok' id='dMsg'></div>
+</section>
+
+
+
+<section class='card' id='histCard' data-only='admin'>
+  <h2 id='histTitle'>Denomination History</h2>
+  <div class='filters' style='grid-template-columns:1fr auto'>
+    <div><label for='hFilterDate'>Date</label><input id='hFilterDate' type='date'></div>
+    <button class='secondary' id='hShowAll'>Show All Dates</button>
+  </div>
+  <div id='histContainer' style='margin-top:18px'></div>
+</section>
+</main>
+</div>
+
+<script src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2'></script>
+<script src='js/common.js'></script>
+<script src='js/dashboard.js'></script>
+</body>
+</html>
