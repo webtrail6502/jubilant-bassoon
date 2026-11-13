@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#07070b">
+<title>Owner Suite</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07070b;--bg2:#0d0d14;--card:rgba(255,255,255,.045);--card2:rgba(255,255,255,.07);
+  --bd:rgba(255,255,255,.09);--bd2:rgba(232,200,120,.28);
+  --ink:#f4efe4;--muted:#9a95a6;--gold:#e8c878;--gold2:#b8902f;--rose:#ff5d7a;--mint:#5eead4;--violet:#8b7bff;
+  --serif:"Cormorant Garamond",Georgia,serif;--sans:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+*{box-sizing:border-box}
+html{color-scheme:dark}
+body{margin:0;min-height:100vh;background:var(--bg);color:var(--ink);font:14px/1.5 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(900px 500px at 15% -10%,rgba(139,123,255,.16),transparent 60%),
+             radial-gradient(800px 500px at 100% 10%,rgba(232,200,120,.12),transparent 60%),
+             radial-gradient(700px 500px at 50% 120%,rgba(255,93,122,.08),transparent 60%)}
+.hidden{display:none!important}
+button{font:inherit;cursor:pointer;border:0;color:inherit}
+input{font:inherit;color:var(--ink)}
+.gold-text{background:linear-gradient(120deg,#fff3cf,var(--gold) 45%,var(--gold2));-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* ============ LOCK SCREEN ============ */
+#login,#locked{position:fixed;inset:0;z-index:5;display:flex;align-items:center;justify-content:center;padding:20px;overflow:auto}
+.stars,.stars::after{position:absolute;inset:0;background-image:
+  radial-gradient(1.5px 1.5px at 12% 20%,#fff,transparent),radial-gradient(1px 1px at 78% 14%,#fff,transparent),
+  radial-gradient(1.5px 1.5px at 62% 70%,#ffe9b0,transparent),radial-gradient(1px 1px at 30% 82%,#fff,transparent),
+  radial-gradient(1px 1px at 90% 58%,#fff,transparent),radial-gradient(1.5px 1.5px at 45% 35%,#cfc6ff,transparent),
+  radial-gradient(1px 1px at 8% 60%,#fff,transparent),radial-gradient(1px 1px at 70% 92%,#fff,transparent);
+  animation:twinkle 5s ease-in-out infinite;opacity:.7}
+.stars::after{content:"";transform:translate(40px,30px) scale(1.2);animation-delay:-2.5s}
+@keyframes twinkle{50%{opacity:.25}}
+.lockcard{position:relative;width:100%;max-width:440px;border-radius:28px;padding:0 30px 30px;
+  background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.03));border:1px solid var(--bd);
+  backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);box-shadow:0 40px 120px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.12);
+  animation:rise .9s cubic-bezier(.2,.8,.2,1) both}
+.lockcard::before{content:"";position:absolute;inset:-1px;border-radius:29px;padding:1px;pointer-events:none;
+  background:linear-gradient(160deg,rgba(232,200,120,.7),transparent 35%,transparent 65%,rgba(139,123,255,.5));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+@keyframes rise{from{opacity:0;transform:translateY(30px) scale(.97)}}
+.anime{display:block;width:230px;max-width:70%;margin:-62px auto 0;filter:drop-shadow(0 18px 30px rgba(0,0,0,.55))}
+.anime .float{animation:bob 4.5s ease-in-out infinite;transform-origin:center}
+@keyframes bob{50%{transform:translateY(-7px)}}
+.anime .blink{animation:blink 5s infinite;transform-origin:center;transform-box:fill-box}
+@keyframes blink{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.08)}}
+.anime .glow{animation:pulseG 3s ease-in-out infinite}
+@keyframes pulseG{50%{opacity:.45}}
+.brand{text-align:center;margin-top:6px}
+.brand small{letter-spacing:.34em;text-transform:uppercase;color:var(--gold);font-size:10.5px;font-weight:600}
+.brand h1{font:600 38px/1.1 var(--serif);margin:6px 0 4px;letter-spacing:.02em}
+.brand p{margin:0;color:var(--muted);font-size:13px}
+.keyrow{position:relative;margin:24px 0 14px}
+.keyrow svg{position:absolute;left:16px;top:50%;transform:translateY(-50%);opacity:.7}
+.keyrow input{width:100%;height:54px;padding:0 48px;border-radius:16px;background:rgba(0,0,0,.35);border:1px solid var(--bd);outline:0;letter-spacing:.12em;transition:.25s}
+.keyrow input:focus{border-color:var(--gold);box-shadow:0 0 0 4px rgba(232,200,120,.14)}
+.keyrow .eye{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:38px;height:38px;border-radius:10px;background:transparent;opacity:.65}
+.keyrow .eye:hover{opacity:1}
+.cta{width:100%;height:54px;border-radius:16px;font-weight:700;letter-spacing:.04em;color:#1a1305;
+  background:linear-gradient(120deg,#fff0c0,var(--gold) 45%,var(--gold2));box-shadow:0 12px 36px rgba(232,200,120,.25);transition:.25s;position:relative;overflow:hidden}
+.cta:hover{transform:translateY(-2px);box-shadow:0 18px 44px rgba(232,200,120,.38)}
+.cta::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-20deg);animation:shine 4s infinite}
+@keyframes shine{0%,60%{left:-60%}100%{left:130%}}
+.cta:disabled{opacity:.6;cursor:wait}
+.err{color:var(--rose);min-height:20px;margin-top:12px;text-align:center;font-size:13px}
+.shake{animation:shake .45s}
+@keyframes shake{20%,60%{transform:translateX(-9px)}40%,80%{transform:translateX(9px)}}
+.foot{margin-top:14px;text-align:center;color:var(--muted);font-size:11.5px;display:flex;gap:7px;align-items:center;justify-content:center}
+.foot i{width:6px;height:6px;border-radius:50%;background:var(--mint);box-shadow:0 0 10px var(--mint)}
+
+/* ============ LOCKED OUT SCREEN ============ */
+#locked{flex-direction:column;text-align:center;background:radial-gradient(600px 400px at 50% 40%,rgba(232,200,120,.1),transparent 70%),var(--bg)}
+.vault{position:relative;width:220px;height:220px;margin:0 auto 26px}
+.vault .ring{position:absolute;inset:0;border-radius:50%;border:1px solid var(--bd2);animation:spin 18s linear infinite}
+.vault .ring.r2{inset:22px;border-style:dashed;border-color:rgba(139,123,255,.4);animation-direction:reverse;animation-duration:26s}
+.vault .ring.r3{inset:48px;border-color:rgba(232,200,120,.5);animation-duration:12s}
+.vault .ring::before{content:"";position:absolute;top:-4px;left:50%;width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 14px var(--gold)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.vault svg{position:absolute;inset:60px;width:100px;height:100px;filter:drop-shadow(0 0 24px rgba(232,200,120,.5))}
+.vault .shackle{transform-origin:50px 40px;animation:lockclose 1s .15s cubic-bezier(.3,1.5,.5,1) both}
+@keyframes lockclose{from{transform:translateY(-16px) rotate(-18deg)}to{transform:none}}
+#locked h2{font:600 40px/1.1 var(--serif);margin:0 0 8px}
+#locked p{margin:0 0 26px;color:var(--muted)}
+#locked .cta{width:auto;padding:0 34px}
+#locked .ok{display:inline-flex;gap:8px;align-items:center;margin-bottom:18px;padding:6px 14px;border:1px solid var(--bd);border-radius:99px;font-size:12px;color:var(--mint);background:rgba(94,234,212,.06)}
+
+/* ============ DASHBOARD ============ */
+#app{position:relative;z-index:1;max-width:1240px;margin:auto;padding:22px 18px 70px;animation:rise .7s both}
+.top{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:26px}
+.id{display:flex;align-items:center;gap:14px}
+.crest{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;background:linear-gradient(140deg,var(--gold),var(--gold2));box-shadow:0 10px 30px rgba(232,200,120,.3)}
+.id h1{font:600 30px/1.1 var(--serif);margin:0}
+.id .sub{color:var(--muted);font-size:12.5px;display:flex;gap:8px;align-items:center;margin-top:2px}
+.live{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--mint);box-shadow:0 0 0 0 rgba(94,234,212,.6);animation:ping 2s infinite}
+@keyframes ping{70%{box-shadow:0 0 0 8px rgba(94,234,212,0)}100%{box-shadow:0 0 0 0 rgba(94,234,212,0)}}
+.lockbtn{height:44px;padding:0 20px;border-radius:14px;background:var(--card);border:1px solid var(--bd);display:flex;gap:9px;align-items:center;font-weight:600;transition:.25s}
+.lockbtn:hover{border-color:var(--gold);background:rgba(232,200,120,.08);color:var(--gold)}
+.hello{font:500 clamp(26px,4vw,40px)/1.15 var(--serif);margin:0 0 4px}
+.hello+p{margin:0 0 22px;color:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:22px}
+.stat{position:relative;overflow:hidden;border-radius:20px;padding:20px;background:var(--card);border:1px solid var(--bd);backdrop-filter:blur(12px);transition:.3s}
+.stat:hover{transform:translateY(-3px);border-color:var(--bd2)}
+.stat::after{content:"";position:absolute;right:-30px;top:-30px;width:110px;height:110px;border-radius:50%;background:radial-gradient(circle,var(--c,var(--gold)),transparent 70%);opacity:.18}
+.stat span{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--muted)}
+.stat b{display:block;font:600 40px/1.1 var(--serif);margin-top:8px}
+.stat em{font-style:normal;font-size:12px;color:var(--muted)}
+.panel{border-radius:24px;padding:20px;background:var(--card);border:1px solid var(--bd);backdrop-filter:blur(14px)}
+.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+.tabs{display:flex;gap:6px;padding:5px;border-radius:14px;background:rgba(0,0,0,.3);border:1px solid var(--bd)}
+.tab{height:38px;padding:0 18px;border-radius:10px;background:transparent;color:var(--muted);font-weight:600;transition:.2s}
+.tab.on{background:linear-gradient(120deg,var(--gold),var(--gold2));color:#1a1305}
+.search{flex:1;min-width:200px;position:relative}
+.search input{width:100%;height:44px;border-radius:14px;padding:0 16px 0 42px;background:rgba(0,0,0,.3);border:1px solid var(--bd);outline:0}
+.search input:focus{border-color:var(--gold)}
+.search svg{position:absolute;left:14px;top:13px;opacity:.55}
+.tw{overflow-x:auto;border-radius:16px;border:1px solid var(--bd)}
+table{width:100%;border-collapse:collapse;min-width:760px}
+th,td{padding:14px 16px;text-align:left;border-bottom:1px solid var(--bd);white-space:nowrap}
+th{font-size:10.5px;text-transform:uppercase;letter-spacing:.16em;color:var(--muted);font-weight:600;background:rgba(255,255,255,.03)}
+tbody tr{transition:.2s}tbody tr:hover{background:rgba(255,255,255,.035)}
+tbody tr:last-child td{border-bottom:0}
+tbody tr.bt td{background:linear-gradient(90deg,color-mix(in srgb,var(--bc) 10%,transparent),transparent 70%)}
+tbody tr.bt td:first-child{box-shadow:inset 4px 0 0 var(--bc)}
+tbody tr.bt.bfirst td{border-top:2px solid color-mix(in srgb,var(--bc) 45%,transparent)}
+tbody tr.bt:first-child td{border-top:0}
+.bchip{display:inline-block;padding:3px 10px;border-radius:99px;font-size:12px;font-weight:600;color:#14100a;background:var(--bc)}
+.person{display:flex;align-items:center;gap:12px}
+.av{position:relative;flex:none;width:42px;height:42px;border-radius:14px;display:grid;place-items:center;font-weight:700;color:#14100a;background:linear-gradient(140deg,var(--a,#e8c878),var(--b,#b8902f))}
+.av i{position:absolute;right:-3px;bottom:-3px;width:12px;height:12px;border-radius:50%;border:2px solid #14141c;background:#5b5868}
+.av i.on{background:var(--mint);box-shadow:0 0 10px var(--mint)}
+.person b{display:block;font-weight:600}
+.seen{display:block;font-size:12px;color:var(--muted);margin-top:1px}
+.seen.on{color:var(--mint)}
+.tag{padding:4px 12px;border-radius:99px;font-size:11.5px;font-weight:700;letter-spacing:.04em;text-transform:capitalize;border:1px solid var(--bd);background:var(--card2)}
+.tag.admin{color:var(--gold);border-color:var(--bd2);background:rgba(232,200,120,.08)}
+.tag.rider{color:var(--violet);border-color:rgba(139,123,255,.35);background:rgba(139,123,255,.08)}
+.sm{height:34px;padding:0 14px;border-radius:10px;font-size:12.5px;font-weight:700;background:var(--card2);border:1px solid var(--bd);transition:.2s}
+.sm:hover{border-color:var(--gold);color:var(--gold)}
+.sm.pri{background:linear-gradient(120deg,var(--gold),var(--gold2));color:#1a1305;border:0}
+.sm.pri:hover{color:#1a1305;filter:brightness(1.08)}
+tr.pwrow td{background:rgba(232,200,120,.05);white-space:normal}
+.pwbox{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.pwbox input{flex:1;min-width:170px;max-width:260px;height:36px;border-radius:10px;padding:0 12px;background:rgba(0,0,0,.35);border:1px solid var(--bd);outline:0}
+.pwbox input:focus{border-color:var(--gold)}
+.pwmsg{width:100%;font-size:13px}.pwmsg:empty{display:none}.pwmsg.bad{color:var(--rose)}.pwmsg.ok{color:var(--mint);font-weight:600}
+.note{color:var(--muted);font-size:12.5px;margin-top:14px}
+.empty{padding:34px;text-align:center;color:var(--muted)}
+@media(max-width:600px){.lockcard{padding:0 20px 24px}.top{margin-bottom:18px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+
+<!-- ============ LOCK SCREEN (business woman) ============ -->
+<div id="login">
+  <div class="stars"></div>
+  <div class="lockcard" id="lockcard">
+    <svg class="anime" viewBox="0 0 300 300" aria-hidden="true">
+      <defs>
+        <linearGradient id="hair" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4a4263"/><stop offset=".5" stop-color="#2a2440"/><stop offset="1" stop-color="#14101f"/></linearGradient>
+        <linearGradient id="hairHi" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b9c4ff" stop-opacity=".7"/><stop offset="1" stop-color="#b9c4ff" stop-opacity="0"/></linearGradient>
+        <linearGradient id="blazer" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#26437c"/><stop offset="1" stop-color="#0c1a3b"/></linearGradient>
+        <linearGradient id="lapel" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1b3262"/><stop offset="1" stop-color="#0a1633"/></linearGradient>
+        <linearGradient id="shirt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#d9e1ef"/></linearGradient>
+        <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff0c0"/><stop offset=".5" stop-color="#e8c878"/><stop offset="1" stop-color="#b8902f"/></linearGradient>
+        <radialGradient id="iris" cx=".5" cy=".35" r=".7"><stop offset="0" stop-color="#d9a070"/><stop offset=".5" stop-color="#8a5231"/><stop offset="1" stop-color="#3d1e0d"/></radialGradient>
+        <radialGradient id="aura" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#e8c878" stop-opacity=".55"/><stop offset="1" stop-color="#e8c878" stop-opacity="0"/></radialGradient>
+        <linearGradient id="skin" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff1e8"/><stop offset="1" stop-color="#f6d5c6"/></linearGradient>
+      </defs>
+      <circle class="glow" cx="150" cy="160" r="135" fill="url(#aura)"/>
+      <g class="float">
+        <!-- back hair + bun (business updo) -->
+        <circle cx="172" cy="30" r="25" fill="url(#hair)"/>
+        <path d="M70 140C60 64 100 26 150 26s90 38 80 114c-2 26 2 50 8 70-22-2-36-14-42-34H104c-6 20-20 32-42 34 6-20 10-44 8-70z" fill="url(#hair)"/>
+        <path d="M156 18c10-6 26-6 34 4M160 30c8-4 20-4 28 2" stroke="url(#hairHi)" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+        <!-- blazer -->
+        <path d="M30 300c2-52 36-84 84-94h72c48 10 82 42 84 94z" fill="url(#blazer)"/>
+        <!-- shirt -->
+        <path d="M118 204h64l-32 70z" fill="url(#shirt)"/>
+        <!-- neck -->
+        <path d="M132 188h36v26c-10 14-26 14-36 0z" fill="#efc9b8"/>
+        <path d="M132 206c10 8 26 8 36 0v-8c-10 6-26 6-36 0z" fill="#e2b3a0" opacity=".7"/>
+        <!-- shirt collar -->
+        <path d="M120 200l-8 30 38 8-24-34z" fill="url(#shirt)" stroke="#c6d0e4" stroke-width="1.5" stroke-linejoin="round"/>
+        <path d="M180 200l8 30-38 8 24-34z" fill="url(#shirt)" stroke="#c6d0e4" stroke-width="1.5" stroke-linejoin="round"/>
+        <!-- lapels -->
+        <path d="M112 212l38 70-22 18H66c2-34 20-62 46-88z" fill="url(#lapel)"/>
+        <path d="M188 212l-38 70 22 18h62c-2-34-20-62-46-88z" fill="url(#lapel)"/>
+        <path d="M112 212l38 70M188 212l-38 70" stroke="#4c6bb0" stroke-width="2" fill="none" stroke-linecap="round" opacity=".8"/>
+        <path d="M150 282v18" stroke="#050c1e" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="150" cy="292" r="3" fill="url(#gold)"/>
+        <!-- gold necklace -->
+        <path d="M128 218c8 22 36 22 44 0" fill="none" stroke="url(#gold)" stroke-width="2"/>
+        <circle cx="150" cy="240" r="4.5" fill="url(#gold)"/>
+        <!-- lapel pin -->
+        <path d="M82 262l5-8 5 8-5 8z" fill="url(#gold)"/>
+        <!-- ears + earrings -->
+        <ellipse cx="85" cy="146" rx="7" ry="12" fill="#f3cdbd"/><ellipse cx="215" cy="146" rx="7" ry="12" fill="#f3cdbd"/>
+        <circle cx="85" cy="162" r="3.4" fill="url(#gold)"/><circle cx="215" cy="162" r="3.4" fill="url(#gold)"/>
+        <!-- face -->
+        <path d="M88 118c0-44 26-68 62-68s62 24 62 68c0 46-24 82-62 82s-62-36-62-82z" fill="url(#skin)"/>
+        <!-- eyes -->
+        <g class="blink">
+          <path d="M101 134c8-15 38-15 46 0-4 20-40 20-46 0z" fill="#fff"/>
+          <path d="M153 134c8-15 38-15 46 0-6 20-42 20-46 0z" fill="#fff"/>
+          <ellipse cx="124" cy="137" rx="13" ry="15.5" fill="url(#iris)"/>
+          <ellipse cx="176" cy="137" rx="13" ry="15.5" fill="url(#iris)"/>
+          <ellipse cx="124" cy="139" rx="6.5" ry="9" fill="#1e0d05"/>
+          <ellipse cx="176" cy="139" rx="6.5" ry="9" fill="#1e0d05"/>
+          <circle cx="119" cy="130" r="4.6" fill="#fff"/><circle cx="171" cy="130" r="4.6" fill="#fff"/>
+          <circle cx="130" cy="146" r="2.4" fill="#fff" opacity=".9"/><circle cx="182" cy="146" r="2.4" fill="#fff" opacity=".9"/>
+          <path d="M100 133c8-15 30-17 44-6M156 127c14-11 36-9 44 6" fill="none" stroke="#1c1428" stroke-width="4" stroke-linecap="round"/>
+          <path d="M98 132l-6 3M202 132l6 3" stroke="#1c1428" stroke-width="3" stroke-linecap="round"/>
+        </g>
+        <!-- brows, blush, nose, lips -->
+        <path d="M102 114c8-6 20-7 29-3M169 111c9-4 21-3 29 3" stroke="#2a2036" stroke-width="3.4" fill="none" stroke-linecap="round"/>
+        <ellipse cx="110" cy="166" rx="11" ry="5.5" fill="#ff8fa3" opacity=".35"/><ellipse cx="190" cy="166" rx="11" ry="5.5" fill="#ff8fa3" opacity=".35"/>
+        <path d="M148 158l2 3 2-3" stroke="#e5b2a0" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M139 173c4-4 8-3 11-1 3-2 7-3 11 1-3 8-19 8-22 0z" fill="#d4243d"/>
+        <path d="M141 174c6 3 12 3 18 0" stroke="#8e1226" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+        <path d="M144 173c2-2 4-1 6 0" stroke="#ff8a9a" stroke-width="1.4" fill="none" stroke-linecap="round" opacity=".8"/>
+        <!-- side-swept bangs -->
+        <path d="M84 124C74 58 112 34 150 34s76 24 66 90c-6-24-14-40-30-52-8 20-30 36-58 42-18 3-32-4-42-18-2 10-4 18-2 28z" fill="url(#hair)"/>
+        <path d="M108 42c-12 14-18 32-16 52M146 36c-10 14-14 30-12 44M188 46c8 12 12 26 10 40" stroke="url(#hairHi)" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+        <!-- loose strands framing the face -->
+        <path d="M84 124c-4 28-2 56 6 78-12-6-20-28-18-54 0-22 6-34 12-24z" fill="url(#hair)"/>
+        <path d="M216 124c4 28 2 56-6 78 12-6 20-28 18-54 0-22-6-34-12-24z" fill="url(#hair)"/>
+        <path d="M94 150c0 18 2 32 6 46M206 150c0 18-2 32-6 46" stroke="url(#hairHi)" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".7"/>
+        <!-- gold hair pin on bun -->
+        <rect x="150" y="30" width="34" height="4" rx="2" fill="url(#gold)" transform="rotate(-18 167 32)"/>
+        <!-- floating padlock -->
+        <g transform="translate(232 196)">
+          <circle r="34" fill="url(#aura)"/>
+          <path d="M-12 -4v-10a12 12 0 0 1 24 0v10" fill="none" stroke="url(#gold)" stroke-width="6" stroke-linecap="round"/>
+          <rect x="-20" y="-6" width="40" height="32" rx="8" fill="url(#gold)"/>
+          <circle cx="0" cy="8" r="5" fill="#2a1d06"/><rect x="-2" y="10" width="4" height="9" rx="2" fill="#2a1d06"/>
+        </g>
+        <!-- sparkles -->
+        <path d="M52 100l4 10 10 4-10 4-4 10-4-10-10-4 10-4z" fill="#fff3cf"/>
+        <path d="M262 110l3 7 7 3-7 3-3 7-3-7-7-3 7-3z" fill="#fff3cf"/>
+      </g>
+    </svg>
+    <div class="brand">
+      <small>Private · Owner Suite</small>
+      <h1 class="gold-text">Welcome back, Boss</h1>
+      <p>Vault sealed. Present your key to enter.</p>
+    </div>
+    <div class="keyrow">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#e8c878" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M16 7l3 3M14 9l2 2"/></svg>
+      <input id="key" type="password" placeholder="Owner key" autocomplete="off" spellcheck="false">
+      <button class="eye" id="eye" type="button" aria-label="Show key"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f4efe4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg></button>
+    </div>
+    <button class="cta" id="go">Unlock Dashboard</button>
+    <div class="err" id="lerr"></div>
+    <div class="foot"><i></i> End-to-end private access · key never stored</div>
+  </div>
+</div>
+
+<!-- ============ LOCKED OUT SCREEN ============ -->
+<div id="locked" class="hidden">
+  <div class="stars"></div>
+  <div style="position:relative">
+    <div class="vault">
+      <div class="ring"></div><div class="ring r2"></div><div class="ring r3"></div>
+      <svg viewBox="0 0 100 100">
+        <defs><linearGradient id="g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff0c0"/><stop offset=".5" stop-color="#e8c878"/><stop offset="1" stop-color="#b8902f"/></linearGradient></defs>
+        <path class="shackle" d="M30 44V32a20 20 0 0 1 40 0v12" fill="none" stroke="url(#g2)" stroke-width="9" stroke-linecap="round"/>
+        <rect x="20" y="42" width="60" height="46" rx="12" fill="url(#g2)"/>
+        <circle cx="50" cy="62" r="7" fill="#2a1d06"/><rect x="47.5" y="64" width="5" height="14" rx="2.5" fill="#2a1d06"/>
+      </svg>
+    </div>
+    <div class="ok"><span class="live"></span> Session secured</div>
+    <h2 class="gold-text">Locked Out</h2>
+    <p>Your dashboard is sealed and all data cleared from this screen.</p>
+    <button class="cta" id="again">Unlock Again</button>
+  </div>
+</div>
+
+<!-- ============ DASHBOARD ============ -->
+<div id="app" class="hidden">
+  <div class="top">
+    <div class="id">
+      <div class="crest"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1a1305" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18h18l-1.5-9-4.5 4-3-7-3 7-4.5-4z"/></svg></div>
+      <div><h1 class="gold-text">Owner Suite</h1><div class="sub"><span class="live"></span><span id="stamp">Live</span></div></div>
+    </div>
+    <button class="lockbtn" id="out"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Lock</button>
+  </div>
+  <h2 class="hello" id="hello">Good day, Boss</h2>
+  <p>Your people and branches at a glance.</p>
+  <div class="stats" id="stats"></div>
+  <div class="panel">
+    <div class="bar">
+      <div class="tabs" id="tabs"></div>
+      <div class="search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f4efe4" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input id="q" placeholder="Search people, branches, emails…"></div>
+    </div>
+    <div class="tw"><table><thead id="thead"></thead><tbody id="tbody"></tbody></table></div>
+    <div class="note" id="note"></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = "https://zqaequyzdrngxnifdkty.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_oqXbagCuLh4DUAy4F-Cfmw_kigOJE8T";
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+let ownerKey = "", D = null, tab = "users", view = {cols: [], rows: []}, poll = null, poll2 = null;
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const when = v => v ? new Date(v).toLocaleString() : "—";
+const ONLINE_MS = 30 * 1000;   /* no heartbeat for 30s = offline */
+let skew = 0;                  /* server clock minus this device clock */
+
+function seenInfo(u){
+  const t = u.last_seen ? new Date(u.last_seen).getTime() : 0;
+  if (!t) return {on: false, text: u.last_sign_in_at ? "Last login " + ago(new Date(u.last_sign_in_at).getTime()) : "Never seen"};
+  if (u.is_online && (Date.now() + skew - t) < ONLINE_MS) return {on: true, text: "Online now"};
+  const d = new Date(t), now = new Date(), tm = d.toLocaleTimeString([], {hour: "numeric", minute: "2-digit"});
+  const y = new Date(now); y.setDate(now.getDate() - 1);
+  if (d.toDateString() === now.toDateString()) return {on: false, text: "Last seen today at " + tm};
+  if (d.toDateString() === y.toDateString()) return {on: false, text: "Last seen yesterday at " + tm};
+  return {on: false, text: "Last seen " + d.toLocaleDateString([], {day: "numeric", month: "short"}) + " at " + tm};
+}
+function ago(t){
+  const m = Math.floor((Date.now() - t) / 60000);
+  if (m < 1) return "just now"; if (m < 60) return m + " min ago";
+  const h = Math.floor(m / 60); if (h < 24) return h + " hr ago";
+  return Math.floor(h / 24) + " d ago";
+}
+const PAL = [["#e8c878","#b8902f"],["#a99bff","#6a54e6"],["#5eead4","#14a38f"],["#ff9db0","#e0405f"],["#8ec5ff","#3b82f6"]];
+const BPAL = ["#e8c878","#a99bff","#5eead4","#ff9db0","#8ec5ff","#ffb26b","#b6e36b","#f08be0","#7ee0ff","#d4a373"];
+function branchOrder(){
+  const codes = D.branches.slice().sort((a, b) => String(a.name || a.code).localeCompare(String(b.name || b.code))).map(b => b.code);
+  D.users.forEach(u => { if (codes.indexOf(u.branch_code) < 0) codes.push(u.branch_code); });
+  return codes;
+}
+function branchColor(code){ const i = branchOrder().indexOf(code); return BPAL[(i < 0 ? 0 : i) % BPAL.length]; }
+function avatar(name, on, color){
+  let h = 0; for (const c of String(name || "?")) h = (h * 31 + c.charCodeAt(0)) >>> 0;
+  const p = PAL[h % PAL.length], c = color || p[0];
+  return `<div class="av" style="--a:${c};--b:${c}">${esc((name || "?").trim().charAt(0).toUpperCase())}<i class="${on ? "on" : ""}"></i></div>`;
+}
+
+async function syncPresence(){
+  const {data, error} = await sb.rpc("owner_presence", {p_key: ownerKey});
+  if (error) throw error;
+  skew = data.now - Date.now();
+  const m = {}; data.users.forEach(x => m[x.id] = x);
+  if (D) D.users.forEach(x => { const p = m[x.id]; if (p) { x.last_seen = p.last_seen; x.is_online = p.is_online; } });
+}
+async function livePresence(){
+  await syncPresence();
+  $("stamp").textContent = "Live · updated " + new Date().toLocaleTimeString([], {hour: "numeric", minute: "2-digit", second: "2-digit"});
+  renderStats();
+  if (!document.querySelector("tr.pwrow")) draw();
+}
+async function load(){
+  const {data, error} = await sb.rpc("owner_overview", {p_key: ownerKey});
+  if (error) throw error;
+  D = data;
+  try { await syncPresence(); } catch (e) {}
+  $("stamp").textContent = "Live · updated " + new Date().toLocaleTimeString([], {hour: "numeric", minute: "2-digit", second: "2-digit"});
+  renderStats();
+  drawTabs(); draw();
+}
+function renderStats(){
+  const u = D.users;
+  const online = u.filter(x => seenInfo(x).on).length;
+  $("stats").innerHTML = [
+    ["Branches", D.branches.length, "Active locations", "var(--gold)"],
+    ["Admins", u.filter(x => x.role === "admin").length, "Branch managers", "var(--violet)"],
+    ["Delivery boys", u.filter(x => x.role !== "admin").length, "On your team", "var(--mint)"],
+    ["Online now", online, "Active right now", "var(--rose)"]
+  ].map(x => `<div class="stat" style="--c:${x[3]}"><span>${x[0]}</span><b>${esc(x[1])}</b><em>${x[2]}</em></div>`).join("");
+  const h = new Date().getHours();
+  $("hello").textContent = (h < 12 ? "Good morning" : h < 17 ? "Good afternoon" : "Good evening") + ", Boss";
+}
+
+const TABS = {users: "People", branches: "Branches"};
+function drawTabs(){
+  $("tabs").innerHTML = Object.keys(TABS).map(k => `<button class="tab ${k === tab ? "on" : ""}" data-t="${k}">${TABS[k]} · ${D[k].length}</button>`).join("");
+}
+
+function build(){
+  const nameOf = code => (D.branches.find(b => b.code === code) || {}).name || code || "";
+  if (tab === "users") {
+    view.cols = ["Name", "Email", "Role", "Branch", "Branch code", "Joined", "Last login", "Password"];
+    const ord = branchOrder();
+    const sorted = D.users.slice().sort((a, b) =>
+      (ord.indexOf(a.branch_code) - ord.indexOf(b.branch_code)) ||
+      ((a.role === "admin" ? 0 : 1) - (b.role === "admin" ? 0 : 1)) ||
+      String(a.name || "").localeCompare(String(b.name || "")));
+    view.rows = sorted.map(x => [x, x.email, x.role, nameOf(x.branch_code), x.branch_code, when(x.joined_at), when(x.last_sign_in_at), "RESET"]);
+  } else {
+    view.cols = ["Branch", "Code", "Admin", "Admin email", "Delivery boys"];
+    view.rows = D.branches.map(b => {
+      const a = D.users.find(x => x.role === "admin" && x.branch_code === b.code) || {};
+      return [b.name, b.code, a.name || "—", a.email || "—", D.users.filter(x => x.role !== "admin" && x.branch_code === b.code).length];
+    });
+  }
+}
+const flat = r => r.map(v => (v && typeof v === "object") ? (v.name || "") : v).join(" ").toLowerCase();
+
+function draw(){
+  build();
+  const q = $("q").value.trim().toLowerCase();
+  const rows = view.rows.filter(r => !q || flat(r).includes(q));
+  $("thead").innerHTML = "<tr>" + view.cols.map(c => `<th>${esc(c)}</th>`).join("") + "</tr>";
+  let prevB = null;
+  $("tbody").innerHTML = rows.length ? rows.map(r => {
+    if (tab !== "users") return "<tr>" + cells(r) + "</tr>";
+    const bc = r[0].branch_code, first = bc !== prevB; prevB = bc;
+    return `<tr class="bt${first ? " bfirst" : ""}" style="--bc:${branchColor(bc)}">` + cells(r) + "</tr>";
+  }).join("") : `<tr><td colspan="${view.cols.length}" class="empty">Nothing here yet.</td></tr>`;
+  function cells(r){ return r.map((v, i) => {
+    if (tab === "users" && i === 0) {
+      const s = seenInfo(v);
+      return `<td><div class="person">${avatar(v.name, s.on, branchColor(v.branch_code))}<div><b>${esc(v.name)}</b><span class="seen ${s.on ? "on" : ""}">${esc(s.text)}</span></div></div></td>`;
+    }
+    if (tab === "users" && v === "RESET") return `<td><button class="sm pri" data-reset="${esc(r[1])}">Set new password</button></td>`;
+    if (tab === "users" && i === 2) return `<td><span class="tag ${v === "admin" ? "admin" : "rider"}">${esc(v)}</span></td>`;
+    return `<td>${esc(v)}</td>`;
+  }).join(""); }
+  $("note").textContent = tab === "users"
+    ? "Last seen updates live (every few seconds) while people use the website. Passwords are stored encrypted — use “Set new password” to reset any account."
+    : rows.length + " branch(es)";
+}
+
+async function open(){
+  $("lerr").textContent = "";
+  ownerKey = $("key").value;
+  const b = $("go"); b.disabled = true; b.textContent = "Verifying…";
+  try {
+    await load();
+    $("login").classList.add("hidden"); $("locked").classList.add("hidden"); $("app").classList.remove("hidden");
+    clearInterval(poll); clearInterval(poll2);
+    poll  = setInterval(() => { if (!document.hidden && ownerKey && !document.querySelector("tr.pwrow")) load().catch(() => {}); }, 60000);
+    poll2 = setInterval(() => { if (!document.hidden && ownerKey && D) livePresence().catch(() => {}); }, 5000);   /* live last-seen every 5s */
+  } catch (e) {
+    ownerKey = "";
+    $("lerr").textContent = /invalid owner key/i.test(e.message) ? "That key is not recognised." : e.message;
+    const c = $("lockcard"); c.classList.remove("shake"); void c.offsetWidth; c.classList.add("shake");
+  }
+  b.disabled = false; b.textContent = "Unlock Dashboard";
+}
+
+$("go").onclick = open;
+$("key").onkeydown = e => { if (e.key === "Enter") open(); };
+$("eye").onclick = () => { const k = $("key"); k.type = k.type === "password" ? "text" : "password"; };
+$("out").onclick = () => {
+  clearInterval(poll); clearInterval(poll2); ownerKey = ""; D = null; $("key").value = ""; $("q").value = "";
+  $("tbody").innerHTML = ""; $("stats").innerHTML = "";
+  $("app").classList.add("hidden"); $("locked").classList.remove("hidden");
+};
+$("again").onclick = () => { $("locked").classList.add("hidden"); $("login").classList.remove("hidden"); $("key").focus(); };
+$("q").oninput = draw;
+$("tabs").onclick = e => { const t = e.target.dataset.t; if (t) { tab = t; $("q").value = ""; drawTabs(); draw(); } };
+$("tbody").onclick = async e => {
+  const cancel = e.target.closest(".pwcancel");
+  if (cancel) { cancel.closest("tr").remove(); return; }
+  const save = e.target.closest(".pwsave");
+  if (save) {
+    const tr = save.closest("tr"), em = tr.dataset.email, msg = tr.querySelector(".pwmsg");
+    const p1 = tr.querySelector(".pw1").value, p2 = tr.querySelector(".pw2").value;
+    msg.className = "pwmsg";
+    if (p1.length < 6) { msg.textContent = "Minimum 6 characters."; msg.classList.add("bad"); return; }
+    if (p1 !== p2) { msg.textContent = "Passwords do not match. Nothing was changed."; msg.classList.add("bad"); return; }
+    save.disabled = true;
+    const {data, error} = await sb.rpc("owner_set_password", {p_key: ownerKey, p_email: em, p_new: p1});
+    save.disabled = false;
+    if (error) { msg.textContent = "Failed: " + error.message; msg.classList.add("bad"); return; }
+    msg.textContent = data + ". Tell them the new password; they can change it again from inside the app.";
+    msg.classList.add("ok");
+    tr.querySelector(".pw1").value = ""; tr.querySelector(".pw2").value = "";
+    return;
+  }
+  const btn = e.target.closest("[data-reset]"); if (!btn) return;
+  const row = btn.closest("tr"), isOpen = row.nextElementSibling && row.nextElementSibling.classList.contains("pwrow");
+  document.querySelectorAll("tr.pwrow").forEach(x => x.remove());
+  if (isOpen) return;
+  const tr = document.createElement("tr");
+  tr.className = "pwrow"; tr.dataset.email = btn.dataset.reset;
+  tr.innerHTML = `<td colspan="${view.cols.length}"><div class="pwbox"><b>New password for ${esc(btn.dataset.reset)}</b>
+    <input type="password" class="pw1" placeholder="New password (min 6)" autocomplete="new-password">
+    <input type="password" class="pw2" placeholder="Confirm password" autocomplete="new-password">
+    <button class="sm pri pwsave">Save</button><button class="sm pwcancel">Cancel</button><div class="pwmsg" aria-live="polite"></div></div></td>`;
+  row.after(tr);
+  tr.querySelector(".pw1").focus();
+};
+$("tbody").onkeydown = e => { if (e.key === "Enter" && e.target.closest(".pwrow")) { e.preventDefault(); e.target.closest("tr").querySelector(".pwsave").click(); } };
+</script>
+</body>
+</html>
